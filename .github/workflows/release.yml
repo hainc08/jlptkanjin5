@@ -19,26 +19,12 @@ on:
         options: [both, android, ios]
         default: both
 
-env:
-  ADMOB_APP_ID_ANDROID: ${{ vars.ADMOB_APP_ID_ANDROID }}
-  ADMOB_APP_ID_IOS: ${{ vars.ADMOB_APP_ID_IOS }}
-  DART_DEFINES: >-
-    --dart-define=ADMOB_BANNER_ANDROID=${{ vars.ADMOB_BANNER_ANDROID }}
-    --dart-define=ADMOB_INTERSTITIAL_ANDROID=${{ vars.ADMOB_INTERSTITIAL_ANDROID }}
-    --dart-define=ADMOB_BANNER_IOS=${{ vars.ADMOB_BANNER_IOS }}
-    --dart-define=ADMOB_INTERSTITIAL_IOS=${{ vars.ADMOB_INTERSTITIAL_IOS }}
-
 jobs:
   android-build:
     if: ${{ !inputs.submit_review && inputs.platform != 'ios' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Kiểm tra cấu hình AdMob
-        run: |
-          for v in ADMOB_APP_ID_ANDROID; do
-            [ -n "${!v}" ] || { echo "::error::Thiếu biến $v (Settings → Secrets and variables → Actions → Variables)"; exit 1; }
-          done
       - uses: actions/setup-java@v4
         with: { distribution: temurin, java-version: '17' }
       - uses: subosito/flutter-action@v2
@@ -65,7 +51,7 @@ jobs:
       - run: python3 tools/check_metadata.py
       - run: flutter pub get
       - run: flutter test
-      - run: flutter build appbundle --release --build-number=${{ github.run_number }} $DART_DEFINES
+      - run: flutter build appbundle --release --build-number=${{ github.run_number }}
       - uses: actions/upload-artifact@v4
         with:
           name: app-release-aab
@@ -86,7 +72,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Kiểm tra cấu hình
         run: |
-          for v in ADMOB_APP_ID_IOS IOS_PROFILE_NAME; do
+          for v in IOS_PROFILE_NAME; do
             [ -n "${!v}" ] || { echo "::error::Thiếu biến $v (Settings → Secrets and variables → Actions → Variables)"; exit 1; }
           done
       - uses: subosito/flutter-action@v2
@@ -119,7 +105,7 @@ jobs:
       - name: Chuyển sang ký thủ công
         working-directory: ios
         run: fastlane prepare_signing
-      - run: flutter build ipa --release --build-number=${{ github.run_number }} --export-options-plist=ios/ExportOptions.plist $DART_DEFINES
+      - run: flutter build ipa --release --build-number=${{ github.run_number }} --export-options-plist=ios/ExportOptions.plist
       - uses: actions/upload-artifact@v4
         with:
           name: app-release-ipa

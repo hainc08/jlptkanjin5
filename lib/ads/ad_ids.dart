@@ -3,13 +3,25 @@ import 'package:flutter/foundation.dart';
 /// Mã đơn vị quảng cáo AdMob.
 ///
 /// - Bản debug/profile: luôn dùng mã TEST của Google (không bao giờ click quảng cáo thật khi test).
-/// - Bản release: lấy từ --dart-define (CI truyền vào từ GitHub repository variables).
-///   Nếu chưa cấu hình, quảng cáo bị tắt thay vì hiện quảng cáo test.
+/// - Bản release: dùng mã thật của tài khoản AdMob (pub-2898831437808228) bên dưới,
+///   có thể ghi đè bằng --dart-define. Mã quảng cáo không phải thông tin bí mật.
 class AdIds {
-  static const _bannerAndroid = String.fromEnvironment('ADMOB_BANNER_ANDROID');
-  static const _bannerIos = String.fromEnvironment('ADMOB_BANNER_IOS');
-  static const _interAndroid = String.fromEnvironment('ADMOB_INTERSTITIAL_ANDROID');
-  static const _interIos = String.fromEnvironment('ADMOB_INTERSTITIAL_IOS');
+  static const _bannerAndroid = String.fromEnvironment(
+    'ADMOB_BANNER_ANDROID',
+    defaultValue: 'ca-app-pub-2898831437808228/2070916442',
+  );
+  static const _bannerIos = String.fromEnvironment(
+    'ADMOB_BANNER_IOS',
+    defaultValue: 'ca-app-pub-2898831437808228/3524645092',
+  );
+  static const _interAndroid = String.fromEnvironment(
+    'ADMOB_INTERSTITIAL_ANDROID',
+    defaultValue: 'ca-app-pub-2898831437808228/1672507372',
+  );
+  static const _interIos = String.fromEnvironment(
+    'ADMOB_INTERSTITIAL_IOS',
+    defaultValue: 'ca-app-pub-2898831437808228/8444753104',
+  );
 
   // Mã test chính thức của Google AdMob.
   static const _testBannerAndroid = 'ca-app-pub-3940256099942544/9214589741';

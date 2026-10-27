@@ -3,7 +3,7 @@
 
 Chạy lại bao nhiêu lần cũng được (idempotent). Dùng cả ở máy bạn lẫn trên CI.
 
-Biến môi trường (để trống = dùng App ID test của Google, chỉ hợp lệ khi debug):
+Biến môi trường (không bắt buộc, để trống = dùng App ID thật đã gắn sẵn bên dưới):
   ADMOB_APP_ID_ANDROID   ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy
   ADMOB_APP_ID_IOS       ca-app-pub-xxxxxxxxxxxxxxxx~zzzzzzzzzz
 """
@@ -20,8 +20,12 @@ DISPLAY_NAME = "Kanji N5"
 TEST_ANDROID = "ca-app-pub-3940256099942544~3347511713"
 TEST_IOS = "ca-app-pub-3940256099942544~1458002511"
 
-admob_android = os.environ.get("ADMOB_APP_ID_ANDROID") or TEST_ANDROID
-admob_ios = os.environ.get("ADMOB_APP_ID_IOS") or TEST_IOS
+# App ID thật của tài khoản AdMob (không phải thông tin bí mật).
+REAL_ANDROID = "ca-app-pub-2898831437808228~3768187672"
+REAL_IOS = "ca-app-pub-2898831437808228~8042262578"
+
+admob_android = os.environ.get("ADMOB_APP_ID_ANDROID") or REAL_ANDROID
+admob_ios = os.environ.get("ADMOB_APP_ID_IOS") or REAL_IOS
 
 
 def log(msg: str) -> None:

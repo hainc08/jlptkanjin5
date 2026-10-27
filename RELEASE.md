@@ -12,8 +12,9 @@ App: **Kanji N5 - JLPT Flashcard** · Bundle ID / package: `com.manabihub.kanjin
       Trang chính sách: `https://hainc08.github.io/jlptkanjin5/privacy-policy.html` (repo phải public, hoặc tài khoản GitHub Pro).
 
 ### 1.2 AdMob (admob.google.com)
-- [ ] Tạo 2 app: *Kanji N5* Android và *Kanji N5* iOS → ghi lại **App ID** (`ca-app-pub-…~…`).
-- [ ] Mỗi app tạo 2 đơn vị quảng cáo: **Banner** và **Interstitial** → ghi lại **Ad unit ID** (`ca-app-pub-…/…`).
+- [x] Đã tạo 2 app và 4 đơn vị quảng cáo (mã đã gắn sẵn trong `lib/ads/ad_ids.dart` và `tools/configure_native.py`):
+  - Android App ID `ca-app-pub-2898831437808228~3768187672` · Banner `…/2070916442` · Interstitial `…/1672507372`
+  - iOS App ID `ca-app-pub-2898831437808228~8042262578` · Banner `…/3524645092` · Interstitial `…/8444753104`
 - [ ] Privacy & messaging: tạo thông điệp **GDPR** (EU/UK) và **IDFA explainer** (iOS), áp dụng cho 2 app trên.
 - [ ] Sau khi app lên store: liên kết app với store trong AdMob, và đặt file `app-ads.txt`
       tại gốc website khai báo trên store (xem mục 5).
@@ -87,11 +88,7 @@ Repo → **Settings → Secrets and variables → Actions**.
 | Tên | Ví dụ |
 |---|---|
 | `APPLE_TEAM_ID` | Không bắt buộc: đã gắn sẵn `SLR7396ZXZ` trong code |
-| `IOS_PROFILE_NAME` | tên profile đã tạo |
-| `ADMOB_APP_ID_ANDROID` | `ca-app-pub-xxxxxxxx~yyyyyy` |
-| `ADMOB_APP_ID_IOS` | `ca-app-pub-xxxxxxxx~zzzzzz` |
-| `ADMOB_BANNER_ANDROID` / `ADMOB_INTERSTITIAL_ANDROID` | `ca-app-pub-xxxxxxxx/…` |
-| `ADMOB_BANNER_IOS` / `ADMOB_INTERSTITIAL_IOS` | `ca-app-pub-xxxxxxxx/…` |
+| `IOS_PROFILE_NAME` | tên profile đã tạo (bắt buộc cho iOS) |
 | `PLAY_RELEASE_STATUS` | `draft` khi app chưa từng phát hành; xoá biến này sau lần phát hành đầu |
 
 ---
