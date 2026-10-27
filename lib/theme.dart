@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'app_config.dart';
+
 class AppColors {
-  static const vermilion = Color(0xFFD7263D); // đỏ son
-  static const plum = Color(0xFF8E1B3A);
+  /// Màu nhấn của app (N5: đỏ son). Đổi theo ACCENT trong apps/<app>/config.json.
+  static const vermilion = Color(AppConfig.accent);
+  static const plum = Color(AppConfig.accentDark);
   static const paper = Color(0xFFFFF8F0);
   static const night = Color(0xFF14141B);
   static const correct = Color(0xFF2E9E5B);

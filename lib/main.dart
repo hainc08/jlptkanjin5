@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'app_config.dart';
 import 'app_scope.dart';
 import 'models/app_settings.dart';
 import 'screens/splash_screen.dart';
@@ -18,7 +19,7 @@ class KanjiApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final settings = AppScope.of(context);
     return MaterialApp(
-      title: 'Kanji N5',
+      title: AppConfig.name,
       debugShowCheckedModeBanner: false,
       theme: buildTheme(Brightness.light),
       darkTheme: buildTheme(Brightness.dark),

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../ads/ads_service.dart';
 import '../ads/banner_ad_slot.dart';
 import '../app_scope.dart';
-import '../data/kanji_n5.dart';
+import '../app_config.dart';
+import '../data/levels.dart';
 import '../models/app_settings.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -95,7 +96,7 @@ class SettingsScreen extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.menu_book_outlined),
                 title: const Text('Bộ dữ liệu'),
-                subtitle: Text('JLPT N5 · ${kanjiN5.length} chữ Kanji'),
+                subtitle: Text('JLPT ${AppConfig.level} · ${appKanji.length} chữ Kanji'),
               ),
               FutureBuilder<bool>(
                 future: AdsService.instance.privacyOptionsRequired(),

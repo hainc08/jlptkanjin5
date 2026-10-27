@@ -1,2 +1,2 @@
 json_key_file("play.json")
-package_name("com.manabihub.kanjin5")
+package_name(ENV["BUNDLE_ID"].to_s.empty? ? "com.manabihub.kanjin5" : ENV["BUNDLE_ID"])

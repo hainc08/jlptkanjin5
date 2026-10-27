@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Kiểm tra độ dài nội dung store trước khi upload."""
+"""Kiểm tra độ dài nội dung store (apps/*/store) trước khi upload."""
 import glob
 import os
 import sys
@@ -14,7 +14,7 @@ LIMITS = {
 }
 
 bad = 0
-for f in sorted(glob.glob("**/fastlane/metadata/**/*.txt", recursive=True)):
+for f in sorted(glob.glob("apps/*/store/**/*.txt", recursive=True)):
     name = os.path.basename(f)
     if name not in LIMITS:
         continue

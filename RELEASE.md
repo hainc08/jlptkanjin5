@@ -1,10 +1,43 @@
-# Hướng dẫn phát hành – Kanji N5
+# Hướng dẫn phát hành – các app Kanji JLPT (ManabiHub)
 
-App: **Kanji N5 - JLPT Flashcard** · Bundle ID / package: `com.manabihub.kanjin5` · Miễn phí, có Google AdMob.
+Một repo chứa nhiều app. Code giao diện (`lib/`) dùng chung; mỗi app là một thư mục trong `apps/`:
+
+| App | Thư mục | Bundle ID / package | Màu |
+|---|---|---|---|
+| Kanji N5 - JLPT Flashcard | `apps/n5` | `com.manabihub.kanjin5` | đỏ son |
+| Kanji N4 - JLPT Flashcard | `apps/n4` | `com.manabihub.kanjin4` | xanh chàm |
+
+```
+apps/<app>/config.json      tên app, bundle ID, phiên bản, màu, mã AdMob, tên profile iOS
+apps/<app>/icons/           icon Android (mipmap-*) và iOS (icon-1024.png)
+apps/<app>/store/ios/       mô tả App Store (metadata/) và ảnh (screenshots/)
+apps/<app>/store/android/   mô tả Google Play, icon 512, feature graphic, ảnh
+lib/data/kanji_<app>.dart   dữ liệu Kanji, đăng ký trong lib/data/levels.dart
+docs/<app>/                 trang hỗ trợ + chính sách quyền riêng tư (N5 dùng docs/ gốc)
+```
+
+Chạy thử một app trên máy:
+```
+python tools/configure_native.py n4
+flutter run --dart-define-from-file=apps/n4/config.json
+```
+Chạy xong nhớ `python tools/configure_native.py n5` để trả android/ ios/ về N5 trước khi commit.
+
+## 0. Thêm một app mới (vd N3)
+1. Chép `apps/n4` thành `apps/n3`, sửa `config.json` (APP, LEVEL, APP_NAME, STORE_NAME, BUNDLE_ID `com.manabihub.kanjin3`, IOS_PROFILE, màu; để trống mã AdMob cho tới khi tạo xong).
+2. Tạo `lib/data/kanji_n3.dart`, thêm một dòng `'n3' => kanjiN3` trong `lib/data/levels.dart`, thêm vào test.
+3. Thay icon, ảnh store, mô tả trong `apps/n3/`; tạo `docs/n3/`.
+4. Thêm `n3` vào ô chọn `app` trong `.github/workflows/release.yml` và matrix trong `ci.yml`.
+5. Làm các bước tay ở mục 1 cho bundle ID mới (AdMob, App ID + profile Apple, hồ sơ App Store Connect, app trên Play, cấp quyền service account, upload AAB đầu tiên bằng tay).
+6. Secrets trên GitHub **dùng chung**, không cần thêm (cùng keystore upload, cùng chứng chỉ iOS và API key).
 
 ---
 
 ## 1. Việc làm tay một lần
+
+## Phụ lục cho từng app
+
+Các mục dưới đây viết cho N5; app khác làm tương tự với bundle ID của app đó.
 
 ### 1.1 GitHub
 - [ ] Đẩy code lên repo `hainc08/jlptkanjin5`.
@@ -87,7 +120,6 @@ Repo → **Settings → Secrets and variables → Actions**.
 | Tên | Ví dụ |
 |---|---|
 | `APPLE_TEAM_ID` | Không bắt buộc: đã gắn sẵn `SLR7396ZXZ` trong code |
-| `IOS_PROFILE_NAME` | Không bắt buộc: mặc định `Kanji N5 AppStore` (CI tự tải profile bằng API key) |
 | `PLAY_RELEASE_STATUS` | `draft` khi app chưa từng phát hành; xoá biến này sau lần phát hành đầu |
 
 ---
@@ -133,15 +165,15 @@ AdMob yêu cầu file `app-ads.txt` ở **gốc domain** của website khai báo
 ---
 
 ## 6. Quy trình mỗi lần phát hành
-1. Sửa `version:` trong `pubspec.yaml` (vd `1.1.0+1`; build number do CI tự đánh).
+1. Sửa `VERSION` trong `apps/<app>/config.json` (vd `1.1.0`; build number do CI tự đánh, dùng chung cho mọi app).
 2. Ghi nội dung cập nhật vào
-   `android/fastlane/metadata/android/vi/changelogs/default.txt` và
-   `ios/fastlane/metadata/vi/release_notes.txt` (từ phiên bản thứ 2).
-3. Đẩy tag:
+   `apps/<app>/store/android/vi/changelogs/default.txt` và
+   `apps/<app>/store/ios/metadata/vi/release_notes.txt` (từ phiên bản thứ 2).
+3. Đẩy tag dạng `<app>-v<VERSION>` (VERSION phải khớp `config.json`):
    ```
-   git tag v1.1.0
-   git push origin v1.1.0
+   git tag n4-v1.0.0
+   git push origin n4-v1.0.0
    ```
    → iOS lên **TestFlight**, Android lên **Internal testing**.
 4. Test trên máy thật.
-5. GitHub → Actions → **Release** → Run workflow → tick **submit_review** → Apple review + Google Production.
+5. GitHub → Actions → **Release** → Run workflow → chọn **app** → tick **submit_review** → Apple review + Google Production.

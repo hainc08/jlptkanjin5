@@ -1,31 +1,36 @@
 #!/usr/bin/env python3
-"""Cấu hình android/ và ios/ sau khi chạy `flutter create`.
+"""Cấu hình android/ và ios/ cho một app trong thư mục apps/.
 
-Chạy lại bao nhiêu lần cũng được (idempotent). Dùng cả ở máy bạn lẫn trên CI.
+    python3 tools/configure_native.py n4     (hoặc đặt biến môi trường APP=n4)
 
-Biến môi trường (không bắt buộc, để trống = dùng App ID thật đã gắn sẵn bên dưới):
-  ADMOB_APP_ID_ANDROID   ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy
-  ADMOB_APP_ID_IOS       ca-app-pub-xxxxxxxxxxxxxxxx~zzzzzzzzzz
+Không truyền gì thì cấu hình app n5. Chạy lại bao nhiêu lần cũng được (idempotent),
+dùng cả ở máy bạn lẫn trên CI. Đọc apps/<app>/config.json để đặt bundle ID, tên app,
+AdMob App ID và chép icon của app vào android/ và ios/.
 """
+import json
 import os
 import plistlib
 import re
+import shutil
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-APP_ID = "com.manabihub.kanjin5"
-DISPLAY_NAME = "Kanji N5"
+APP = (sys.argv[1] if len(sys.argv) > 1 else os.environ.get("APP")) or "n5"
+APP_DIR = ROOT / "apps" / APP
+if not (APP_DIR / "config.json").exists():
+    sys.exit(f"Không thấy apps/{APP}/config.json")
+CFG = json.loads((APP_DIR / "config.json").read_text(encoding="utf-8"))
+
+APP_ID = CFG["BUNDLE_ID"]
+DISPLAY_NAME = CFG["APP_NAME"]
 
 TEST_ANDROID = "ca-app-pub-3940256099942544~3347511713"
 TEST_IOS = "ca-app-pub-3940256099942544~1458002511"
 
-# App ID thật của tài khoản AdMob (không phải thông tin bí mật).
-REAL_ANDROID = "ca-app-pub-2898831437808228~3768187672"
-REAL_IOS = "ca-app-pub-2898831437808228~8042262578"
-
-admob_android = os.environ.get("ADMOB_APP_ID_ANDROID") or REAL_ANDROID
-admob_ios = os.environ.get("ADMOB_APP_ID_IOS") or REAL_IOS
+# App chưa có AdMob App ID thật thì dùng App ID test (SDK bắt buộc phải có, nếu không app sẽ crash).
+admob_android = CFG.get("ADMOB_APP_ID_ANDROID") or TEST_ANDROID
+admob_ios = CFG.get("ADMOB_APP_ID_IOS") or TEST_IOS
 
 
 def log(msg: str) -> None:
@@ -148,6 +153,28 @@ def configure_ios() -> None:
         log(f"project.pbxproj: bundle ID {APP_ID}")
 
 
+# ---------------------------------------------------------------- Icon
+def copy_icons() -> None:
+    src_android = APP_DIR / "icons/android"
+    res = ROOT / "android/app/src/main/res"
+    if src_android.exists() and res.exists():
+        for d in src_android.iterdir():
+            shutil.copytree(d, res / d.name, dirs_exist_ok=True)
+        log(f"Icon Android: chép từ apps/{APP}/icons/android")
+    src_ios = APP_DIR / "icons/ios/icon-1024.png"
+    appicon = ROOT / "ios/Runner/Assets.xcassets/AppIcon.appiconset"
+    if src_ios.exists() and appicon.exists():
+        shutil.copyfile(src_ios, appicon / "icon-1024.png")
+        (appicon / "Contents.json").write_text(json.dumps({
+            "images": [{"filename": "icon-1024.png", "idiom": "universal",
+                        "platform": "ios", "size": "1024x1024"}],
+            "info": {"author": "xcode", "version": 1},
+        }, indent=2) + "\n", encoding="utf-8")
+        log(f"Icon iOS: chép từ apps/{APP}/icons/ios")
+
+
 if __name__ == "__main__":
+    log(f"App: {APP} ({APP_ID})")
     configure_android()
     configure_ios()
+    copy_icons()

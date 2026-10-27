@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../ads/ads_service.dart';
-import '../data/kanji_n5.dart';
+import '../app_config.dart';
+import '../data/levels.dart';
 import '../theme.dart';
 import 'test_screen.dart';
 
@@ -111,7 +112,7 @@ class _SplashScreenState extends State<SplashScreen>
                 child: const Column(
                   children: [
                     Text(
-                      'Kanji N5',
+                      AppConfig.name,
                       style: TextStyle(
                         fontSize: 34,
                         fontWeight: FontWeight.w800,
@@ -129,7 +130,7 @@ class _SplashScreenState extends State<SplashScreen>
               ),
               const Spacer(flex: 3),
               Text(
-                '${kanjiN5.length} chữ Kanji · Phiên bản 1.0',
+                '${appKanji.length} chữ Kanji · Phiên bản ${AppConfig.version}',
                 style: const TextStyle(fontSize: 13, color: Colors.white60),
               ),
               const SizedBox(height: 24),

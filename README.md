@@ -1,8 +1,15 @@
-# Kanji N5 Flashcard
+# Kanji JLPT Flashcard (ManabiHub)
 
-App Flutter luyện Kanji JLPT N5 (104 chữ, có Hán Việt, nghĩa tiếng Việt, âm On/Kun).
+Một bộ code Flutter cho nhiều app luyện Kanji JLPT (Hán Việt, nghĩa tiếng Việt, âm On/Kun):
 
-- Bundle ID / package: `com.manabihub.kanjin5`
+| App | Cấu hình | Bundle ID | Số chữ |
+|---|---|---|---|
+| Kanji N5 | `apps/n5/` | `com.manabihub.kanjin5` | 104 |
+| Kanji N4 | `apps/n4/` | `com.manabihub.kanjin4` | 176 |
+
+Chọn app khi chạy/build bằng `--dart-define-from-file=apps/<app>/config.json`
+và `python tools/configure_native.py <app>`. Cách thêm app mới: xem **RELEASE.md**, mục 0.
+
 - Miễn phí, có quảng cáo Google AdMob (banner ở màn Kết quả và Cài đặt, quảng cáo toàn màn hình sau mỗi 2 lượt test)
 - Phát hành tự động bằng fastlane + GitHub Actions: xem **RELEASE.md**
 
@@ -22,14 +29,14 @@ Cài đặt được lưu bằng `shared_preferences`.
 3. Sinh các thư mục nền tảng rồi cấu hình (bundle ID, tên app, AdMob, ký app):
    ```
    flutter create --org com.manabihub --project-name kanji_n5_flashcard --platforms=android,ios .
-   python tools/configure_native.py
+   python tools/configure_native.py n5
    ```
    Lệnh `flutter create` **không** ghi đè code trong `lib/`. Khi chạy debug, app dùng mã quảng cáo TEST của Google.
 4. Cài thư viện và chạy thử:
    ```
    flutter pub get
    flutter test
-   flutter run
+   flutter run --dart-define-from-file=apps/n5/config.json   (hoặc apps/n4/config.json)
    ```
    Chạy trên máy ảo Android hoặc điện thoại Android cắm USB.
 

@@ -1,17 +1,6 @@
-/// Một chữ Kanji kèm Hán Việt, nghĩa tiếng Việt, âm On và âm Kun.
-class Kanji {
-  const Kanji(this.char, this.hanViet, this.meaning, this.on, this.kun);
+import 'kanji.dart';
 
-  final String char;
-  final String hanViet;
-  final String meaning;
-  final String on;
-  final String kun;
-
-  /// Chuỗi cách đọc dùng làm đáp án: "On / Kun".
-  String get readingLabel =>
-      [on, kun].where((e) => e.isNotEmpty).join(' / ');
-}
+export 'kanji.dart';
 
 /// Bộ Kanji JLPT N5 (chữ, Hán Việt, nghĩa, On, Kun).
 const List<Kanji> kanjiN5 = [

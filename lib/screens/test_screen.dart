@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../ads/ads_service.dart';
 import '../app_scope.dart';
-import '../data/kanji_n5.dart';
+import '../data/levels.dart';
 import '../logic/quiz.dart';
 import '../models/app_settings.dart';
 import '../theme.dart';
@@ -13,7 +13,7 @@ import 'result_screen.dart';
 import 'settings_screen.dart';
 
 class TestScreen extends StatefulWidget {
-  /// [targets] = null: lấy ngẫu nhiên từ toàn bộ N5 theo số câu trong cài đặt.
+  /// [targets] = null: lấy ngẫu nhiên từ toàn bộ bộ Kanji của app theo số câu trong cài đặt.
   /// [targets] != null: ôn đúng các chữ này (dùng cho "Ôn câu sai").
   const TestScreen({super.key, this.targets});
 
@@ -46,8 +46,8 @@ class _TestScreenState extends State<TestScreen> {
     _autoTimer?.cancel();
     _mode = settings.mode;
     _questions = buildQuiz(
-      targets: widget.targets ?? kanjiN5,
-      all: kanjiN5,
+      targets: widget.targets ?? appKanji,
+      all: appKanji,
       mode: _mode,
       count: widget.targets != null ? 0 : settings.questionCount,
     );

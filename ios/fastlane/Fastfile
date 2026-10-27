@@ -1,4 +1,30 @@
+require "json"
+
 default_platform(:ios)
+
+# App đang xử lý: biến môi trường APP (n5, n4, ...). Cấu hình nằm ở apps/<app>/config.json,
+# nội dung store ở apps/<app>/store/ios/.
+def repo_root
+  d = Dir.pwd
+  d = File.dirname(d) until File.directory?(File.join(d, "apps")) || d == "/"
+  d
+end
+
+def app_id
+  ENV["APP"].to_s.empty? ? "n5" : ENV["APP"]
+end
+
+def app_dir
+  File.join(repo_root, "apps", app_id)
+end
+
+def cfg
+  @cfg ||= JSON.parse(File.read(File.join(app_dir, "config.json")))
+end
+
+def profile_name
+  ENV["IOS_PROFILE_NAME"].to_s.empty? ? cfg["IOS_PROFILE"] : ENV["IOS_PROFILE_NAME"]
+end
 
 platform :ios do
   def asc_key
@@ -14,9 +40,9 @@ platform :ios do
   lane :fetch_profile do
     get_provisioning_profile(
       api_key: asc_key,
-      app_identifier: "com.manabihub.kanjin5",
+      app_identifier: cfg["BUNDLE_ID"],
       readonly: true,
-      provisioning_name: ENV["IOS_PROFILE_NAME"].to_s.empty? ? "Kanji N5 AppStore" : ENV["IOS_PROFILE_NAME"],
+      provisioning_name: profile_name,
       ignore_profiles_with_different_name: true,
       skip_certificate_verification: true
     )
@@ -31,8 +57,8 @@ platform :ios do
       targets: ["Runner"],
       build_configurations: ["Release"],
       code_sign_identity: "Apple Distribution",
-      profile_name: ENV["IOS_PROFILE_NAME"],
-      bundle_identifier: "com.manabihub.kanjin5"
+      profile_name: profile_name,
+      bundle_identifier: cfg["BUNDLE_ID"]
     )
   end
 
@@ -40,6 +66,7 @@ platform :ios do
   lane :beta do
     upload_to_testflight(
       api_key: asc_key,
+      app_identifier: cfg["BUNDLE_ID"],
       ipa: ENV["IPA_PATH"],
       skip_waiting_for_build_processing: true
     )
@@ -47,11 +74,15 @@ platform :ios do
 
   # Cập nhật nội dung store + screenshot rồi gửi review (bản build mới nhất của phiên bản).
   lane :release do
+    screenshots = File.join(app_dir, "store/ios/screenshots")
     deliver(
       api_key: asc_key,
-      app_version: ENV["APP_VERSION"],
+      app_identifier: cfg["BUNDLE_ID"],
+      app_version: ENV["APP_VERSION"].to_s.empty? ? cfg["VERSION"] : ENV["APP_VERSION"],
+      metadata_path: File.join(app_dir, "store/ios/metadata"),
+      screenshots_path: screenshots,
       skip_binary_upload: true,
-      skip_screenshots: Dir.glob("screenshots/**/*.png").empty?,
+      skip_screenshots: Dir.glob(File.join(screenshots, "**/*.png")).empty?,
       overwrite_screenshots: true,
       submit_for_review: true,
       automatic_release: false,

@@ -1,1 +1,1 @@
-app_identifier("com.manabihub.kanjin5")
+app_identifier(ENV["BUNDLE_ID"].to_s.empty? ? "com.manabihub.kanjin5" : ENV["BUNDLE_ID"])

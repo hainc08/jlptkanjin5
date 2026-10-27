@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import '../data/kanji_n5.dart';
+import '../data/kanji.dart';
 import '../models/app_settings.dart';
 
 class Question {
