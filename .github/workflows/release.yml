@@ -1,0 +1,165 @@
+name: Release
+
+# 1) Đẩy tag v*  (vd: git tag v1.0.0 && git push origin v1.0.0)
+#    → build và upload: iOS lên TestFlight, Android lên track Internal testing.
+# 2) Actions → Release → Run workflow, tick "submit_review"
+#    → iOS gửi Apple review, Android đẩy từ Internal lên Production.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      submit_review:
+        description: 'Gửi review (iOS) và đẩy lên Production (Android)'
+        type: boolean
+        default: false
+      platform:
+        description: 'Nền tảng'
+        type: choice
+        options: [both, android, ios]
+        default: both
+
+env:
+  ADMOB_APP_ID_ANDROID: ${{ vars.ADMOB_APP_ID_ANDROID }}
+  ADMOB_APP_ID_IOS: ${{ vars.ADMOB_APP_ID_IOS }}
+  DART_DEFINES: >-
+    --dart-define=ADMOB_BANNER_ANDROID=${{ vars.ADMOB_BANNER_ANDROID }}
+    --dart-define=ADMOB_INTERSTITIAL_ANDROID=${{ vars.ADMOB_INTERSTITIAL_ANDROID }}
+    --dart-define=ADMOB_BANNER_IOS=${{ vars.ADMOB_BANNER_IOS }}
+    --dart-define=ADMOB_INTERSTITIAL_IOS=${{ vars.ADMOB_INTERSTITIAL_IOS }}
+
+jobs:
+  android-build:
+    if: ${{ !inputs.submit_review && inputs.platform != 'ios' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Kiểm tra cấu hình AdMob
+        run: |
+          for v in ADMOB_APP_ID_ANDROID; do
+            [ -n "${!v}" ] || { echo "::error::Thiếu biến $v (Settings → Secrets and variables → Actions → Variables)"; exit 1; }
+          done
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '17' }
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable, cache: true }
+      - uses: ruby/setup-ruby@v1
+        with: { ruby-version: '3.3' }
+      - run: gem install fastlane --no-document
+      - name: Sinh thư mục nền tảng và cấu hình native
+        run: |
+          flutter create --org com.manabihub --project-name kanji_n5_flashcard --platforms=android,ios .
+          python3 tools/configure_native.py
+      - name: Chuẩn bị khóa ký và service account
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          PLAY_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 -d > android/app/upload-keystore.jks
+          printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=%s\nstoreFile=upload-keystore.jks\n' \
+            "$KEYSTORE_PASSWORD" "$KEY_PASSWORD" "$KEY_ALIAS" > android/key.properties
+          printf '%s' "$PLAY_JSON" > android/play.json
+      - run: python3 tools/check_metadata.py
+      - run: flutter pub get
+      - run: flutter test
+      - run: flutter build appbundle --release --build-number=${{ github.run_number }} $DART_DEFINES
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-release-aab
+          path: build/app/outputs/bundle/release/app-release.aab
+      - name: Upload lên Google Play (Internal testing)
+        working-directory: android
+        env:
+          PLAY_RELEASE_STATUS: ${{ vars.PLAY_RELEASE_STATUS }}
+        run: fastlane internal
+
+  ios-build:
+    if: ${{ !inputs.submit_review && inputs.platform != 'android' }}
+    runs-on: macos-latest
+    env:
+      APPLE_TEAM_ID: ${{ vars.APPLE_TEAM_ID }}
+      IOS_PROFILE_NAME: ${{ vars.IOS_PROFILE_NAME }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Kiểm tra cấu hình
+        run: |
+          for v in ADMOB_APP_ID_IOS IOS_PROFILE_NAME; do
+            [ -n "${!v}" ] || { echo "::error::Thiếu biến $v (Settings → Secrets and variables → Actions → Variables)"; exit 1; }
+          done
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable, cache: true }
+      - name: Sinh thư mục nền tảng và cấu hình native
+        run: |
+          flutter create --org com.manabihub --project-name kanji_n5_flashcard --platforms=android,ios .
+          python3 tools/configure_native.py
+          python3 tools/write_export_options.py
+      - name: Cài chứng chỉ và provisioning profile
+        env:
+          P12: ${{ secrets.IOS_DIST_CERT_P12_BASE64 }}
+          P12_PASSWORD: ${{ secrets.IOS_DIST_CERT_PASSWORD }}
+          PROFILE: ${{ secrets.IOS_PROFILE_BASE64 }}
+        run: |
+          KEYCHAIN=$RUNNER_TEMP/build.keychain-db
+          KEYCHAIN_PASSWORD=$(openssl rand -hex 16)
+          echo "$P12" | base64 --decode > $RUNNER_TEMP/cert.p12
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN
+          security set-keychain-settings -lut 21600 $KEYCHAIN
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN
+          security import $RUNNER_TEMP/cert.p12 -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN
+          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN
+          security list-keychain -d user -s $KEYCHAIN
+          for d in "$HOME/Library/MobileDevice/Provisioning Profiles" "$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles"; do
+            mkdir -p "$d"
+            echo "$PROFILE" | base64 --decode > "$d/kanjin5_appstore.mobileprovision"
+          done
+      - run: flutter pub get
+      - name: Chuyển sang ký thủ công
+        working-directory: ios
+        run: fastlane prepare_signing
+      - run: flutter build ipa --release --build-number=${{ github.run_number }} --export-options-plist=ios/ExportOptions.plist $DART_DEFINES
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-release-ipa
+          path: build/ios/ipa/*.ipa
+      - name: Upload lên TestFlight
+        working-directory: ios
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8_BASE64: ${{ secrets.ASC_KEY_P8_BASE64 }}
+        run: IPA_PATH=$(ls $GITHUB_WORKSPACE/build/ios/ipa/*.ipa | head -1) fastlane beta
+
+  android-submit:
+    if: ${{ inputs.submit_review && inputs.platform != 'ios' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with: { ruby-version: '3.3' }
+      - run: gem install fastlane --no-document
+      - env:
+          PLAY_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+        run: printf '%s' "$PLAY_JSON" > android/play.json
+      - name: Đẩy Internal → Production
+        working-directory: android
+        run: fastlane production
+
+  ios-submit:
+    if: ${{ inputs.submit_review && inputs.platform != 'android' }}
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/check_metadata.py
+      - name: Gửi Apple review
+        working-directory: ios
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8_BASE64: ${{ secrets.ASC_KEY_P8_BASE64 }}
+        run: |
+          APP_VERSION=$(grep '^version:' ../pubspec.yaml | sed 's/version: *//; s/+.*//')
+          echo "Phiên bản: $APP_VERSION"
+          APP_VERSION=$APP_VERSION fastlane release

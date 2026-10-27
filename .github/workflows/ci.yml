@@ -1,0 +1,26 @@
+name: CI
+
+# Kiểm tra code mỗi lần push / mở PR: phân tích, chạy test, build thử APK debug.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '17' }
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable, cache: true }
+      - name: Sinh thư mục nền tảng và cấu hình native
+        run: |
+          flutter create --org com.manabihub --project-name kanji_n5_flashcard --platforms=android,ios .
+          python3 tools/configure_native.py
+      - run: flutter pub get
+      - run: flutter analyze --no-fatal-infos
+      - run: flutter test
+      - run: python3 tools/check_metadata.py
+      - run: flutter build apk --debug

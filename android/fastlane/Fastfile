@@ -1,0 +1,31 @@
+default_platform(:android)
+
+# Lưu ý: code Ruby trong Fastfile chạy với thư mục hiện tại là fastlane/,
+# còn tham số đường dẫn của action tính từ thư mục cha (android/).
+
+platform :android do
+  # Đưa AAB lên track Internal testing (kèm mô tả store trong fastlane/metadata).
+  lane :internal do
+    upload_to_play_store(
+      track: "internal",
+      aab: "../build/app/outputs/bundle/release/app-release.aab",
+      release_status: ENV["PLAY_RELEASE_STATUS"].to_s.empty? ? "completed" : ENV["PLAY_RELEASE_STATUS"],
+      skip_upload_screenshots: Dir.glob("metadata/android/*/images/phoneScreenshots/*.png").empty?,
+      skip_upload_images: Dir.glob("metadata/android/*/images/*.png").empty?
+    )
+  end
+
+  # Đẩy bản đang ở Internal lên Production (Google sẽ review).
+  lane :production do
+    upload_to_play_store(
+      track: "internal",
+      track_promote_to: "production",
+      skip_upload_aab: true,
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      release_status: "completed"
+    )
+  end
+end

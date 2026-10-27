@@ -1,0 +1,9 @@
+Kanji N5 is a kanji flashcard quiz app for Vietnamese learners preparing for the JLPT N5 exam. The interface is in Vietnamese.
+
+No login or account is required. All features are available right after launch:
+1. The splash screen opens the quiz automatically after about 2 seconds.
+2. Tap one of the 4 answers. The card flips to show the Sino-Vietnamese reading, meaning, On and Kun readings. Tap "Câu tiếp theo" (Next) to continue.
+3. After the last question, the Result screen shows the score. "Ôn câu sai" replays only the wrong answers; "Làm bài mới" starts a new quiz.
+4. The gear icon opens Settings: number of questions, question type, dark mode, hints and auto-next.
+
+Ads: the app shows Google AdMob banner ads (Result and Settings screens) and an occasional interstitial after finishing a quiz. Consent for personalized ads and the App Tracking Transparency prompt are handled by Google's User Messaging Platform. The app itself does not collect personal data; settings are stored only on the device.

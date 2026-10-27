@@ -1,0 +1,2 @@
+json_key_file("play.json")
+package_name("com.manabihub.kanjin5")

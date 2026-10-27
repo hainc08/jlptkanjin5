@@ -1,0 +1,139 @@
+/// Một chữ Kanji kèm Hán Việt, nghĩa tiếng Việt, âm On và âm Kun.
+class Kanji {
+  const Kanji(this.char, this.hanViet, this.meaning, this.on, this.kun);
+
+  final String char;
+  final String hanViet;
+  final String meaning;
+  final String on;
+  final String kun;
+
+  /// Chuỗi cách đọc dùng làm đáp án: "On / Kun".
+  String get readingLabel =>
+      [on, kun].where((e) => e.isNotEmpty).join(' / ');
+}
+
+/// Bộ Kanji JLPT N5 (chữ, Hán Việt, nghĩa, On, Kun).
+const List<Kanji> kanjiN5 = [
+  // Số đếm
+  Kanji('一', 'NHẤT', 'một', 'イチ、イツ', 'ひと(つ)'),
+  Kanji('二', 'NHỊ', 'hai', 'ニ', 'ふた(つ)'),
+  Kanji('三', 'TAM', 'ba', 'サン', 'みっ(つ)'),
+  Kanji('四', 'TỨ', 'bốn', 'シ', 'よ、よん'),
+  Kanji('五', 'NGŨ', 'năm (số 5)', 'ゴ', 'いつ(つ)'),
+  Kanji('六', 'LỤC', 'sáu', 'ロク', 'むっ(つ)'),
+  Kanji('七', 'THẤT', 'bảy', 'シチ', 'なな'),
+  Kanji('八', 'BÁT', 'tám', 'ハチ', 'やっ(つ)'),
+  Kanji('九', 'CỬU', 'chín', 'キュウ、ク', 'ここの(つ)'),
+  Kanji('十', 'THẬP', 'mười', 'ジュウ', 'とお'),
+  Kanji('百', 'BÁCH', 'một trăm', 'ヒャク', ''),
+  Kanji('千', 'THIÊN', 'một nghìn', 'セン', 'ち'),
+  Kanji('万', 'VẠN', 'mười nghìn', 'マン、バン', ''),
+  Kanji('円', 'VIÊN', 'yên (tiền), tròn', 'エン', 'まる(い)'),
+
+  // Thời gian
+  Kanji('日', 'NHẬT', 'mặt trời, ngày', 'ニチ、ジツ', 'ひ、か'),
+  Kanji('月', 'NGUYỆT', 'mặt trăng, tháng', 'ゲツ、ガツ', 'つき'),
+  Kanji('火', 'HỎA', 'lửa', 'カ', 'ひ'),
+  Kanji('水', 'THỦY', 'nước', 'スイ', 'みず'),
+  Kanji('木', 'MỘC', 'cây', 'ボク、モク', 'き'),
+  Kanji('金', 'KIM', 'vàng, tiền', 'キン、コン', 'かね'),
+  Kanji('土', 'THỔ', 'đất', 'ド、ト', 'つち'),
+  Kanji('年', 'NIÊN', 'năm (thời gian)', 'ネン', 'とし'),
+  Kanji('時', 'THỜI', 'thời gian, giờ', 'ジ', 'とき'),
+  Kanji('分', 'PHÂN', 'phút, chia', 'ブン、フン、ブ', 'わ(かる)'),
+  Kanji('半', 'BÁN', 'một nửa', 'ハン', 'なか(ば)'),
+  Kanji('今', 'KIM', 'bây giờ', 'コン、キン', 'いま'),
+  Kanji('午', 'NGỌ', 'buổi trưa', 'ゴ', ''),
+  Kanji('前', 'TIỀN', 'phía trước, trước', 'ゼン', 'まえ'),
+  Kanji('後', 'HẬU', 'phía sau, sau', 'ゴ、コウ', 'あと、うし(ろ)'),
+  Kanji('週', 'CHU', 'tuần', 'シュウ', ''),
+  Kanji('毎', 'MỖI', 'mỗi', 'マイ', ''),
+  Kanji('何', 'HÀ', 'cái gì', 'カ', 'なに、なん'),
+
+  // Con người
+  Kanji('人', 'NHÂN', 'người', 'ジン、ニン', 'ひと'),
+  Kanji('男', 'NAM', 'đàn ông', 'ダン、ナン', 'おとこ'),
+  Kanji('女', 'NỮ', 'phụ nữ', 'ジョ、ニョ', 'おんな'),
+  Kanji('子', 'TỬ', 'con, trẻ em', 'シ、ス', 'こ'),
+  Kanji('父', 'PHỤ', 'cha', 'フ', 'ちち'),
+  Kanji('母', 'MẪU', 'mẹ', 'ボ', 'はは'),
+  Kanji('友', 'HỮU', 'bạn bè', 'ユウ', 'とも'),
+  Kanji('名', 'DANH', 'tên', 'メイ、ミョウ', 'な'),
+  Kanji('先', 'TIÊN', 'trước, đầu tiên', 'セン', 'さき'),
+  Kanji('生', 'SINH', 'sinh, sống', 'セイ、ショウ', 'い(きる)、う(まれる)'),
+  Kanji('学', 'HỌC', 'học', 'ガク', 'まな(ぶ)'),
+  Kanji('校', 'HIỆU', 'trường học', 'コウ', ''),
+  Kanji('語', 'NGỮ', 'ngôn ngữ', 'ゴ', 'かた(る)'),
+  Kanji('本', 'BẢN', 'sách, gốc', 'ホン', 'もと'),
+
+  // Vị trí, phương hướng
+  Kanji('上', 'THƯỢNG', 'bên trên', 'ジョウ', 'うえ、あ(がる)'),
+  Kanji('下', 'HẠ', 'bên dưới', 'カ、ゲ', 'した、さ(がる)'),
+  Kanji('中', 'TRUNG', 'bên trong, giữa', 'チュウ', 'なか'),
+  Kanji('外', 'NGOẠI', 'bên ngoài', 'ガイ、ゲ', 'そと'),
+  Kanji('左', 'TẢ', 'bên trái', 'サ', 'ひだり'),
+  Kanji('右', 'HỮU', 'bên phải', 'ウ、ユウ', 'みぎ'),
+  Kanji('東', 'ĐÔNG', 'phía đông', 'トウ', 'ひがし'),
+  Kanji('西', 'TÂY', 'phía tây', 'セイ、サイ', 'にし'),
+  Kanji('南', 'NAM', 'phía nam', 'ナン', 'みなみ'),
+  Kanji('北', 'BẮC', 'phía bắc', 'ホク', 'きた'),
+
+  // Tính từ
+  Kanji('大', 'ĐẠI', 'to, lớn', 'ダイ、タイ', 'おお(きい)'),
+  Kanji('小', 'TIỂU', 'nhỏ', 'ショウ', 'ちい(さい)、こ'),
+  Kanji('高', 'CAO', 'cao, đắt', 'コウ', 'たか(い)'),
+  Kanji('安', 'AN', 'rẻ, yên ổn', 'アン', 'やす(い)'),
+  Kanji('長', 'TRƯỜNG', 'dài, người đứng đầu', 'チョウ', 'なが(い)'),
+  Kanji('新', 'TÂN', 'mới', 'シン', 'あたら(しい)'),
+  Kanji('古', 'CỔ', 'cũ', 'コ', 'ふる(い)'),
+  Kanji('白', 'BẠCH', 'màu trắng', 'ハク', 'しろ'),
+  Kanji('多', 'ĐA', 'nhiều', 'タ', 'おお(い)'),
+  Kanji('少', 'THIỂU', 'ít', 'ショウ', 'すく(ない)、すこ(し)'),
+
+  // Thiên nhiên
+  Kanji('山', 'SƠN', 'núi', 'サン', 'やま'),
+  Kanji('川', 'XUYÊN', 'sông', 'セン', 'かわ'),
+  Kanji('天', 'THIÊN', 'trời', 'テン', 'あめ'),
+  Kanji('気', 'KHÍ', 'khí, tinh thần', 'キ、ケ', ''),
+  Kanji('雨', 'VŨ', 'mưa', 'ウ', 'あめ'),
+  Kanji('花', 'HOA', 'hoa', 'カ', 'はな'),
+  Kanji('空', 'KHÔNG', 'bầu trời, trống rỗng', 'クウ', 'そら、から'),
+  Kanji('魚', 'NGƯ', 'cá', 'ギョ', 'さかな'),
+  Kanji('犬', 'KHUYỂN', 'con chó', 'ケン', 'いぬ'),
+
+  // Nơi chốn, đồ vật
+  Kanji('国', 'QUỐC', 'đất nước', 'コク', 'くに'),
+  Kanji('店', 'ĐIẾM', 'cửa hàng', 'テン', 'みせ'),
+  Kanji('駅', 'DỊCH', 'nhà ga', 'エキ', ''),
+  Kanji('道', 'ĐẠO', 'con đường', 'ドウ', 'みち'),
+  Kanji('社', 'XÃ', 'công ty, đền thờ', 'シャ', 'やしろ'),
+  Kanji('車', 'XA', 'xe', 'シャ', 'くるま'),
+  Kanji('電', 'ĐIỆN', 'điện', 'デン', ''),
+  Kanji('間', 'GIAN', 'khoảng, giữa', 'カン、ケン', 'あいだ、ま'),
+
+  // Cơ thể
+  Kanji('口', 'KHẨU', 'miệng', 'コウ', 'くち'),
+  Kanji('目', 'MỤC', 'mắt', 'モク', 'め'),
+  Kanji('耳', 'NHĨ', 'tai', 'ジ', 'みみ'),
+  Kanji('手', 'THỦ', 'tay', 'シュ', 'て'),
+  Kanji('足', 'TÚC', 'chân, đủ', 'ソク', 'あし、た(りる)'),
+
+  // Động từ
+  Kanji('食', 'THỰC', 'ăn', 'ショク', 'た(べる)'),
+  Kanji('飲', 'ẨM', 'uống', 'イン', 'の(む)'),
+  Kanji('見', 'KIẾN', 'nhìn, xem', 'ケン', 'み(る)'),
+  Kanji('聞', 'VĂN', 'nghe, hỏi', 'ブン', 'き(く)'),
+  Kanji('読', 'ĐỘC', 'đọc', 'ドク', 'よ(む)'),
+  Kanji('書', 'THƯ', 'viết', 'ショ', 'か(く)'),
+  Kanji('話', 'THOẠI', 'nói chuyện', 'ワ', 'はな(す)'),
+  Kanji('言', 'NGÔN', 'nói', 'ゲン、ゴン', 'い(う)'),
+  Kanji('行', 'HÀNH', 'đi', 'コウ、ギョウ', 'い(く)、おこな(う)'),
+  Kanji('来', 'LAI', 'đến', 'ライ', 'く(る)'),
+  Kanji('出', 'XUẤT', 'ra ngoài', 'シュツ', 'で(る)、だ(す)'),
+  Kanji('入', 'NHẬP', 'vào', 'ニュウ', 'はい(る)、い(れる)'),
+  Kanji('休', 'HƯU', 'nghỉ ngơi', 'キュウ', 'やす(む)'),
+  Kanji('買', 'MÃI', 'mua', 'バイ', 'か(う)'),
+  Kanji('立', 'LẬP', 'đứng', 'リツ', 'た(つ)'),
+  Kanji('会', 'HỘI', 'gặp gỡ, hội', 'カイ', 'あ(う)'),
+];
