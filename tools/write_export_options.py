@@ -5,7 +5,7 @@ import plistlib
 import sys
 
 team = os.environ.get("APPLE_TEAM_ID") or "SLR7396ZXZ"
-profile = os.environ.get("IOS_PROFILE_NAME")
+profile = os.environ.get("IOS_PROFILE_NAME") or "Kanji N5 AppStore"
 if not team or not profile:
     sys.exit("Thiếu APPLE_TEAM_ID hoặc IOS_PROFILE_NAME (GitHub → Settings → Variables).")
 

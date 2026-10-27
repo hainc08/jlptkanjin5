@@ -81,14 +81,13 @@ Repo → **Settings → Secrets and variables → Actions**.
 | `ASC_KEY_P8_BASE64` | base64 của file `.p8` |
 | `IOS_DIST_CERT_P12_BASE64` | base64 của `dist.p12` |
 | `IOS_DIST_CERT_PASSWORD` | mật khẩu đặt khi export `.p12` |
-| `IOS_PROFILE_BASE64` | base64 của file `.mobileprovision` |
 
 **Variables** (không bí mật, nằm trong app):
 
 | Tên | Ví dụ |
 |---|---|
 | `APPLE_TEAM_ID` | Không bắt buộc: đã gắn sẵn `SLR7396ZXZ` trong code |
-| `IOS_PROFILE_NAME` | tên profile đã tạo (bắt buộc cho iOS) |
+| `IOS_PROFILE_NAME` | Không bắt buộc: mặc định `Kanji N5 AppStore` (CI tự tải profile bằng API key) |
 | `PLAY_RELEASE_STATUS` | `draft` khi app chưa từng phát hành; xoá biến này sau lần phát hành đầu |
 
 ---

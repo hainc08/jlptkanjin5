@@ -10,6 +10,18 @@ platform :ios do
     )
   end
 
+  # Tải provisioning profile App Store có sẵn trên Apple Developer và cài vào máy build.
+  lane :fetch_profile do
+    get_provisioning_profile(
+      api_key: asc_key,
+      app_identifier: "com.manabihub.kanjin5",
+      readonly: true,
+      provisioning_name: ENV["IOS_PROFILE_NAME"].to_s.empty? ? "Kanji N5 AppStore" : ENV["IOS_PROFILE_NAME"],
+      ignore_profiles_with_different_name: true,
+      skip_certificate_verification: true
+    )
+  end
+
   # Chuyển target Runner sang ký thủ công bằng chứng chỉ + profile phân phối.
   lane :prepare_signing do
     update_code_signing_settings(
