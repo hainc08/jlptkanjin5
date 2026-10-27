@@ -44,7 +44,9 @@ jobs:
           KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           PLAY_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
         run: |
-          echo "$KEYSTORE_BASE64" | base64 -d > android/app/upload-keystore.jks
+          printf '%s' "$KEYSTORE_BASE64" | tr -d ' \r\n"' | base64 -d > android/app/upload-keystore.jks
+          echo "Keystore: $(stat -c%s android/app/upload-keystore.jks) bytes, sha256 $(sha256sum android/app/upload-keystore.jks | cut -c1-16)"
+          head -c1 android/app/upload-keystore.jks | od -An -tx1 | grep -q 30 || { echo "::error::ANDROID_KEYSTORE_BASE64 không phải keystore hợp lệ, hãy dán lại nội dung file keystore_base64.txt"; exit 1; }
           printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=%s\nstoreFile=upload-keystore.jks\n' \
             "$KEYSTORE_PASSWORD" "$KEY_PASSWORD" "$KEY_ALIAS" > android/key.properties
           printf '%s' "$PLAY_JSON" > android/play.json
