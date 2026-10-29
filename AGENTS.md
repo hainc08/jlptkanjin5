@@ -9,7 +9,7 @@
 
 ## Cấu trúc
 - Một codebase, nhiều app: `apps/<level>/config.json` (APP, LEVEL, APP_NAME, STORE_NAME, BUNDLE_ID, VERSION, IOS_PROFILE, ACCENT, mã AdMob) truyền qua `--dart-define-from-file`; `lib/app_config.dart` đọc.
-- `lib/data/levels.dart`: `bundledKanji` (dữ liệu đóng sẵn `kanji_n5.dart` 104 chữ, `kanji_n4.dart` 176 chữ) và `appKanji` (bản đang dùng).
+- `lib/data/levels.dart`: `bundledKanji` (dữ liệu đóng sẵn: `kanji_n5.dart` 104 chữ, `kanji_n4.dart` 176 chữ, `kanji_n3.dart` 276 chữ, `kanji_n2.dart` 228 chữ, `kanji_n1.dart` 258 chữ — tổng cộng 1.042 chữ không trùng lặp) và `appKanji` (bản đang dùng).
 - `lib/data/kanji_store.dart`: tải `https://hainc08.github.io/jlpt-content/kanji/<app>.json` (repo `D:\100.JLPT\content`), ETag, cache SharedPreferences, kiểm tra hợp lệ (≥20 chữ, không trùng chữ/nghĩa); tự đồng bộ ≤6 giờ/lần, nút ⟳ ở Cài đặt → Bộ dữ liệu. Sửa chữ trên GitHub là app cập nhật, không cần build lại.
 - `tools/export_kanji_json.py ../../content/kanji` xuất .dart → JSON.
 - `tools/configure_native.py <app>` đặt tên/bundle/icon native; `tools/check_metadata.py`, `app_info.py`, `write_export_options.py`.
@@ -21,7 +21,8 @@
 - **N4** (`com.manabihub.kanjin4`):
   - **iOS**: Đã build bản có đồng bộ dữ liệu từ xa (Build 8), điền đầy đủ metadata + 10 screenshot và gửi Apple duyệt (`Waiting for Review` / 審査待ち).
   - **Android**: Đã đẩy bản build mới nhất (kèm đồng bộ dữ liệu từ xa) lên Internal testing; bản closed testing (track Alpha) đã gửi Google duyệt.
-- **GitHub Pages (`jlpt-content`)**: Đã push `kanji/n5.json` và `kanji/n4.json` hoạt động (`200 OK`).
+- **GitHub Pages (`jlpt-content`)**: Đã push `kanji/n5.json`, `n4.json`, `n3.json`, `n2.json`, `n1.json` hoạt động (`200 OK`).
+- **N3, N2, N1** (`com.manabihub.kanjin3..kanjin1`): Đã hoàn tất Giai đoạn 1 (code, dữ liệu Kanji, `apps/n3..n1`, bộ icon + screenshot iOS/Android, store metadata, `docs/n3..n1`, CI matrix 5 app). Còn Giai đoạn 2 (tạo AdMob, Apple Developer App ID/Profile, App Store Connect, Play Console) và Giai đoạn 3 (chạy Release).
 - Play Console tài khoản **D_Monkey** (`/console/u/1/`). App N5 id 4973817237859693440, N4 id 4974739520135758241.
 - Thử nghiệm khép kín: cần Google Group testers (người dùng tạo) + 12 tester thật.
 - Working tree có thay đổi android/ cục bộ chưa commit (do configure_native) — đừng reset.
@@ -32,5 +33,5 @@
 - Claude chưa có quyền push GitHub (chưa cài Claude GitHub App) → commit cục bộ, người dùng tự `git push`.
 
 ## Việc tiếp theo
-- Thêm N3, N2, N1: dữ liệu kanji + `apps/n3..n1` + AdMob + store listing; xuất JSON sang `content/kanji/<app>.json`.
+- Cấu hình tài khoản (Giai đoạn 2) cho N3, N2, N1: tạo app & ad unit trên AdMob → điền mã vào `apps/{n3,n2,n1}/config.json`; tạo App ID + Provisioning Profile trên Apple Developer; tạo app trên App Store Connect và Google Play Console; sau đó chạy Release.
 - Build lại N5 (bản 1.0.1) để đưa tính năng tải dữ liệu từ xa lên bản N5 (N4 đã có trong Build 8).
