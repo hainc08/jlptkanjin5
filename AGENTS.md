@@ -23,15 +23,14 @@
   - **Android**: Đã đẩy bản build mới nhất (kèm đồng bộ dữ liệu từ xa) lên Internal testing; bản closed testing (track Alpha) đã gửi Google duyệt.
 - **GitHub Pages (`jlpt-content`)**: Đã push `kanji/n5.json`, `n4.json`, `n3.json`, `n2.json`, `n1.json` hoạt động (`200 OK`).
 - **N3, N2, N1** (`com.manabihub.kanjin3..kanjin1`):
-  - **Giai đoạn 1 (100% Hoàn tất)**: Code, dữ liệu Kanji (không trùng lặp N5..N1), apps/n3..n1 config, icon + screenshot iOS/Android, store metadata, docs/n3..n1, CI matrix 5 app.
-  - **Giai đoạn 2 (100% Hoàn tất)**:
-    - **Apple Developer**: Đã tạo 3 App ID (`com.manabihub.kanjin{3,2,1}`) và 3 Provisioning Profile (`Kanji N{3,2,1} AppStore`).
-    - **App Store Connect**: Đã tạo 3 App record (N3: `6828317163`, N2: `6828343585`, N1: `6828343591`). Cả 3 bản build iOS IPA đã upload lên TestFlight thành công!
-    - **Google AdMob**: Đã tạo 100% cho cả 6 app và 12 ad units (Banner & Interstitial), cập nhật vào `apps/{n3,n2,n1}/config.json` và commit/push lên `main`.
-    - **Google Play Console**: Đã tạo 3 App (N3: `4974234468745789241`, N2: `4975864356603322809`, N1: `4973223569641456527`) trên tài khoản D_Monkey. Cả 3 app đã đạt 91% (10/11 nhiệm vụ: Chính sách riêng tư, Ads, Quyền truy cập, Đối tượng 16+, Tài chính, Chính phủ, Sức khỏe, Cài đặt cửa hàng, Phân loại nội dung IARC PEGI 3, An toàn dữ liệu, và điền toàn bộ văn bản Store listing).
-  - **Giai đoạn 3 (Bản dựng Release)**:
-    - iOS: Đã upload lên TestFlight cho cả 3 app N3, N2, N1.
-    - Android: Đã tải và lưu 3 file AAB ký chuẩn phát hành về `build/releases/` (`kanji_n3_release.aab`, `kanji_n2_release.aab`, `kanji_n1_release.aab`).
+  - **Giai đoạn 1 & 2 (100% Hoàn tất)**: Code, dữ liệu Kanji, AdMob (đầy đủ 12 ad units), App ID/Profile/Record trên ASC & Play Console, docs/n3..n1, CI matrix.
+  - **iOS (App Store Connect)**:
+    - **N3 (ID: 6828317163)**: ĐÃ GỬI APPLE DUYỆT THÀNH CÔNG (**Waiting for Review** / 審査待ち) kèm Build 10, 10 screenshots, App Privacy & Pricing Free ($0.00).
+    - **N1 (ID: 6828343591)**: ĐÃ GỬI APPLE DUYỆT THÀNH CÔNG (**Waiting for Review** / 審査待ち) kèm Build 14, 10 screenshots, App Privacy & Pricing Free ($0.00).
+    - **N2 (ID: 6828343585)**: Đã hoàn tất App Privacy (Tracking declared & Published), Pricing Free ($0.00), TestFlight Build 11. Chỉ còn thiếu bảng câu hỏi **Age Rating (Phân loại độ tuổi)** do Apple vừa bổ sung câu hỏi mới (`gunsOrOtherWeapons`, `horrorOrFearThemes` -> chỉ cần chọn Không / None).
+  - **Android (Google Play Console)**:
+    - N3: Đã hoàn thành 11/11 task và tạo bản phát hành Thử nghiệm khép kín (Closed testing) với Build 10 AAB.
+    - N2, N1: Đã lưu quốc gia và sẵn sàng file AAB phát hành tại `build/releases/` (`kanji_n2_release.aab`, `kanji_n1_release.aab`).
 - Play Console tài khoản **D_Monkey** (`/console/u/1/`).
   - App N5 id: `4973817237859693440`
   - App N4 id: `4974739520135758241`
