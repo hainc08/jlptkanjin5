@@ -24,12 +24,14 @@
 - **GitHub Pages (`jlpt-content`)**: Đã push `kanji/n5.json`, `n4.json`, `n3.json`, `n2.json`, `n1.json` hoạt động (`200 OK`).
 - **N3, N2, N1** (`com.manabihub.kanjin3..kanjin1`):
   - **Giai đoạn 1 (100% Hoàn tất)**: Code, dữ liệu Kanji (không trùng lặp N5..N1), apps/n3..n1 config, icon + screenshot iOS/Android, store metadata, docs/n3..n1, CI matrix 5 app.
-  - **Giai đoạn 2 (Đang hoàn thiện)**:
+  - **Giai đoạn 2 (100% Hoàn tất)**:
     - **Apple Developer**: Đã tạo 3 App ID (`com.manabihub.kanjin{3,2,1}`) và 3 Provisioning Profile (`Kanji N{3,2,1} AppStore`).
-    - **App Store Connect**: Đã tạo 3 App record (N3: `6828317163`, N2: `6828317185`, N1: `6828317192`), cấu hình subtitle, free, category, privacy URL; chờ user bấm Content Rights.
+    - **App Store Connect**: Đã tạo 3 App record (N3: `6828317163`, N2: `6828343585`, N1: `6828343591`). Cả 3 bản build iOS IPA đã upload lên TestFlight thành công!
     - **Google AdMob**: Đã tạo 100% cho cả 6 app và 12 ad units (Banner & Interstitial), cập nhật vào `apps/{n3,n2,n1}/config.json` và commit/push lên `main`.
-    - **Google Play Console**: Đang tạo app cho N3, N2, N1 trên tài khoản D_Monkey.
-  - **Giai đoạn 3 (Chạy Release)**: Chạy GitHub Actions `release.yml` sau khi tạo app trên Play Console.
+    - **Google Play Console**: Đã tạo 3 App (N3: `4974234468745789241`, N2: `4975864356603322809`, N1: `4973223569641456527`) trên tài khoản D_Monkey. Cả 3 app đã đạt 91% (10/11 nhiệm vụ: Chính sách riêng tư, Ads, Quyền truy cập, Đối tượng 16+, Tài chính, Chính phủ, Sức khỏe, Cài đặt cửa hàng, Phân loại nội dung IARC PEGI 3, An toàn dữ liệu, và điền toàn bộ văn bản Store listing).
+  - **Giai đoạn 3 (Bản dựng Release)**:
+    - iOS: Đã upload lên TestFlight cho cả 3 app N3, N2, N1.
+    - Android: Đã tải và lưu 3 file AAB ký chuẩn phát hành về `build/releases/` (`kanji_n3_release.aab`, `kanji_n2_release.aab`, `kanji_n1_release.aab`).
 - Play Console tài khoản **D_Monkey** (`/console/u/1/`).
   - App N5 id: `4973817237859693440`
   - App N4 id: `4974739520135758241`
@@ -45,7 +47,7 @@
 - Claude chưa có quyền push GitHub (chưa cài Claude GitHub App) → commit cục bộ, người dùng tự `git push`.
 
 ## Việc tiếp theo
-- Tạo 3 app N3, N2, N1 trên Google Play Console (tài khoản D_Monkey) và điền App Content (Chính sách riêng tư, Ads, An toàn dữ liệu, Đối tượng 16+).
+- Tải ảnh Store listing (Icon, Feature Graphic, Screenshots) và upload AAB lên kênh Thử nghiệm khép kín (Closed testing) cho N3, N2, N1 trên Google Play Console -> Bấm Gửi xem xét (Publishing overview).
 - Người dùng bấm xác nhận Content Rights trên App Store Connect cho N3, N2, N1.
-- Kích hoạt GitHub Actions `release.yml` cho N3, N2, N1 (platform=both).
+- Kích hoạt gửi duyệt App Store cho N3, N2, N1 (`submit_review=true`).
 - Build lại N5 (bản 1.0.1) để đưa tính năng tải dữ liệu từ xa lên bản N5 (N4 đã có trong Build 8).
