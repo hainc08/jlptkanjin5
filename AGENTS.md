@@ -22,7 +22,14 @@
   - **iOS**: Đã build bản có đồng bộ dữ liệu từ xa (Build 8), điền đầy đủ metadata + 10 screenshot và gửi Apple duyệt (`Waiting for Review` / 審査待ち).
   - **Android**: Đã đẩy bản build mới nhất (kèm đồng bộ dữ liệu từ xa) lên Internal testing; bản closed testing (track Alpha) đã gửi Google duyệt.
 - **GitHub Pages (`jlpt-content`)**: Đã push `kanji/n5.json`, `n4.json`, `n3.json`, `n2.json`, `n1.json` hoạt động (`200 OK`).
-- **N3, N2, N1** (`com.manabihub.kanjin3..kanjin1`): Đã hoàn tất Giai đoạn 1 (code, dữ liệu Kanji, `apps/n3..n1`, bộ icon + screenshot iOS/Android, store metadata, `docs/n3..n1`, CI matrix 5 app). Còn Giai đoạn 2 (tạo AdMob, Apple Developer App ID/Profile, App Store Connect, Play Console) và Giai đoạn 3 (chạy Release).
+- **N3, N2, N1** (`com.manabihub.kanjin3..kanjin1`):
+  - **Giai đoạn 1 (100% Hoàn tất)**: Code, dữ liệu Kanji (không trùng lặp N5..N1), apps/n3..n1 config, icon + screenshot iOS/Android, store metadata, docs/n3..n1, CI matrix 5 app.
+  - **Giai đoạn 2 (Đang hoàn thiện)**:
+    - **Apple Developer**: Đã tạo 3 App ID (`com.manabihub.kanjin{3,2,1}`) và 3 Provisioning Profile (`Kanji N{3,2,1} AppStore`).
+    - **App Store Connect**: Đã tạo 3 App record (N3: `6828317163`, N2: `6828317185`, N1: `6828317192`), cấu hình subtitle, free, category, privacy URL; chờ user bấm Content Rights.
+    - **Google AdMob**: Đã tạo 100% cho cả 6 app và 12 ad units (Banner & Interstitial), cập nhật vào `apps/{n3,n2,n1}/config.json` và commit/push lên `main`.
+    - **Google Play Console**: Đang tạo app cho N3, N2, N1 trên tài khoản D_Monkey.
+  - **Giai đoạn 3 (Chạy Release)**: Chạy GitHub Actions `release.yml` sau khi tạo app trên Play Console.
 - Play Console tài khoản **D_Monkey** (`/console/u/1/`). App N5 id 4973817237859693440, N4 id 4974739520135758241.
 - Thử nghiệm khép kín: cần Google Group testers (người dùng tạo) + 12 tester thật.
 - Working tree có thay đổi android/ cục bộ chưa commit (do configure_native) — đừng reset.
@@ -33,5 +40,7 @@
 - Claude chưa có quyền push GitHub (chưa cài Claude GitHub App) → commit cục bộ, người dùng tự `git push`.
 
 ## Việc tiếp theo
-- Cấu hình tài khoản (Giai đoạn 2) cho N3, N2, N1: tạo app & ad unit trên AdMob → điền mã vào `apps/{n3,n2,n1}/config.json`; tạo App ID + Provisioning Profile trên Apple Developer; tạo app trên App Store Connect và Google Play Console; sau đó chạy Release.
+- Tạo 3 app N3, N2, N1 trên Google Play Console (tài khoản D_Monkey) và điền App Content (Chính sách riêng tư, Ads, An toàn dữ liệu, Đối tượng 16+).
+- Người dùng bấm xác nhận Content Rights trên App Store Connect cho N3, N2, N1.
+- Kích hoạt GitHub Actions `release.yml` cho N3, N2, N1 (platform=both).
 - Build lại N5 (bản 1.0.1) để đưa tính năng tải dữ liệu từ xa lên bản N5 (N4 đã có trong Build 8).
