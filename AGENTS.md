@@ -30,7 +30,12 @@
     - **Google AdMob**: Đã tạo 100% cho cả 6 app và 12 ad units (Banner & Interstitial), cập nhật vào `apps/{n3,n2,n1}/config.json` và commit/push lên `main`.
     - **Google Play Console**: Đang tạo app cho N3, N2, N1 trên tài khoản D_Monkey.
   - **Giai đoạn 3 (Chạy Release)**: Chạy GitHub Actions `release.yml` sau khi tạo app trên Play Console.
-- Play Console tài khoản **D_Monkey** (`/console/u/1/`). App N5 id 4973817237859693440, N4 id 4974739520135758241.
+- Play Console tài khoản **D_Monkey** (`/console/u/1/`).
+  - App N5 id: `4973817237859693440`
+  - App N4 id: `4974739520135758241`
+  - App N3 id: `4974234468745789241`
+  - App N2 id: `4975864356603322809`
+  - App N1 id: `4973223569641456527`
 - Thử nghiệm khép kín: cần Google Group testers (người dùng tạo) + 12 tester thật.
 - Working tree có thay đổi android/ cục bộ chưa commit (do configure_native) — đừng reset.
 
