@@ -26,8 +26,8 @@
   - **Giai đoạn 1 & 2 (100% Hoàn tất)**: Code, dữ liệu Kanji, AdMob (đầy đủ 12 ad units), App ID/Profile/Record trên ASC & Play Console, docs/n3..n1, CI matrix.
   - **iOS (App Store Connect)**:
     - **N3 (ID: 6828317163)**: ĐÃ GỬI APPLE DUYỆT THÀNH CÔNG (**Waiting for Review** / 審査待ち) kèm Build 10, 10 screenshots, App Privacy & Pricing Free ($0.00).
+    - **N2 (ID: 6828343585)**: ĐÃ GỬI APPLE DUYỆT THÀNH CÔNG (**Waiting for Review** / 審査待ち) kèm Build 13, 10 screenshots, App Privacy, Age Rating 4+ & Pricing Free ($0.00).
     - **N1 (ID: 6828343591)**: ĐÃ GỬI APPLE DUYỆT THÀNH CÔNG (**Waiting for Review** / 審査待ち) kèm Build 14, 10 screenshots, App Privacy & Pricing Free ($0.00).
-    - **N2 (ID: 6828343585)**: Đã hoàn tất App Privacy (Tracking declared & Published), Pricing Free ($0.00), TestFlight Build 11. Chỉ còn thiếu bảng câu hỏi **Age Rating (Phân loại độ tuổi)** do Apple vừa bổ sung câu hỏi mới (`gunsOrOtherWeapons`, `horrorOrFearThemes` -> chỉ cần chọn Không / None).
   - **Android (Google Play Console)**:
     - N3: Đã hoàn thành 11/11 task và tạo bản phát hành Thử nghiệm khép kín (Closed testing) với Build 10 AAB.
     - N2, N1: Đã lưu quốc gia và sẵn sàng file AAB phát hành tại `build/releases/` (`kanji_n2_release.aab`, `kanji_n1_release.aab`).
