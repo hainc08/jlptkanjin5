@@ -18,7 +18,10 @@
 
 ## Trạng thái (29/10/2026)
 - **N5**: iOS đã nộp (審査待ち). Android đã có.
-- **N4** (`com.manabihub.kanjin4`): Android 1.0.0 trên internal testing; bản closed testing (track Alpha) đã gửi Google duyệt. Còn: iOS release (`app=n4`, `platform=ios`), ASC content rights (người dùng tự làm).
+- **N4** (`com.manabihub.kanjin4`):
+  - **iOS**: Đã build bản có đồng bộ dữ liệu từ xa (Build 8), điền đầy đủ metadata + 10 screenshot và gửi Apple duyệt (`Waiting for Review` / 審査待ち).
+  - **Android**: Đã đẩy bản build mới nhất (kèm đồng bộ dữ liệu từ xa) lên Internal testing; bản closed testing (track Alpha) đã gửi Google duyệt.
+- **GitHub Pages (`jlpt-content`)**: Đã push `kanji/n5.json` và `kanji/n4.json` hoạt động (`200 OK`).
 - Play Console tài khoản **D_Monkey** (`/console/u/1/`). App N5 id 4973817237859693440, N4 id 4974739520135758241.
 - Thử nghiệm khép kín: cần Google Group testers (người dùng tạo) + 12 tester thật.
 - Working tree có thay đổi android/ cục bộ chưa commit (do configure_native) — đừng reset.
@@ -30,4 +33,4 @@
 
 ## Việc tiếp theo
 - Thêm N3, N2, N1: dữ liệu kanji + `apps/n3..n1` + AdMob + store listing; xuất JSON sang `content/kanji/<app>.json`.
-- Bản có tải dữ liệu từ xa (commit 29/10) chưa build/test trên máy thật; cần build lại N5/N4 và phát hành bản 1.0.1 để người dùng nhận tính năng này.
+- Build lại N5 (bản 1.0.1) để đưa tính năng tải dữ liệu từ xa lên bản N5 (N4 đã có trong Build 8).
