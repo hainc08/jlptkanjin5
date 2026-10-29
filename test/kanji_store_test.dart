@@ -60,7 +60,7 @@ void main() {
   test('thêm chữ + sửa nghĩa trên GitHub → app cập nhật, giữ được khi offline', () async {
     final edited = [
       ...kanjiN5.map((k) => k.char == '一' ? Kanji(k.char, k.hanViet, 'một (số 1)', k.on, k.kun) : k),
-      const Kanji('毎', 'MỖI', 'mỗi', 'マイ', ''),
+      const Kanji('森', 'SÂM', 'rừng rậm', 'シン', 'もり'),
     ];
     body = toJson(edited);
     final s = await make();
