@@ -4,6 +4,7 @@ import '../ads/ads_service.dart';
 import '../ads/banner_ad_slot.dart';
 import '../app_scope.dart';
 import '../app_config.dart';
+import '../data/kanji_store.dart';
 import '../data/levels.dart';
 import '../models/app_settings.dart';
 
@@ -93,11 +94,7 @@ class SettingsScreen extends StatelessWidget {
           const _SectionTitle('Thông tin'),
           _Group(
             children: [
-              ListTile(
-                leading: const Icon(Icons.menu_book_outlined),
-                title: const Text('Bộ dữ liệu'),
-                subtitle: Text('JLPT ${AppConfig.level} · ${appKanji.length} chữ Kanji'),
-              ),
+              const _DataTile(),
               FutureBuilder<bool>(
                 future: AdsService.instance.privacyOptionsRequired(),
                 builder: (context, snap) => snap.data == true
@@ -169,6 +166,52 @@ class _Group extends StatelessWidget {
         type: MaterialType.transparency,
         child: Column(children: children),
       ),
+    );
+  }
+}
+
+/// Bộ dữ liệu Kanji: số chữ, thời điểm cập nhật, nút kiểm tra dữ liệu mới.
+class _DataTile extends StatelessWidget {
+  const _DataTile();
+
+  @override
+  Widget build(BuildContext context) {
+    final store = KanjiStore.current;
+    if (store == null) {
+      return ListTile(
+        leading: const Icon(Icons.menu_book_outlined),
+        title: const Text('Bộ dữ liệu'),
+        subtitle: Text('JLPT ${AppConfig.level} · ${appKanji.length} chữ Kanji'),
+      );
+    }
+    return ListenableBuilder(
+      listenable: store,
+      builder: (context, _) {
+        final last = store.lastSync;
+        final when = last == null
+            ? ''
+            : ' · kiểm tra ${last.hour.toString().padLeft(2, '0')}:${last.minute.toString().padLeft(2, '0')} ${last.day}/${last.month}';
+        return ListTile(
+          leading: const Icon(Icons.menu_book_outlined),
+          title: const Text('Bộ dữ liệu'),
+          subtitle: Text('JLPT ${AppConfig.level} · ${store.items.length} chữ Kanji$when'),
+          trailing: store.syncing
+              ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2))
+              : IconButton(
+                  tooltip: 'Kiểm tra dữ liệu mới',
+                  icon: const Icon(Icons.refresh),
+                  onPressed: () async {
+                    final messenger = ScaffoldMessenger.of(context);
+                    final r = await store.sync();
+                    messenger.showSnackBar(SnackBar(
+                      content: Text(r < 0
+                          ? 'Không tải được dữ liệu mới. Đang dùng bộ hiện có.'
+                          : (r == 0 ? 'Dữ liệu đã là mới nhất.' : 'Đã cập nhật bộ Kanji (${store.items.length} chữ).')),
+                    ));
+                  },
+                ),
+        );
+      },
     );
   }
 }
