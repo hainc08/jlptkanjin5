@@ -1,4 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:kanji_n5_flashcard/data/kanji_n1.dart';
+import 'package:kanji_n5_flashcard/data/kanji_n2.dart';
+import 'package:kanji_n5_flashcard/data/kanji_n3.dart';
 import 'package:kanji_n5_flashcard/data/kanji_n4.dart';
 import 'package:kanji_n5_flashcard/data/kanji_n5.dart';
 import 'package:kanji_n5_flashcard/data/levels.dart';
@@ -6,7 +9,13 @@ import 'package:kanji_n5_flashcard/logic/quiz.dart';
 import 'package:kanji_n5_flashcard/models/app_settings.dart';
 
 void main() {
-  final levels = {'N5': kanjiN5, 'N4': kanjiN4};
+  final levels = {
+    'N5': kanjiN5,
+    'N4': kanjiN4,
+    'N3': kanjiN3,
+    'N2': kanjiN2,
+    'N1': kanjiN1,
+  };
 
   for (final MapEntry(key: level, value: data) in levels.entries) {
     group(level, () {
@@ -42,9 +51,13 @@ void main() {
     });
   }
 
-  test('N4 không lặp lại chữ của N5', () {
-    final n5 = kanjiN5.map((k) => k.char).toSet();
-    expect(kanjiN4.where((k) => n5.contains(k.char)), isEmpty);
+  test('Các cấp N5..N1 không lặp lại chữ của nhau', () {
+    final seen = <String>{};
+    for (final entry in levels.entries) {
+      for (final k in entry.value) {
+        expect(seen.add(k.char), isTrue, reason: 'Trùng chữ ${k.char} ở ${entry.key}');
+      }
+    }
   });
 
   test('appKanji khớp với app đang build', () {

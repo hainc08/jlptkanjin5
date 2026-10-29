@@ -1,0 +1,4 @@
+Phiên bản đầu tiên:
+• 258 chữ Kanji JLPT N1 có Hán Việt, nghĩa tiếng Việt, âm On/Kun
+• 3 kiểu câu hỏi, thẻ lật, ôn lại câu sai
+• Chế độ tối
