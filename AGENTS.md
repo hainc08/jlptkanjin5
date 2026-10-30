@@ -16,21 +16,21 @@
 - `apps/<app>/store/...`, `apps/<app>/icons/...`; trang chính sách: `docs/<app>/privacy-policy.html` (GitHub Pages).
 - CI: `.github/workflows/ci.yml` (matrix n5, n4). Release: `release.yml` — tag `n4-v1.0.0` (tag `v*` cũ = n5) hoặc chạy tay với input `app`, `platform`. Fastlane đọc `ENV["APP"]`.
 
-## Trạng thái (29/10/2026)
+## Trạng thái (30/10/2026)
 - **N5**: iOS đã nộp (審査待ち). Android đã có.
 - **N4** (`com.manabihub.kanjin4`):
   - **iOS**: Đã build bản có đồng bộ dữ liệu từ xa (Build 8), điền đầy đủ metadata + 10 screenshot và gửi Apple duyệt (`Waiting for Review` / 審査待ち).
-  - **Android**: Đã đẩy bản build mới nhất (kèm đồng bộ dữ liệu từ xa) lên Internal testing; bản closed testing (track Alpha) đã gửi Google duyệt.
+  - **Android**: Đã đẩy bản build mới nhất lên Closed testing (Alpha) đã duyệt.
 - **GitHub Pages (`jlpt-content`)**: Đã push `kanji/n5.json`, `n4.json`, `n3.json`, `n2.json`, `n1.json` hoạt động (`200 OK`).
 - **N3, N2, N1** (`com.manabihub.kanjin3..kanjin1`):
-  - **Giai đoạn 1 & 2 (100% Hoàn tất)**: Code, dữ liệu Kanji, AdMob (đầy đủ 12 ad units), App ID/Profile/Record trên ASC & Play Console, docs/n3..n1, CI matrix.
   - **iOS (App Store Connect)**:
-    - **N3 (ID: 6828317163)**: ĐÃ GỬI APPLE DUYỆT THÀNH CÔNG (**Waiting for Review** / 審査待ち) kèm Build 10, 10 screenshots, App Privacy & Pricing Free ($0.00).
-    - **N2 (ID: 6828343585)**: ĐÃ GỬI APPLE DUYỆT THÀNH CÔNG (**Waiting for Review** / 審査待ち) kèm Build 13, 10 screenshots, App Privacy, Age Rating 4+ & Pricing Free ($0.00).
-    - **N1 (ID: 6828343591)**: ĐÃ GỬI APPLE DUYỆT THÀNH CÔNG (**Waiting for Review** / 審査待ち) kèm Build 14, 10 screenshots, App Privacy & Pricing Free ($0.00).
+    - Cả 3 app (N3: `6828317163`, N2: `6828343585`, N1: `6828343591`) nhận cùng một phản hồi từ Apple: *Guideline 2.1 - Information Needed - New App Submission* (do tài khoản Apple mới có limited review history).
+    - **Không phải lỗi crash hay lỗi code**. Apple yêu cầu giải trình 6 câu hỏi (mục đích, đối tượng, cách truy cập, dịch vụ ngoài, vùng miền, bản quyền) và video quay màn hình (screen recording).
+    - Đã chuẩn bị sẵn mẫu giải trình chuẩn 6 câu hỏi và cập nhật vào `apps/{n1..n5}/store/ios/metadata/review_information/notes.txt`.
   - **Android (Google Play Console)**:
-    - N3: Đã hoàn thành 11/11 task và tạo bản phát hành Thử nghiệm khép kín (Closed testing) với Build 10 AAB.
-    - N2, N1: Đã lưu quốc gia và sẵn sàng file AAB phát hành tại `build/releases/` (`kanji_n2_release.aab`, `kanji_n1_release.aab`).
+    - N1, N4, N5: Đã duyệt track Closed testing, đang chờ tester opt-in 14 ngày.
+    - N3: Đang chờ hoàn tất form AD_ID và bấm "Gửi 14 thay đổi xem xét".
+    - N2: Cần điền AD_ID, tạo bản phát hành Closed testing và gửi duyệt.
 - Play Console tài khoản **D_Monkey** (`/console/u/1/`).
   - App N5 id: `4973817237859693440`
   - App N4 id: `4974739520135758241`

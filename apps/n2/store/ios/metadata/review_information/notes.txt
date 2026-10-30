@@ -1,0 +1,23 @@
+### APP PURPOSE & TARGET AUDIENCE
+Kanji N2 - JLPT Flashcard is a focused educational app designed for Japanese language students preparing for the JLPT N2 examination. It provides 228 upper-intermediate N2 Kanji characters through 3D interactive flip flashcards, multiple-choice quizzes, Han-Viet mnemonics, and On/Kun readings.
+
+### ACCESS & SETUP INSTRUCTIONS
+- No account registration or login is required. The app is 100% accessible upon launch.
+- Typical user flow:
+  1. Launch app -> Splash screen automatically transitions to the Quiz screen.
+  2. Select any quiz mode: Kanji to Meaning, Kanji to Reading, or Meaning to Kanji.
+  3. Answer multiple-choice questions -> card flips in 3D displaying full details.
+  4. Quiz completion screen shows score summary with one-tap option to review mistakes.
+  5. Settings icon allows toggling Dark Mode, Han-Viet hints, and questions per session.
+
+### EXTERNAL SERVICES & TOOLS
+- Core functionality operates 100% offline with bundled local datasets.
+- Optional background update via HTTPS from our GitHub Pages content repository.
+- Google Mobile Ads (AdMob) for display ads (consent requested via Google UMP SDK with ATT).
+- No third-party login, no payment processing, no user-generated content, no AI generation.
+
+### REGIONAL CONSISTENCY
+The app functions consistently and identically across all countries and regions worldwide.
+
+### REGULATORY & THIRD-PARTY CONTENT
+The app does not operate in a regulated industry. All Kanji data, translations, and mnemonic notes are standard educational materials compiled for JLPT study.

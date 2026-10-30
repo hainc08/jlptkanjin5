@@ -38,7 +38,12 @@ App Store: `ios/fastlane/metadata/<locale>/` (locale dạng `vi`, `en-US`, `ja`)
 
 `ios/fastlane/metadata/copyright.txt`, `primary_category.txt` (vd: PRODUCTIVITY)
 `ios/fastlane/metadata/review_information/`: first_name.txt, last_name.txt, phone_number.txt (+84...), email_address.txt, demo_user.txt, notes.txt. File demo_password.txt KHÔNG commit; CI tạo nó từ secret.
-notes.txt: hướng dẫn reviewer từng bước test các tính năng chính, giải thích quyền truy cập (camera, vị trí...) và tính năng cần phần cứng hay vùng địa lý đặc biệt.
+notes.txt: **BẮT BUỘC KHÔNG ĐƯỢC ĐỂ TRỐNG**. Với tài khoản Apple mới ("limited App Review history"), Apple sẽ kích hoạt cờ *Guideline 2.1 - Information Needed - New App Submission* (2.1.0 Performance: App Completeness) nếu thiếu giải trình. Trong `notes.txt` phải soạn sẵn bằng tiếng Anh theo cấu trúc 5 phần chuẩn:
+1. **APP PURPOSE & TARGET AUDIENCE**: Mô tả rõ mục đích app, đối tượng sử dụng, vấn đề app giải quyết.
+2. **ACCESS & SETUP INSTRUCTIONS**: Hướng dẫn reviewer cách test; nếu không cần tài khoản, ghi rõ *No account registration or login required; fully accessible upon launch* và mô tả flow các màn hình chính (Launch -> Splash -> Quiz/Main -> Results -> Settings).
+3. **EXTERNAL SERVICES & TOOLS**: Nêu rõ app dùng dữ liệu nội bộ (offline local bundle), các dịch vụ bên thứ ba (vd: Google Mobile Ads AdMob with ATT consent), xác nhận không dùng backend bí mật hay AI nhạy cảm.
+4. **REGIONAL CONSISTENCY**: Xác nhận app hoạt động đồng nhất trên toàn cầu, không chặn vùng miền (*Functions consistently across all regions*).
+5. **REGULATORY & THIRD-PARTY CONTENT**: Xác nhận app không thuộc ngành quản lý đặc biệt (ngân hàng, y tế, cờ bạc); nội dung là tư liệu giáo dục học tập tự biên soạn/chuẩn mở.
 
 Google Play: `android/fastlane/metadata/android/<locale>/` (locale dạng `vi-VN`, `en-US`, `ja-JP`)
 | File | Giới hạn |
@@ -321,6 +326,15 @@ ios/fastlane/metadata/review_information/demo_password.txt
 
 ## Bước 7 — Khi bị từ chối
 Người dùng dán lý do từ chối (Resolution Center hoặc email Play) vào chat. Claude phân loại lý do theo guideline tương ứng, đề xuất cách sửa (code, metadata hoặc ảnh), soạn câu trả lời gửi reviewer ngắn gọn và lịch sự (tiếng Anh), rồi cập nhật file metadata.
+
+### Các lý do phổ biến và cách giải quyết:
+- **Guideline 2.1 - Information Needed - New App Submission (2.1.0 Performance: App Completeness)**:
+  - *Nguyên nhân*: Tài khoản Apple mới có lịch sử review hạn chế ("limited App Review history"). Reviewer gửi form 6 câu hỏi yêu cầu giải trình app purpose, target audience, access instructions, external services, regional differences, regulatory material, và video quay màn hình thực tế (screen recording).
+  - *Xử lý*:
+    1. Soạn thư trả lời giải trình chi tiết cả 6 điểm trực tiếp tại **Resolution Center (Reply to App Review)**.
+    2. Đồng thời cập nhật đầy đủ nội dung giải trình này vào `notes.txt` trong `review_information/` để mọi bản build về sau tự động mang theo.
+    3. Đính kèm video quay màn hình thiết bị thật (screen recording 30-60s) hoặc dẫn link video demo công khai (YouTube unlisted, Google Drive, iCloud).
+    4. Bấm gửi lại (Resubmit to App Review) mà không cần phải thay đổi code hay build lại binary mới.
 
 ## Giao kết quả
 - Có repo: mở PR với toàn bộ file, mô tả PR có checklist secrets.

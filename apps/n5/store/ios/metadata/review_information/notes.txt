@@ -1,9 +1,23 @@
-Kanji N5 is a kanji flashcard quiz app for Vietnamese learners preparing for the JLPT N5 exam. The interface is in Vietnamese.
+### APP PURPOSE & TARGET AUDIENCE
+Kanji N5 - JLPT Flashcard is a focused educational app designed for Japanese language students preparing for the JLPT N5 examination. It provides 104 beginner N5 Kanji characters through 3D interactive flip flashcards, multiple-choice quizzes, Han-Viet mnemonics, and On/Kun readings.
 
-No login or account is required. All features are available right after launch:
-1. The splash screen opens the quiz automatically after about 2 seconds.
-2. Tap one of the 4 answers. The card flips to show the Sino-Vietnamese reading, meaning, On and Kun readings. Tap "Câu tiếp theo" (Next) to continue.
-3. After the last question, the Result screen shows the score. "Ôn câu sai" replays only the wrong answers; "Làm bài mới" starts a new quiz.
-4. The gear icon opens Settings: number of questions, question type, dark mode, hints and auto-next.
+### ACCESS & SETUP INSTRUCTIONS
+- No account registration or login is required. The app is 100% accessible upon launch.
+- Typical user flow:
+  1. Launch app -> Splash screen automatically transitions to the Quiz screen.
+  2. Select any quiz mode: Kanji to Meaning, Kanji to Reading, or Meaning to Kanji.
+  3. Answer multiple-choice questions -> card flips in 3D displaying full details.
+  4. Quiz completion screen shows score summary with one-tap option to review mistakes.
+  5. Settings icon allows toggling Dark Mode, Han-Viet hints, and questions per session.
 
-Ads: the app shows Google AdMob banner ads (Result and Settings screens) and an occasional interstitial after finishing a quiz. Consent for personalized ads and the App Tracking Transparency prompt are handled by Google's User Messaging Platform. The app itself does not collect personal data; settings are stored only on the device.
+### EXTERNAL SERVICES & TOOLS
+- Core functionality operates 100% offline with bundled local datasets.
+- Optional background update via HTTPS from our GitHub Pages content repository.
+- Google Mobile Ads (AdMob) for display ads (consent requested via Google UMP SDK with ATT).
+- No third-party login, no payment processing, no user-generated content, no AI generation.
+
+### REGIONAL CONSISTENCY
+The app functions consistently and identically across all countries and regions worldwide.
+
+### REGULATORY & THIRD-PARTY CONTENT
+The app does not operate in a regulated industry. All Kanji data, translations, and mnemonic notes are standard educational materials compiled for JLPT study.
