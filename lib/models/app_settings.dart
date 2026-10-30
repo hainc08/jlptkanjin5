@@ -39,7 +39,7 @@ class AppSettings extends ChangeNotifier {
       AppSettings._(await SharedPreferences.getInstance());
 
   /// Các lựa chọn số câu; 0 = tất cả.
-  static const questionCountOptions = [10, 20, 30, 0];
+  static const questionCountOptions = [10, 20, 50, 0];
 
   int get questionCount => _prefs.getInt('questionCount') ?? 10;
   set questionCount(int value) {
