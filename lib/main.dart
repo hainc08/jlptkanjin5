@@ -5,17 +5,23 @@ import 'package:flutter/material.dart';
 import 'app_config.dart';
 import 'app_scope.dart';
 import 'data/level_data.dart';
+import 'data/progress_store.dart';
 import 'models/app_settings.dart';
+import 'progress_scope.dart';
 import 'screens/splash_screen.dart';
 import 'theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final settings = await AppSettings.load();
+  final progress = await ProgressStore.load();
   final data = LevelData();
   await data.init();
   LevelData.current = data;
-  runApp(AppScope(settings: settings, child: const KanjiApp()));
+  runApp(ProgressScope(
+    progress: progress,
+    child: AppScope(settings: settings, child: const KanjiApp()),
+  ));
   // Kiểm tra dữ liệu Kanji mới của 5 cấp trên GitHub ở nền.
   unawaited(data.maybeSyncAll());
 }
