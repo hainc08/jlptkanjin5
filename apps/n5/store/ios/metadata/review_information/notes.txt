@@ -11,7 +11,12 @@ Vietnamese-speaking learners of Japanese, at any level from beginner (N5) to adv
 Most kanji apps are in English or Japanese, and they teach meanings through English. Vietnamese learners have a specific advantage: about 60% of Vietnamese vocabulary comes from Chinese characters, so the Han-Viet reading of a kanji is often the fastest memory hook. Few apps give Han-Viet readings together with Vietnamese meanings for the full N5–N1 list, and fewer still track per-kanji progress offline with no account. This app is built around that Han-Viet-first approach.
 
 ### 4. BETA TESTING
-[CẦN NGƯỜI DÙNG ĐIỀN: mô tả beta test thật (TestFlight / Google Play Closed testing), số người thử, và 1–3 ví dụ góp ý cụ thể đã được đưa vào bản này. Không bịa.]
+We are a small team, and testing so far has been limited. We want to be transparent about it:
+- Earlier per-level builds were tested internally on our own devices through TestFlight and through Google Play closed testing tracks. We are still recruiting external testers for Google Play's closed-testing period.
+- Changes made after that internal testing include: kanji data can now be corrected remotely without a new build; a 50-questions-per-round option; and wrong answers can be reviewed with one tap.
+- The biggest change came from your 4.3 review: we merged the five level apps into this single app and added on-device progress tracking (learned kanji, daily streak, a "needs review" list, next-level suggestions).
+This build will go to TestFlight before release, and we will keep improving it from user feedback.
+
 
 ### 5. STANDALONE OR SUITE
 This is a standalone product. It replaces the five per-level apps we submitted earlier, which have been withdrawn. No other app on our account offers kanji study.
