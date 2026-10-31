@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'app_config.dart';
 import 'app_scope.dart';
+import 'data/jlpt_level.dart';
 import 'data/level_data.dart';
 import 'data/progress_store.dart';
 import 'models/app_settings.dart';
@@ -32,11 +33,12 @@ class KanjiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settings = AppScope.of(context);
+    final accent = (settings.currentLevel ?? JlptLevel.n5).color;
     return MaterialApp(
       title: AppConfig.name,
       debugShowCheckedModeBanner: false,
-      theme: buildTheme(Brightness.light),
-      darkTheme: buildTheme(Brightness.dark),
+      theme: buildTheme(Brightness.light, accent: accent),
+      darkTheme: buildTheme(Brightness.dark, accent: accent),
       themeMode: settings.darkMode ? ThemeMode.dark : ThemeMode.light,
       home: const SplashScreen(),
     );

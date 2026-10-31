@@ -68,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen>
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [AppColors.vermilion, AppColors.plum],
+            colors: [Color(0xFFC62828), Color(0xFF2E7D32)],
           ),
         ),
         child: SafeArea(
@@ -99,7 +99,7 @@ class _SplashScreenState extends State<SplashScreen>
                       style: TextStyle(
                         fontSize: 76,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.vermilion,
+                        color: Color(0xFFC62828),
                         locale: kJapanese,
                       ),
                     ),

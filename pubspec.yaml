@@ -1,5 +1,5 @@
 name: kanji_n5_flashcard
-description: "Flashcard luyện Kanji JLPT N5."
+description: "Flashcard Kanji JLPT N5–N1."
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -20,3 +20,14 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: NotoSerif
+      fonts:
+        - asset: assets/fonts/NotoSerif-Regular.ttf
+        - asset: assets/fonts/NotoSerif-SemiBold.ttf
+          weight: 600
+    - family: BeVietnamPro
+      fonts:
+        - asset: assets/fonts/BeVietnamPro-Regular.ttf
+        - asset: assets/fonts/BeVietnamPro-SemiBold.ttf
+          weight: 600
