@@ -7,16 +7,17 @@ import '../app_scope.dart';
 import '../data/levels.dart';
 import '../logic/quiz.dart';
 import '../models/app_settings.dart';
+import '../progress_scope.dart';
 import '../theme.dart';
 import '../widgets/flip_card.dart';
 import 'result_screen.dart';
-import 'settings_screen.dart';
 
 class TestScreen extends StatefulWidget {
-  /// [targets] = null: lấy ngẫu nhiên từ toàn bộ bộ Kanji của app theo số câu trong cài đặt.
-  /// [targets] != null: ôn đúng các chữ này (dùng cho "Ôn câu sai").
-  const TestScreen({super.key, this.targets});
+  /// [targets] = null: lấy chữ của [level] theo số câu trong cài đặt, ưu tiên chữ chưa thuộc.
+  /// [targets] != null: ôn đúng các chữ này (dùng cho "Ôn câu sai", "Ôn các chữ này").
+  const TestScreen({super.key, required this.level, this.targets});
 
+  final JlptLevel level;
   final List<Kanji>? targets;
 
   @override
@@ -45,11 +46,19 @@ class _TestScreenState extends State<TestScreen> {
     final settings = AppScope.read(context);
     _autoTimer?.cancel();
     _mode = settings.mode;
+    final level = widget.level;
+    final items = kanjiOf(level);
+    final progress = ProgressScope.read(context);
     _questions = buildQuiz(
-      targets: widget.targets ?? kanjiOf(JlptLevel.n5),
-      all: kanjiOf(JlptLevel.n5),
+      targets: widget.targets ??
+          pickTargets(
+            items: items,
+            isMastered: (k) => progress.isMastered(level, k.char),
+            count: settings.questionCount,
+          ),
+      all: items,
       mode: _mode,
-      count: widget.targets != null ? 0 : settings.questionCount,
+      count: 0,
     );
     _index = 0;
     _flipped = false;
@@ -65,6 +74,7 @@ class _TestScreenState extends State<TestScreen> {
       _q.chosen = i;
       _flipped = true;
     });
+    ProgressScope.read(context).record(widget.level, _q.kanji.char, _q.isCorrect);
     if (AppScope.read(context).autoNext) {
       _autoTimer?.cancel();
       _autoTimer = Timer(const Duration(milliseconds: 1500), () {
@@ -82,7 +92,7 @@ class _TestScreenState extends State<TestScreen> {
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (_) => ResultScreen(questions: _questions, mode: _mode),
+          builder: (_) => ResultScreen(level: widget.level, questions: _questions, mode: _mode),
         ),
       );
       return;
@@ -115,12 +125,6 @@ class _TestScreenState extends State<TestScreen> {
     if (ok == true && mounted) setState(_newQuiz);
   }
 
-  void _openSettings() {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const SettingsScreen()),
-    );
-  }
-
   @override
   void dispose() {
     _autoTimer?.cancel();
@@ -136,17 +140,12 @@ class _TestScreenState extends State<TestScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.refresh_rounded),
-          tooltip: 'Làm bài mới',
-          onPressed: _confirmRestart,
-        ),
-        title: Text('Câu ${_index + 1}/$total'),
+        title: Text('${widget.level.label} · Câu ${_index + 1}/$total'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            tooltip: 'Cài đặt',
-            onPressed: _openSettings,
+            icon: const Icon(Icons.refresh_rounded),
+            tooltip: 'Làm bài mới',
+            onPressed: _confirmRestart,
           ),
         ],
       ),
