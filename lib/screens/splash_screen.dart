@@ -3,10 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../ads/ads_service.dart';
-import '../app_config.dart';
+import '../app_scope.dart';
 import '../data/levels.dart';
 import '../theme.dart';
-import 'test_screen.dart';
+import 'home_shell.dart';
+import 'welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -22,13 +23,8 @@ class _SplashScreenState extends State<SplashScreen>
     duration: const Duration(milliseconds: 1100),
   )..forward();
 
-  late final Animation<double> _scale =
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutBack);
-
-  late final Animation<double> _fade = CurvedAnimation(
-    parent: _controller,
-    curve: const Interval(0, 0.6, curve: Curves.easeOut),
-  );
+  late final Animation<double> _fade =
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut);
 
   Timer? _timer;
 
@@ -37,15 +33,17 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
     // Xin phép quảng cáo + khởi tạo AdMob song song với splash.
     unawaited(AdsService.instance.init());
-    _timer = Timer(const Duration(milliseconds: 2200), _goToTest);
+    _timer = Timer(const Duration(milliseconds: 2200), _goNext);
   }
 
-  void _goToTest() {
+  /// Lần đầu (chưa chọn cấp) → Chào hỏi; các lần sau → Trang chủ.
+  void _goNext() {
     if (!mounted) return;
+    final first = AppScope.read(context).currentLevel == null;
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 500),
-        pageBuilder: (_, __, ___) => const TestScreen(),
+        pageBuilder: (_, __, ___) => first ? const WelcomeScreen() : const HomeShell(),
         transitionsBuilder: (_, animation, __, child) =>
             FadeTransition(opacity: animation, child: child),
       ),
@@ -61,81 +59,84 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final muted = theme.colorScheme.onSurface.withValues(alpha: 0.6);
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFFC62828), Color(0xFF2E7D32)],
-          ),
-        ),
-        child: SafeArea(
+      body: SafeArea(
+        child: FadeTransition(
+          opacity: _fade,
           child: Column(
             children: [
               const Spacer(flex: 3),
-              FadeTransition(
-                opacity: _fade,
-                child: ScaleTransition(
-                  scale: _scale,
-                  child: Container(
-                    width: 132,
-                    height: 132,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: AppColors.paper,
-                      borderRadius: BorderRadius.circular(36),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.25),
-                          blurRadius: 30,
-                          offset: const Offset(0, 14),
-                        ),
-                      ],
-                    ),
-                    child: const Text(
-                      '漢',
-                      style: TextStyle(
-                        fontSize: 76,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFFC62828),
-                        locale: kJapanese,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              const _Seal(),
+              const SizedBox(height: 32),
+              Text('Kanji JLPT', style: theme.textTheme.displaySmall),
+              const SizedBox(height: 8),
+              Text('Flashcard N5 – N1', style: TextStyle(fontSize: 16, color: muted, letterSpacing: 0.5)),
               const SizedBox(height: 28),
-              FadeTransition(
-                opacity: _fade,
-                child: const Column(
-                  children: [
-                    Text(
-                      AppConfig.name,
-                      style: TextStyle(
-                        fontSize: 34,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white,
-                        letterSpacing: 0.5,
-                      ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  for (final l in JlptLevel.values)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 6),
+                      child: CircleAvatar(radius: 5, backgroundColor: l.color),
                     ),
-                    SizedBox(height: 6),
-                    Text(
-                      'Flashcard luyện thi JLPT',
-                      style: TextStyle(fontSize: 16, color: Colors.white70),
+                ],
+              ),
+              const Spacer(flex: 4),
+              Text.rich(
+                TextSpan(
+                  text: 'Một sản phẩm từ ',
+                  style: TextStyle(fontSize: 13, color: muted),
+                  children: [
+                    TextSpan(
+                      text: 'ManabiHub',
+                      style: TextStyle(
+                        fontFamily: 'NotoSerif',
+                        fontWeight: FontWeight.w600,
+                        color: theme.colorScheme.onSurface,
+                      ),
                     ),
                   ],
                 ),
               ),
-              const Spacer(flex: 3),
-              Text(
-                '${kanjiOf(JlptLevel.n5).length} chữ Kanji · Phiên bản ${AppConfig.version}',
-                style: const TextStyle(fontSize: 13, color: Colors.white60),
-              ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 28),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Con dấu hanko đỏ chứa chữ 漢字.
+class _Seal extends StatelessWidget {
+  const _Seal();
+
+  static const _red = Color(0xFFC62828);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 120,
+      height: 120,
+      padding: const EdgeInsets.all(6),
+      decoration: BoxDecoration(
+        border: Border.all(color: _red, width: 3),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: _red.withValues(alpha: 0.08),
+          border: Border.all(color: _red.withValues(alpha: 0.5)),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Text(
+          '漢\n字',
+          textAlign: TextAlign.center,
+          style: kanjiStyle(38, weight: FontWeight.w700, color: AppColors.ink).copyWith(height: 1.05),
         ),
       ),
     );
