@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'home_tab.dart';
 import 'settings_screen.dart';
 
 /// Khung chính: 3 tab Trang chủ · Các cấp · Cài đặt.
@@ -21,7 +22,7 @@ class _HomeShellState extends State<HomeShell> {
       body: IndexedStack(
         index: _tab,
         children: const [
-          Center(child: Text('Trang chủ')),
+          HomeTab(),
           Center(child: Text('Các cấp')),
           SettingsScreen(),
         ],

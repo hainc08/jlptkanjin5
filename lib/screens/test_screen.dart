@@ -177,11 +177,14 @@ class _TestScreenState extends State<TestScreen> {
                 children: [
                   Icon(_mode.icon, size: 16, color: scheme.onSurfaceVariant),
                   const SizedBox(width: 6),
-                  Text(
-                    _mode.instruction,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: scheme.onSurfaceVariant,
+                  Flexible(
+                    child: Text(
+                      _mode.instruction,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: scheme.onSurfaceVariant,
+                      ),
                     ),
                   ),
                 ],
