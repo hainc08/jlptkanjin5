@@ -28,6 +28,22 @@ String answerOf(Kanji k, QuizMode mode) => switch (mode) {
       QuizMode.meaningToKanji => k.char,
     };
 
+/// Chọn chữ để hỏi: chữ chưa thuộc trước, thiếu thì bù chữ đã thuộc.
+/// [count] <= 0 nghĩa là hỏi hết [items].
+List<Kanji> pickTargets({
+  required List<Kanji> items,
+  required bool Function(Kanji) isMastered,
+  required int count,
+  Random? random,
+}) {
+  final rng = random ?? Random();
+  final fresh = items.where((k) => !isMastered(k)).toList()..shuffle(rng);
+  final known = items.where(isMastered).toList()..shuffle(rng);
+  final all = [...fresh, ...known];
+  if (count <= 0) return all..shuffle(rng);
+  return all.take(count).toList()..shuffle(rng);
+}
+
 /// Tạo bộ câu hỏi.
 /// [targets]: các chữ cần hỏi. [all]: kho để lấy đáp án nhiễu.
 /// [count] <= 0 nghĩa là hỏi hết [targets].
