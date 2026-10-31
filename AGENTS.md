@@ -22,6 +22,7 @@
 - Thiết kế: `docs/superpowers/specs/2026-10-31-kanji-jlpt-merged-app-design.md`; kế hoạch: `docs/superpowers/plans/2026-10-31-kanji-jlpt-merged-app.md`.
 - Code ở worktree `D:\100.JLPT\apps\kanji_jlpt` (nhánh `feat/merged-app`): 5 cấp (`lib/data/jlpt_level.dart`, `level_data.dart`), tiến độ lưu trên máy (`progress_store.dart`), Splash → Chào hỏi → 3 tab Trang chủ / Các cấp / Cài đặt, theme Wabi-Sabi (Noto Serif + Be Vietnam Pro), icon mới (`tools/make_merged_icon.py`).
 - `apps/n4..n1` chỉ còn để lưu trữ; CI và release chỉ build `n5`.
+- **31/10/2026**: đã gửi lại Apple bản **1.1.0 (27)** (có sửa tiến độ: quiz ưu tiên chữ đang học, hiện "Đã học · Đã thuộc") → trạng thái 審査待ち. Lượt gửi `3d50d703-…`; chưa trả lời tin nhắn 4.3 trong lượt gửi (câu trả lời đã nằm ở Ghi chú review).
 
 ## Trạng thái cũ (30/10/2026)
 - **N5**: iOS đã nộp (審査待ち). Android đã có.
