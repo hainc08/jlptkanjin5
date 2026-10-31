@@ -25,6 +25,7 @@ class LevelsTab extends StatelessWidget {
             LevelCard(
               level: l,
               percent: progress.percent(l, kanjiOf(l)),
+              learned: progress.learnedPercent(l, kanjiOf(l)),
               highlighted: l == current,
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(builder: (_) => TestScreen(level: l)),

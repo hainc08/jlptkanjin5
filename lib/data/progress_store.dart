@@ -8,7 +8,7 @@ import 'kanji.dart';
 
 /// Tiến độ của một chữ trong một cấp.
 class _Entry {
-  _Entry({this.streak = 0, this.wrong = 0, this.lastWrong = 0});
+  _Entry({this.streak = 0, this.wrong = 0, this.lastWrong = 0, this.correct = 0});
 
   /// Số lần đúng liên tiếp.
   int streak;
@@ -19,18 +19,22 @@ class _Entry {
   /// Thời điểm sai gần nhất (ms).
   int lastWrong;
 
+  /// Tổng số lần đúng (dữ liệu cũ chưa có thì lấy bằng [streak]).
+  int correct;
+
   factory _Entry.fromJson(Map<String, dynamic> j) => _Entry(
         streak: (j['s'] as num?)?.toInt() ?? 0,
         wrong: (j['w'] as num?)?.toInt() ?? 0,
         lastWrong: (j['lw'] as num?)?.toInt() ?? 0,
+        correct: (j['c'] as num?)?.toInt() ?? (j['s'] as num?)?.toInt() ?? 0,
       );
 
-  Map<String, dynamic> toJson() => {'s': streak, 'w': wrong, 'lw': lastWrong};
+  Map<String, dynamic> toJson() => {'s': streak, 'w': wrong, 'lw': lastWrong, 'c': correct};
 }
 
 /// Tiến độ học, chỉ lưu trên máy bằng SharedPreferences.
 ///
-/// - `progress_<cấp>`: `{chữ: {"s": đúng liên tiếp, "w": số lần sai, "lw": lần sai gần nhất}}`
+/// - `progress_<cấp>`: `{chữ: {"s": đúng liên tiếp, "w": số lần sai, "lw": lần sai gần nhất, "c": tổng lần đúng}}`
 /// - `progress_days`: các ngày có học (`yyyy-MM-dd`), dùng tính chuỗi ngày.
 /// - `progress_today`: `{"d": ngày, "c": ["<cấp>:<chữ>", ...]}`, dùng đếm "Hôm nay".
 class ProgressStore extends ChangeNotifier {
@@ -102,6 +106,7 @@ class ProgressStore extends ChangeNotifier {
     final e = entries.putIfAbsent(char, _Entry.new);
     if (correct) {
       e.streak++;
+      e.correct++;
     } else {
       e.streak = 0;
       e.wrong++;
@@ -133,6 +138,20 @@ class ProgressStore extends ChangeNotifier {
 
   double percent(JlptLevel level, List<Kanji> items) =>
       items.isEmpty ? 0 : masteredCount(level, items) / items.length;
+
+  /// Đã học = từng trả lời đúng ít nhất một lần.
+  bool isLearned(JlptLevel level, String char) => (_levels[level]![char]?.correct ?? 0) > 0;
+
+  /// Đang học = đã gặp (đúng hoặc sai) nhưng chưa thuộc.
+  bool isLearning(JlptLevel level, String char) =>
+      _levels[level]!.containsKey(char) && !isMastered(level, char);
+
+  /// Số chữ đã học, chỉ tính các chữ đang có trong [items].
+  int learnedCount(JlptLevel level, List<Kanji> items) =>
+      items.where((k) => isLearned(level, k.char)).length;
+
+  double learnedPercent(JlptLevel level, List<Kanji> items) =>
+      items.isEmpty ? 0 : learnedCount(level, items) / items.length;
 
   /// Chữ từng sai và chưa thuộc, lần sai gần nhất đứng trước.
   List<Kanji> needsReview(JlptLevel level, List<Kanji> items) {

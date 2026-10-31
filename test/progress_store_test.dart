@@ -137,4 +137,38 @@ void main() {
     expect(p.needsReview(JlptLevel.n4, JlptLevel.n4.bundled), isEmpty);
     expect(prefs.getKeys().where((k) => k.startsWith('progress_')), isEmpty);
   });
+
+  test('đã học = từng trả lời đúng ít nhất 1 lần, sai sau đó vẫn tính', () async {
+    final p = await make();
+    p.record(JlptLevel.n5, n5[0].char, true);
+    p.record(JlptLevel.n5, n5[0].char, false);
+    p.record(JlptLevel.n5, n5[1].char, false); // chỉ sai → chưa tính đã học
+    p.record(JlptLevel.n5, n5[2].char, true);
+    expect(p.learnedCount(JlptLevel.n5, n5), 2);
+    expect(p.learnedPercent(JlptLevel.n5, [n5[0], n5[1], n5[2], n5[3]]), 0.5);
+    final again = await make();
+    expect(again.learnedCount(JlptLevel.n5, n5), 2);
+  });
+
+  test('dữ liệu cũ (chưa có trường c) vẫn tính đã học theo chuỗi đúng', () async {
+    SharedPreferences.setMockInitialValues({
+      'progress_n5': '{"${n5[0].char}":{"s":2,"w":0,"lw":0},"${n5[1].char}":{"s":0,"w":1,"lw":5}}',
+    });
+    prefs = await SharedPreferences.getInstance();
+    final p = await make();
+    expect(p.learnedCount(JlptLevel.n5, n5), 1);
+  });
+
+  test('isLearning: đã gặp nhưng chưa thuộc', () async {
+    final p = await make();
+    p.record(JlptLevel.n5, n5[0].char, true);
+    p.record(JlptLevel.n5, n5[1].char, false);
+    for (var i = 0; i < 3; i++) {
+      p.record(JlptLevel.n5, n5[2].char, true);
+    }
+    expect(p.isLearning(JlptLevel.n5, n5[0].char), isTrue);
+    expect(p.isLearning(JlptLevel.n5, n5[1].char), isTrue);
+    expect(p.isLearning(JlptLevel.n5, n5[2].char), isFalse);
+    expect(p.isLearning(JlptLevel.n5, n5[3].char), isFalse);
+  });
 }

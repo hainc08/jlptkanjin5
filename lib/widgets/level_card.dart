@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/levels.dart';
 import '../theme.dart';
+import 'progress_bar.dart';
 
 /// Thẻ một cấp JLPT: khối màu tên cấp, số chữ, mô tả, 3 chữ mẫu, tiến độ (nếu có).
 /// Dùng chung cho màn Chào hỏi và tab Các cấp.
@@ -10,6 +11,7 @@ class LevelCard extends StatelessWidget {
     super.key,
     required this.level,
     this.percent,
+    this.learned,
     this.highlighted = false,
     this.onTap,
   });
@@ -18,6 +20,9 @@ class LevelCard extends StatelessWidget {
 
   /// Tỉ lệ đã thuộc 0..1; null = không hiện thanh tiến độ.
   final double? percent;
+
+  /// Tỉ lệ đã học 0..1 (lớp nhạt của thanh tiến độ); null = bằng [percent].
+  final double? learned;
   final bool highlighted;
   final VoidCallback? onTap;
 
@@ -70,18 +75,10 @@ class LevelCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     if (percent != null) ...[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(3),
-                        child: LinearProgressIndicator(
-                          value: percent,
-                          minHeight: 6,
-                          color: c,
-                          backgroundColor: c.withValues(alpha: 0.15),
-                        ),
-                      ),
+                      LearnBar(learned: learned ?? percent!, mastered: percent!, color: c),
                       const SizedBox(height: 4),
                       Text(
-                        '${(percent! * 100).round()}% đã thuộc',
+                        '${((learned ?? percent!) * 100).round()}% đã học · ${(percent! * 100).round()}% đã thuộc',
                         style: TextStyle(fontSize: 12, color: scheme.onSurface.withValues(alpha: 0.7)),
                       ),
                     ] else

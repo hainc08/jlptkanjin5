@@ -6,6 +6,7 @@ import '../data/progress_store.dart';
 import '../progress_scope.dart';
 import '../theme.dart';
 import '../widgets/content_width.dart';
+import '../widgets/progress_bar.dart';
 
 import 'test_screen.dart';
 
@@ -40,6 +41,7 @@ class HomeTab extends StatelessWidget {
           const SizedBox(height: 16),
           _ContinueCard(
             level: level,
+            learned: progress.learnedCount(level, items),
             mastered: progress.masteredCount(level, items),
             total: items.length,
             percent: pct,
@@ -135,21 +137,17 @@ class _LevelsStrip extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '${l.label} ${(progress.percent(l, kanjiOf(l)) * 100).round()}%',
+                      '${l.label} ${(progress.learnedPercent(l, kanjiOf(l)) * 100).round()}%',
                       style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
                           color: l.color),
                     ),
                     const SizedBox(height: 6),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(3),
-                      child: LinearProgressIndicator(
-                        value: progress.percent(l, kanjiOf(l)),
-                        minHeight: 6,
-                        color: l.color,
-                        backgroundColor: l.color.withValues(alpha: 0.15),
-                      ),
+                    LearnBar(
+                      learned: progress.learnedPercent(l, kanjiOf(l)),
+                      mastered: progress.percent(l, kanjiOf(l)),
+                      color: l.color,
                     ),
                   ],
                 ),
@@ -166,6 +164,7 @@ class _LevelsStrip extends StatelessWidget {
 class _ContinueCard extends StatelessWidget {
   const _ContinueCard({
     required this.level,
+    required this.learned,
     required this.mastered,
     required this.total,
     required this.percent,
@@ -173,6 +172,7 @@ class _ContinueCard extends StatelessWidget {
   });
 
   final JlptLevel level;
+  final int learned;
   final int mastered;
   final int total;
   final double percent;
@@ -218,25 +218,23 @@ class _ContinueCard extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  'Đã thuộc $mastered/$total chữ',
+                  'Đã học $learned · Đã thuộc $mastered/$total chữ',
                   style: const TextStyle(
                       color: white, fontWeight: FontWeight.w600),
                 ),
               ),
-              Text('${(percent * 100).round()}%',
+              Text('${total == 0 ? 0 : (learned * 100 / total).round()}%',
                   style: const TextStyle(
                       color: white, fontWeight: FontWeight.w600)),
             ],
           ),
           const SizedBox(height: 8),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(4),
-            child: LinearProgressIndicator(
-              value: percent,
-              minHeight: 8,
-              color: white,
-              backgroundColor: white.withValues(alpha: 0.3),
-            ),
+          LearnBar(
+            learned: total == 0 ? 0 : learned / total,
+            mastered: percent,
+            color: white,
+            height: 8,
+            background: white.withValues(alpha: 0.25),
           ),
           const SizedBox(height: 16),
           FilledButton.icon(

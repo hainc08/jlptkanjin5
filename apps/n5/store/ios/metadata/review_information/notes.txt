@@ -2,7 +2,7 @@ CHANGES SINCE THE 4.3 / 4.2.6 REJECTION
 We previously submitted five apps (Kanji N5, N4, N3, N2, N1) that shared one codebase and differed only in their kanji list. We agree that was not appropriate. We merged all five levels into this single app, "Kanji JLPT - Flashcard N5–N1" (1.1.0), and will not resubmit N4, N3, N2 or N1.
 
 1. WHAT THE APP DOES
-Helps Vietnamese speakers learn the 1,000+ JLPT kanji (N5 to N1). Each kanji has its Sino-Vietnamese (Han-Viet) reading, a Vietnamese meaning and On/Kun readings. Learners practise with multiple-choice flashcards (kanji to meaning, kanji to reading, meaning to kanji). Progress is stored per kanji on the device: 3 correct answers in a row = learned. Home shows progress for each level, the daily streak, kanji studied today and a "needs review" list. Quizzes prioritise kanji not yet learned, and at 80% the app suggests the next level.
+Helps Vietnamese speakers learn the 1,000+ JLPT kanji (N5 to N1). Each kanji has its Sino-Vietnamese (Han-Viet) reading, a Vietnamese meaning and On/Kun readings. Learners practise with multiple-choice flashcards (kanji to meaning, kanji to reading, meaning to kanji). Progress is stored per kanji on the device: one correct answer = studied, 3 correct answers in a row = mastered. Home shows studied and mastered counts for each level, the daily streak, kanji studied today and a "needs review" list. Quizzes first revisit kanji in progress, then add new ones; at 80% mastered the app suggests the next level.
 
 2. INTENDED USERS
 Vietnamese learners of Japanese from beginner (N5) to advanced (N1): students, people going to work or study in Japan, and staff of Japanese companies. Each user picks a starting level on first launch.

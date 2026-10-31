@@ -70,4 +70,13 @@ void main() {
     expect(tester.widget<TestScreen>(find.byType(TestScreen)).level, JlptLevel.n3);
     resetPlatform();
   });
+
+  testWidgets('trả lời đúng 1 lần → thẻ Tiếp tục học hiện Đã học 1', (tester) async {
+    await pumpHome(tester, 'n5', (app) {
+      app.progress.record(JlptLevel.n5, kanjiOf(JlptLevel.n5)[0].char, true);
+    });
+    expect(find.textContaining('Đã học 1'), findsOneWidget);
+    expect(find.textContaining('Đã thuộc 0'), findsOneWidget);
+    resetPlatform();
+  });
 }

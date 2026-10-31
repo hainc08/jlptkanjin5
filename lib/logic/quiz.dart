@@ -28,19 +28,26 @@ String answerOf(Kanji k, QuizMode mode) => switch (mode) {
       QuizMode.meaningToKanji => k.char,
     };
 
-/// Chọn chữ để hỏi: chữ chưa thuộc trước, thiếu thì bù chữ đã thuộc.
+/// Chọn chữ để hỏi, theo thứ tự ưu tiên:
+/// 1. chữ đang học dở ([isLearning]), tối đa 70% số câu để chữ sớm đạt "đã thuộc";
+/// 2. chữ chưa gặp;
+/// 3. chữ đang học còn lại; 4. chữ đã thuộc.
 /// [count] <= 0 nghĩa là hỏi hết [items].
 List<Kanji> pickTargets({
   required List<Kanji> items,
   required bool Function(Kanji) isMastered,
+  bool Function(Kanji)? isLearning,
   required int count,
   Random? random,
 }) {
   final rng = random ?? Random();
-  final fresh = items.where((k) => !isMastered(k)).toList()..shuffle(rng);
+  final learningOf = isLearning ?? (_) => false;
   final known = items.where(isMastered).toList()..shuffle(rng);
-  final all = [...fresh, ...known];
-  if (count <= 0) return all..shuffle(rng);
+  final learning = items.where((k) => !isMastered(k) && learningOf(k)).toList()..shuffle(rng);
+  final fresh = items.where((k) => !isMastered(k) && !learningOf(k)).toList()..shuffle(rng);
+  if (count <= 0) return [...learning, ...fresh, ...known]..shuffle(rng);
+  final head = learning.take((count * 0.7).ceil()).toList();
+  final all = [...head, ...fresh, ...learning.skip(head.length), ...known];
   return all.take(count).toList()..shuffle(rng);
 }
 

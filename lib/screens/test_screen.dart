@@ -56,6 +56,7 @@ class _TestScreenState extends State<TestScreen> {
           pickTargets(
             items: items,
             isMastered: (k) => progress.isMastered(level, k.char),
+            isLearning: (k) => progress.isLearning(level, k.char),
             count: settings.questionCount,
           ),
       all: items,
