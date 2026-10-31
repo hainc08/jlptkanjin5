@@ -14,6 +14,7 @@ LIMITS = {
     # App Store
     "name.txt": 30, "subtitle.txt": 30, "keywords.txt": 100,
     "description.txt": 4000, "promotional_text.txt": 170, "release_notes.txt": 4000,
+    "notes.txt": 4000,  # review_information/notes.txt (App Review Notes)
     # Google Play
     "title.txt": 30, "short_description.txt": 80, "full_description.txt": 4000,
     "default.txt": 500,
