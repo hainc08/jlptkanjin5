@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
-"""Kiểm tra độ dài nội dung store (apps/*/store) trước khi upload."""
+"""Kiểm tra độ dài nội dung store (apps/*/store) trước khi upload.
+
+    python3 tools/check_metadata.py            kiểm tra độ dài
+    python3 tools/check_metadata.py --review   thêm: báo lỗi nếu còn chỗ "CẦN NGƯỜI DÙNG ĐIỀN"
+"""
 import glob
 import os
 import sys
+
+PLACEHOLDER = "CẦN NGƯỜI DÙNG ĐIỀN"
 
 LIMITS = {
     # App Store
@@ -29,5 +35,12 @@ for f in sorted(glob.glob("apps/*/store/**/*.txt", recursive=True)):
         # Giữ keywords dưới 100 byte cho chắc (tiếng Việt có dấu tốn 2–3 byte/ký tự).
         status, bad = "KW  ", bad + 1
     print(f"{status} {n:>5}/{LIMITS[name]:<5} {f}")
+
+# --review: trước khi gửi Apple review, chặn chỗ còn để trống cho người dùng điền.
+if "--review" in sys.argv:
+    for f in sorted(glob.glob("apps/*/store/**/*.txt", recursive=True)):
+        if PLACEHOLDER in open(f, encoding="utf-8").read():
+            print(f"CHƯA ĐIỀN  {f}: còn '{PLACEHOLDER}'")
+            bad += 1
 
 sys.exit(1 if bad else 0)
