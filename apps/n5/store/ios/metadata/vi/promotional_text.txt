@@ -1,1 +1,1 @@
-Một app cho cả 5 cấp JLPT: 1.042 chữ Kanji có Hán Việt, theo dõi tiến độ, chuỗi ngày học và ôn lại chữ hay sai.
+Một app cho cả 5 cấp JLPT: hơn 1.000 chữ Kanji có Hán Việt, theo dõi tiến độ, chuỗi ngày học và ôn lại chữ hay sai.

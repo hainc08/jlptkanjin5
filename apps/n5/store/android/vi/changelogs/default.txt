@@ -1,5 +1,5 @@
 Phiên bản 1.1.0 – Kanji JLPT N5–N1:
-• Gộp cả 5 cấp N5, N4, N3, N2, N1 (1.042 chữ) vào một app
+• Gộp cả 5 cấp N5, N4, N3, N2, N1 (hơn 1.000 chữ) vào một app
 • Trang chủ theo dõi tiến độ, chuỗi ngày học, chữ cần ôn lại
 • Chọn cấp bắt đầu, gợi ý lộ trình lên cấp
 • Giao diện mới, mỗi cấp một màu
