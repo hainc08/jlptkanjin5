@@ -43,7 +43,8 @@ class _SplashScreenState extends State<SplashScreen>
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
         transitionDuration: const Duration(milliseconds: 500),
-        pageBuilder: (_, __, ___) => first ? const WelcomeScreen() : const HomeShell(),
+        pageBuilder: (_, __, ___) =>
+            first ? const WelcomeScreen() : const HomeShell(),
         transitionsBuilder: (_, animation, __, child) =>
             FadeTransition(opacity: animation, child: child),
       ),
@@ -65,44 +66,51 @@ class _SplashScreenState extends State<SplashScreen>
       body: SafeArea(
         child: FadeTransition(
           opacity: _fade,
-          child: Column(
-            children: [
-              const Spacer(flex: 3),
-              const _Seal(),
-              const SizedBox(height: 32),
-              Text('Kanji JLPT', style: theme.textTheme.displaySmall),
-              const SizedBox(height: 8),
-              Text('Flashcard N5 – N1', style: TextStyle(fontSize: 16, color: muted, letterSpacing: 0.5)),
-              const SizedBox(height: 28),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  for (final l in JlptLevel.values)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 6),
-                      child: CircleAvatar(radius: 5, backgroundColor: l.color),
-                    ),
-                ],
-              ),
-              const Spacer(flex: 4),
-              Text.rich(
-                TextSpan(
-                  text: 'Một sản phẩm từ ',
-                  style: TextStyle(fontSize: 13, color: muted),
+          // Giãn hết bề ngang để nội dung nằm giữa (Column mặc định chỉ rộng bằng phần tử rộng nhất).
+          child: SizedBox(
+            width: double.infinity,
+            child: Column(
+              children: [
+                const Spacer(flex: 3),
+                const _Seal(),
+                const SizedBox(height: 32),
+                Text('Kanji JLPT', style: theme.textTheme.displaySmall),
+                const SizedBox(height: 8),
+                Text('Flashcard N5 – N1',
+                    style: TextStyle(
+                        fontSize: 16, color: muted, letterSpacing: 0.5)),
+                const SizedBox(height: 28),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    TextSpan(
-                      text: 'ManabiHub',
-                      style: TextStyle(
-                        fontFamily: 'NotoSerif',
-                        fontWeight: FontWeight.w600,
-                        color: theme.colorScheme.onSurface,
+                    for (final l in JlptLevel.values)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 6),
+                        child:
+                            CircleAvatar(radius: 5, backgroundColor: l.color),
                       ),
-                    ),
                   ],
                 ),
-              ),
-              const SizedBox(height: 28),
-            ],
+                const Spacer(flex: 4),
+                Text.rich(
+                  TextSpan(
+                    text: 'Một sản phẩm từ ',
+                    style: TextStyle(fontSize: 13, color: muted),
+                    children: [
+                      TextSpan(
+                        text: 'ManabiHub',
+                        style: TextStyle(
+                          fontFamily: 'NotoSerif',
+                          fontWeight: FontWeight.w600,
+                          color: theme.colorScheme.onSurface,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 28),
+              ],
+            ),
           ),
         ),
       ),
@@ -136,7 +144,8 @@ class _Seal extends StatelessWidget {
         child: Text(
           '漢\n字',
           textAlign: TextAlign.center,
-          style: kanjiStyle(38, weight: FontWeight.w700, color: AppColors.ink).copyWith(height: 1.05),
+          style: kanjiStyle(38, weight: FontWeight.w700, color: AppColors.ink)
+              .copyWith(height: 1.05),
         ),
       ),
     );
