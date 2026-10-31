@@ -46,8 +46,8 @@ class _TestScreenState extends State<TestScreen> {
     _autoTimer?.cancel();
     _mode = settings.mode;
     _questions = buildQuiz(
-      targets: widget.targets ?? appKanji,
-      all: appKanji,
+      targets: widget.targets ?? kanjiOf(JlptLevel.n5),
+      all: kanjiOf(JlptLevel.n5),
       mode: _mode,
       count: widget.targets != null ? 0 : settings.questionCount,
     );

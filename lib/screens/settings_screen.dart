@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import '../ads/ads_service.dart';
 import '../ads/banner_ad_slot.dart';
 import '../app_scope.dart';
-import '../app_config.dart';
-import '../data/kanji_store.dart';
+import '../data/level_data.dart';
 import '../data/levels.dart';
 import '../models/app_settings.dart';
 
@@ -176,12 +175,12 @@ class _DataTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final store = KanjiStore.current;
+    final store = LevelData.current?.storeOf(JlptLevel.n5);
     if (store == null) {
       return ListTile(
         leading: const Icon(Icons.menu_book_outlined),
         title: const Text('Bộ dữ liệu'),
-        subtitle: Text('JLPT ${AppConfig.level} · ${appKanji.length} chữ Kanji'),
+        subtitle: Text('JLPT N5 · ${kanjiOf(JlptLevel.n5).length} chữ Kanji'),
       );
     }
     return ListenableBuilder(
@@ -194,7 +193,7 @@ class _DataTile extends StatelessWidget {
         return ListTile(
           leading: const Icon(Icons.menu_book_outlined),
           title: const Text('Bộ dữ liệu'),
-          subtitle: Text('JLPT ${AppConfig.level} · ${store.items.length} chữ Kanji$when'),
+          subtitle: Text('JLPT N5 · ${store.items.length} chữ Kanji$when'),
           trailing: store.syncing
               ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2))
               : IconButton(

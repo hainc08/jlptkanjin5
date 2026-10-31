@@ -130,7 +130,7 @@ class _SplashScreenState extends State<SplashScreen>
               ),
               const Spacer(flex: 3),
               Text(
-                '${appKanji.length} chữ Kanji · Phiên bản ${AppConfig.version}',
+                '${kanjiOf(JlptLevel.n5).length} chữ Kanji · Phiên bản ${AppConfig.version}',
                 style: const TextStyle(fontSize: 13, color: Colors.white60),
               ),
               const SizedBox(height: 24),

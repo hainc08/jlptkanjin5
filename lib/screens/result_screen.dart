@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../ads/banner_ad_slot.dart';
-import '../app_config.dart';
 import '../logic/quiz.dart';
 import '../models/app_settings.dart';
 import '../theme.dart';
@@ -16,7 +15,7 @@ class ResultScreen extends StatelessWidget {
 
   ({String title, String subtitle}) _message(double pct) {
     if (pct >= 0.9) {
-      return (title: 'Xuất sắc! 🎉', subtitle: 'Bạn nắm Kanji ${AppConfig.level} rất chắc.');
+      return (title: 'Xuất sắc! 🎉', subtitle: 'Bạn nắm Kanji N5 rất chắc.');
     }
     if (pct >= 0.7) {
       return (title: 'Tốt lắm!', subtitle: 'Ôn thêm vài chữ nữa là hoàn hảo.');

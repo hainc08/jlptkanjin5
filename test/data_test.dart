@@ -60,7 +60,9 @@ void main() {
     }
   });
 
-  test('appKanji khớp với app đang build', () {
-    expect(appKanji, isNotEmpty);
+  test('kanjiOf trả dữ liệu cho cả 5 cấp', () {
+    for (final l in JlptLevel.values) {
+      expect(kanjiOf(l), isNotEmpty);
+    }
   });
 }
