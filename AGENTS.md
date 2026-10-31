@@ -8,15 +8,22 @@
 
 
 ## Cấu trúc
-- Một codebase, nhiều app: `apps/<level>/config.json` (APP, LEVEL, APP_NAME, STORE_NAME, BUNDLE_ID, VERSION, IOS_PROFILE, ACCENT, mã AdMob) truyền qua `--dart-define-from-file`; `lib/app_config.dart` đọc.
-- `lib/data/levels.dart`: `bundledKanji` (dữ liệu đóng sẵn: `kanji_n5.dart` 104 chữ, `kanji_n4.dart` 176 chữ, `kanji_n3.dart` 276 chữ, `kanji_n2.dart` 228 chữ, `kanji_n1.dart` 258 chữ — tổng cộng 1.042 chữ không trùng lặp) và `appKanji` (bản đang dùng).
+- Một app gộp 5 cấp, build bằng `apps/n5/config.json` (APP, APP_NAME, STORE_NAME, BUNDLE_ID, VERSION, IOS_PROFILE, mã AdMob) qua `--dart-define-from-file`; `lib/app_config.dart` đọc. Màu nhấn đi theo cấp đang học (`JlptLevel.color`).
+- `lib/data/jlpt_level.dart`: enum `JlptLevel` (n5..n1) với dữ liệu đóng sẵn: `kanji_n5.dart` 104 chữ, `kanji_n4.dart` 176 chữ, `kanji_n3.dart` 276 chữ, `kanji_n2.dart` 228 chữ, `kanji_n1.dart` 258 chữ — tổng 1.042 chữ không trùng. `kanjiOf(level)` trong `levels.dart` trả bộ đang dùng; `LevelData` giữ 5 `KanjiStore`.
+- `lib/data/progress_store.dart`: tiến độ từng chữ (đúng 3 lần liên tiếp = đã thuộc), chuỗi ngày, số chữ hôm nay — chỉ lưu SharedPreferences.
 - `lib/data/kanji_store.dart`: tải `https://hainc08.github.io/jlpt-content/kanji/<app>.json` (repo `D:\100.JLPT\content`), ETag, cache SharedPreferences, kiểm tra hợp lệ (≥20 chữ, không trùng chữ/nghĩa); tự đồng bộ ≤6 giờ/lần, nút ⟳ ở Cài đặt → Bộ dữ liệu. Sửa chữ trên GitHub là app cập nhật, không cần build lại.
 - `tools/export_kanji_json.py ../../content/kanji` xuất .dart → JSON.
 - `tools/configure_native.py <app>` đặt tên/bundle/icon native; `tools/check_metadata.py`, `app_info.py`, `write_export_options.py`.
 - `apps/<app>/store/...`, `apps/<app>/icons/...`; trang chính sách: `docs/<app>/privacy-policy.html` (GitHub Pages).
-- CI: `.github/workflows/ci.yml` (matrix n5, n4). Release: `release.yml` — tag `n4-v1.0.0` (tag `v*` cũ = n5) hoặc chạy tay với input `app`, `platform`. Fastlane đọc `ENV["APP"]`.
+- CI: `.github/workflows/ci.yml` (matrix n5). Release: `release.yml` — tag `n5-v1.1.0` (tag `v*` cũ = n5) hoặc chạy tay với input `app` (chỉ n5), `platform`. Fastlane đọc `ENV["APP"]`.
 
-## Trạng thái (30/10/2026)
+## Trạng thái (31/10/2026) — app gộp
+- Apple từ chối N1–N5 theo Guideline 4.3 (Spam) / 4.2.6 vì 5 app chung một binary. Hướng xử lý: **gộp thành một app "Kanji JLPT - Flashcard N5–N1"** dùng lại bundle N5 (`com.manabihub.kanjin5`), bản 1.1.0.
+- Thiết kế: `docs/superpowers/specs/2026-10-31-kanji-jlpt-merged-app-design.md`; kế hoạch: `docs/superpowers/plans/2026-10-31-kanji-jlpt-merged-app.md`.
+- Code ở worktree `D:\100.JLPT\apps\kanji_jlpt` (nhánh `feat/merged-app`): 5 cấp (`lib/data/jlpt_level.dart`, `level_data.dart`), tiến độ lưu trên máy (`progress_store.dart`), Splash → Chào hỏi → 3 tab Trang chủ / Các cấp / Cài đặt, theme Wabi-Sabi (Noto Serif + Be Vietnam Pro), icon mới (`tools/make_merged_icon.py`).
+- `apps/n4..n1` chỉ còn để lưu trữ; CI và release chỉ build `n5`.
+
+## Trạng thái cũ (30/10/2026)
 - **N5**: iOS đã nộp (審査待ち). Android đã có.
 - **N4** (`com.manabihub.kanjin4`):
   - **iOS**: Đã build bản có đồng bộ dữ liệu từ xa (Build 8), điền đầy đủ metadata + 10 screenshot và gửi Apple duyệt (`Waiting for Review` / 審査待ち).
@@ -45,8 +52,10 @@
 - Khai báo pháp lý/đồng ý điều khoản/cấp quyền trên store: người dùng tự bấm.
 - Claude chưa có quyền push GitHub (chưa cài Claude GitHub App) → commit cục bộ, người dùng tự `git push`.
 
-## Việc tiếp theo
-- Tải ảnh Store listing (Icon, Feature Graphic, Screenshots) và upload AAB lên kênh Thử nghiệm khép kín (Closed testing) cho N3, N2, N1 trên Google Play Console -> Bấm Gửi xem xét (Publishing overview).
-- Người dùng bấm xác nhận Content Rights trên App Store Connect cho N3, N2, N1.
-- Kích hoạt gửi duyệt App Store cho N3, N2, N1 (`submit_review=true`).
-- Build lại N5 (bản 1.0.1) để đưa tính năng tải dữ liệu từ xa lên bản N5 (N4 đã có trong Build 8).
+## Việc tiếp theo (app gộp, nhánh `feat/merged-app`)
+- Người dùng điền câu 4 (beta test thật) trong `apps/n5/store/ios/metadata/review_information/notes.txt`.
+- Chụp lại screenshot store (iOS `apps/n5/store/ios/screenshots`, Android `apps/n5/store/android/vi/images`) và feature graphic theo giao diện mới — ảnh hiện tại vẫn là app N5 cũ.
+- Merge `feat/merged-app` vào `main`, push, release tag `n5-v1.1.0`.
+- App Store Connect: rút N4, N3, N2, N1 khỏi review; gửi N5 1.1.0 kèm trả lời 4.3 (nội dung notes.txt) trong Resolution Center.
+- Google Play: quyết định dừng/gỡ N4–N1, đẩy N5 1.1.0.
+- Build Android trên Windows: pub cache (ổ C) khác ổ với dự án (ổ D) làm Kotlin incremental lỗi → build với `GRADLE_OPTS="-Dorg.gradle.project.kotlin.incremental=false"`.

@@ -1,23 +1,42 @@
-### APP PURPOSE & TARGET AUDIENCE
-Kanji N5 - JLPT Flashcard is a focused educational app designed for Japanese language students preparing for the JLPT N5 examination. It provides 104 beginner N5 Kanji characters through 3D interactive flip flashcards, multiple-choice quizzes, Han-Viet mnemonics, and On/Kun readings.
+### WHAT CHANGED SINCE THE 4.3 / 4.2.6 REJECTION
+We previously submitted five separate apps (Kanji N5, N4, N3, N2, N1) that shared one codebase and differed only in their kanji list. We agree that was not appropriate. We have withdrawn the N4, N3, N2 and N1 submissions and consolidated all five levels into this single app, "Kanji JLPT - Flashcard N5–N1" (version 1.1.0). Only this app will be published on our account for kanji study.
 
-### ACCESS & SETUP INSTRUCTIONS
-- No account registration or login is required. The app is 100% accessible upon launch.
-- Typical user flow:
-  1. Launch app -> Splash screen automatically transitions to the Quiz screen.
-  2. Select any quiz mode: Kanji to Meaning, Kanji to Reading, or Meaning to Kanji.
-  3. Answer multiple-choice questions -> card flips in 3D displaying full details.
-  4. Quiz completion screen shows score summary with one-tap option to review mistakes.
-  5. Settings icon allows toggling Dark Mode, Han-Viet hints, and questions per session.
+### 1. WHAT THE APP DOES
+The app helps Vietnamese speakers learn all 1,042 kanji tested in the Japanese Language Proficiency Test (JLPT), levels N5 to N1. Each kanji is shown with its Sino-Vietnamese reading (Han-Viet), which lets Vietnamese learners connect a kanji to a word they already know, plus a Vietnamese meaning and the Japanese On/Kun readings. Learners practise through multiple-choice flashcards in three directions: kanji to meaning, kanji to reading, and meaning to kanji. The app records progress per kanji on the device: a kanji counts as learned after three correct answers in a row. The Home screen shows progress for every level, the daily study streak, how many kanji were studied today, and the kanji the learner keeps getting wrong, which can be reviewed with one tap. Quizzes prioritise kanji the learner has not learned yet. When a level reaches 80%, the app suggests moving on to the next level.
 
-### EXTERNAL SERVICES & TOOLS
-- Core functionality operates 100% offline with bundled local datasets.
-- Optional background update via HTTPS from our GitHub Pages content repository.
-- Google Mobile Ads (AdMob) for display ads (consent requested via Google UMP SDK with ATT).
-- No third-party login, no payment processing, no user-generated content, no AI generation.
+### 2. INTENDED USERS
+Vietnamese-speaking learners of Japanese, at any level from beginner (N5) to advanced (N1). Typical users are university students, people preparing to work or study in Japan, and Vietnamese employees of Japanese companies preparing for the JLPT. On first launch, each user picks the level that matches their ability.
 
-### REGIONAL CONSISTENCY
-The app functions consistently and identically across all countries and regions worldwide.
+### 3. GAP IN THE MARKET
+Most kanji apps are in English or Japanese, and they teach meanings through English. Vietnamese learners have a specific advantage: about 60% of Vietnamese vocabulary comes from Chinese characters, so the Han-Viet reading of a kanji is often the fastest memory hook. Few apps give Han-Viet readings together with Vietnamese meanings for the full N5–N1 list, and fewer still track per-kanji progress offline with no account. This app is built around that Han-Viet-first approach.
 
-### REGULATORY & THIRD-PARTY CONTENT
-The app does not operate in a regulated industry. All Kanji data, translations, and mnemonic notes are standard educational materials compiled for JLPT study.
+### 4. BETA TESTING
+[CẦN NGƯỜI DÙNG ĐIỀN: mô tả beta test thật (TestFlight / Google Play Closed testing), số người thử, và 1–3 ví dụ góp ý cụ thể đã được đưa vào bản này. Không bịa.]
+
+### 5. STANDALONE OR SUITE
+This is a standalone product. It replaces the five per-level apps we submitted earlier, which have been withdrawn. No other app on our account offers kanji study.
+
+### 6. COULD IT BE AN IN-APP PURCHASE OR EXPANSION OF ANOTHER APP?
+Yes. That is exactly why we merged the five level apps into this single app. All five levels are included free inside this app. There is no other app on our account it could be part of.
+
+### 7. CODE SHARED WITH OTHER APPS ON OUR ACCOUNT
+No other published app on our account uses this binary. The only shared components are standard frameworks (Flutter, Google Mobile Ads SDK, shared_preferences, http).
+
+### 8. CODE SHARED WITH THIRD-PARTY APPS
+No. The app was written by us and was not made from a commercial template or an app generation service. We use only standard open-source frameworks (Flutter and its packages) and the Google Mobile Ads SDK.
+
+### 9. CLIENT OR THIRD-PARTY CONTENT
+No. The concept, branding (ManabiHub) and kanji content (Han-Viet readings, Vietnamese meanings, On/Kun readings) were prepared by us. The app is not built for a client.
+
+### HOW TO REVIEW
+- No account or login is needed.
+- First launch: Splash → "Chào bạn!" welcome screen → tap any level (for example N5) → Home.
+- Home: tap "Học tiếp" to start a quiz. Answer a few questions, some correctly and some wrongly. Go back to Home: the level progress, the streak, "Hôm nay" (today) and the "Cần ôn lại" (needs review) list update.
+- "Các cấp" (Levels) tab: shows progress for all 5 levels. Tap a level to quiz it.
+- "Cài đặt" (Settings) tab: change the current level, the question type and the number of questions. "Xóa lịch sử học" resets all progress.
+
+### EXTERNAL SERVICES
+- The app works fully offline with bundled data. Kanji lists are optionally updated over HTTPS from our GitHub Pages content repository.
+- Google Mobile Ads (AdMob) shows ads. Consent is collected through the Google UMP SDK, with ATT.
+- There is no login, no payment, no user-generated content and no AI generation. Progress is stored only on the device.
+- The app works the same in every country and region.
