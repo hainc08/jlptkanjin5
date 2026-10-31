@@ -60,3 +60,5 @@ build_log.txt
 *.ipa
 android/app-release-aab*/
 android/app-release-aab.zip
+
+build_artifacts/
