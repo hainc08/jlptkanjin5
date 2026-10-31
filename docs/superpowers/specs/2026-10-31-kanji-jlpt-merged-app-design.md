@@ -177,6 +177,11 @@ Lưu dạng JSON theo cấp, mỗi cấp một khóa (ví dụ `progress_n4`), �
 
 ## 9. Cấu hình, build và store
 
+### 9.0 Nơi làm việc
+- Làm trong **thư mục riêng** `D:\100.JLPT\apps\kanji_jlpt`, tạo bằng **git worktree** của chính repo này, trên nhánh `feat/merged-app`. Thư mục `kanji_flashcard` (nhánh `main`) với 5 app cũ giữ nguyên, không bị lẫn.
+- Lý do chọn worktree thay vì repo mới: dùng lại nguyên CI (`.github/workflows`), fastlane, GitHub Secrets, khóa ký và quy trình release, nên không phải dựng lại gì khi build.
+- Khi xong và đã kiểm tra, merge `feat/merged-app` vào `main` để release như cũ.
+
 - Còn **một app**. `apps/n5/config.json` được cập nhật:
   - `APP_NAME` = `Kanji JLPT`
   - `STORE_NAME` = `Kanji JLPT - Flashcard N5–N1`
