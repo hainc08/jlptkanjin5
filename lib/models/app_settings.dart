@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/jlpt_level.dart';
+
 enum QuizMode { kanjiToMeaning, kanjiToReading, meaningToKanji }
 
 extension QuizModeText on QuizMode {
@@ -66,6 +68,17 @@ class AppSettings extends ChangeNotifier {
   bool get showHanViet => _prefs.getBool('showHanViet') ?? true;
   set showHanViet(bool value) {
     _prefs.setBool('showHanViet', value);
+    notifyListeners();
+  }
+
+  /// Cấp đang học; null = chưa qua màn Chào hỏi.
+  JlptLevel? get currentLevel => JlptLevel.fromId(_prefs.getString('currentLevel'));
+  set currentLevel(JlptLevel? value) {
+    if (value == null) {
+      _prefs.remove('currentLevel');
+    } else {
+      _prefs.setString('currentLevel', value.id);
+    }
     notifyListeners();
   }
 

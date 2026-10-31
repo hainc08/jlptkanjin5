@@ -1,1 +1,1 @@
-Học 104 chữ Kanji N5 qua thẻ lật và câu hỏi trắc nghiệm. Có Hán Việt, nghĩa tiếng Việt, âm On/Kun.
+Một app cho cả 5 cấp JLPT: 1.042 chữ Kanji có Hán Việt, theo dõi tiến độ, chuỗi ngày học và ôn lại chữ hay sai.

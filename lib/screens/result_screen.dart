@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
 
 import '../ads/banner_ad_slot.dart';
-import '../app_config.dart';
 import '../logic/quiz.dart';
 import '../models/app_settings.dart';
+import '../data/levels.dart';
 import '../theme.dart';
-import 'settings_screen.dart';
+import 'home_shell.dart';
 import 'test_screen.dart';
 
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({super.key, required this.questions, required this.mode});
+  const ResultScreen({super.key, required this.level, required this.questions, required this.mode});
 
+  final JlptLevel level;
   final List<Question> questions;
   final QuizMode mode;
 
+  /// Quay về khung 3 tab: pop hết nếu Trang chủ nằm dưới, không thì mở mới.
+  void _goHome(BuildContext context) {
+    final nav = Navigator.of(context);
+    if (nav.canPop()) {
+      nav.popUntil((r) => r.isFirst);
+    } else {
+      nav.pushReplacement(MaterialPageRoute(builder: (_) => const HomeShell()));
+    }
+  }
+
   ({String title, String subtitle}) _message(double pct) {
     if (pct >= 0.9) {
-      return (title: 'Xuất sắc! 🎉', subtitle: 'Bạn nắm Kanji ${AppConfig.level} rất chắc.');
+      return (title: 'Xuất sắc! 🎉', subtitle: 'Bạn nắm Kanji ${level.label} rất chắc.');
     }
     if (pct >= 0.7) {
       return (title: 'Tốt lắm!', subtitle: 'Ôn thêm vài chữ nữa là hoàn hảo.');
@@ -39,14 +50,12 @@ class ResultScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Kết quả'),
+        title: Text('Kết quả ${level.label}'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings_outlined),
-            tooltip: 'Cài đặt',
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const SettingsScreen()),
-            ),
+            icon: const Icon(Icons.home_outlined),
+            tooltip: 'Về trang chủ',
+            onPressed: () => _goHome(context),
           ),
         ],
       ),
@@ -118,6 +127,7 @@ class ResultScreen extends StatelessWidget {
                     onPressed: () => Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (_) => TestScreen(
+                          level: level,
                           targets: wrong.map((q) => q.kanji).toList(),
                         ),
                       ),
@@ -131,7 +141,7 @@ class ResultScreen extends StatelessWidget {
                   icon: const Icon(Icons.play_arrow_rounded),
                   label: const Text('Làm bài mới'),
                   onPressed: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (_) => const TestScreen()),
+                    MaterialPageRoute(builder: (_) => TestScreen(level: level)),
                   ),
                 ),
               ),

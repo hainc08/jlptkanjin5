@@ -1,4 +1,16 @@
-Kanji N5 – JLPT Flashcard giúp bạn học trọn bộ 104 chữ Kanji của kỳ thi JLPT N5 theo cách nhanh và vui nhất: thẻ lật kết hợp câu hỏi trắc nghiệm.
+Kanji JLPT - Flashcard N5–N1 là một ứng dụng duy nhất để học trọn bộ 1.042 chữ Kanji của cả 5 cấp JLPT, từ N5 đến N1, dành riêng cho người Việt.
+
+CHỌN CẤP THEO NĂNG LỰC
+• Lần đầu mở app, bạn tự chọn cấp bắt đầu: N5, N4, N3, N2 hay N1
+• Lộ trình N5 → N4 → N3 → N2 → N1: gần xong một cấp, app gợi ý chuyển sang cấp tiếp theo
+• Cả 5 cấp đều mở, đổi cấp bất cứ lúc nào
+
+TRANG CHỦ THEO DÕI TIẾN ĐỘ CỦA BẠN
+• Tiến độ từng cấp: bao nhiêu chữ đã thuộc
+• Chuỗi ngày học liên tiếp và số chữ đã ôn hôm nay
+• "Cần ôn lại": những chữ bạn hay sai, ôn lại chỉ với một chạm
+• Quiz ưu tiên chữ bạn chưa thuộc, để mỗi lượt học đều có ích
+• Tiến độ lưu ngay trên máy, không cần tài khoản
 
 MỖI CHỮ KANJI ĐỀU CÓ
 • Âm Hán Việt – mẹo nhớ nhanh dành riêng cho người Việt
@@ -6,18 +18,14 @@ MỖI CHỮ KANJI ĐỀU CÓ
 • Âm On (音読み) và âm Kun (訓読み)
 
 3 KIỂU LUYỆN TẬP
-• Kanji → Nghĩa: nhìn chữ, chọn nghĩa đúng
-• Kanji → Cách đọc: luyện âm On / Kun
-• Nghĩa → Kanji: nhìn nghĩa, chọn đúng mặt chữ
+• Kanji → Nghĩa
+• Kanji → Cách đọc (On / Kun)
+• Nghĩa → Kanji
 
 HỌC HIỆU QUẢ
-• Thẻ lật 3D: trả lời xong, thẻ tự lật để bạn xem đầy đủ thông tin
-• Màn kết quả có điểm số và danh sách câu sai
-• "Ôn câu sai" một chạm để luyện lại đúng những chữ còn yếu
-• Tuỳ chọn 10 / 20 / 30 câu hoặc toàn bộ 104 chữ mỗi lượt
-• Bật/tắt gợi ý Hán Việt, tự chuyển câu
-• Chế độ tối dịu mắt khi học buổi tối
-
-Không cần tạo tài khoản, mở app là học ngay. Phù hợp cho người mới bắt đầu học tiếng Nhật, sinh viên và người chuẩn bị thi JLPT N5.
+• Thẻ lật 3D: trả lời xong, thẻ lật để xem đầy đủ thông tin
+• Màn kết quả có điểm số, "Ôn câu sai" một chạm
+• Tuỳ chọn 10 / 20 / 50 câu hoặc cả cấp mỗi lượt
+• Giao diện giấy washi tối giản, mỗi cấp một màu, có chế độ tối
 
 Ứng dụng miễn phí và có hiển thị quảng cáo.

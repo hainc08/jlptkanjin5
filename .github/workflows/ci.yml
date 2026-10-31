@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app: [n5, n4, n3, n2, n1]
+        app: [n5]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4

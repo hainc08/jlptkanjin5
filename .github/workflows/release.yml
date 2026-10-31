@@ -14,7 +14,7 @@ on:
       app:
         description: 'App (tên thư mục trong apps/)'
         type: choice
-        options: [n5, n4, n3, n2, n1]
+        options: [n5]
         default: n5
       submit_review:
         description: 'Gửi review (iOS) và đẩy lên Production (Android)'
@@ -205,7 +205,7 @@ jobs:
       APP_VERSION: ${{ needs.setup.outputs.version }}
     steps:
       - uses: actions/checkout@v4
-      - run: python3 tools/check_metadata.py
+      - run: python3 tools/check_metadata.py --review
       - name: Gửi Apple review
         working-directory: ios
         env:
