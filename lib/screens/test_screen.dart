@@ -9,7 +9,9 @@ import '../logic/quiz.dart';
 import '../models/app_settings.dart';
 import '../progress_scope.dart';
 import '../theme.dart';
+import '../widgets/content_width.dart';
 import '../widgets/flip_card.dart';
+
 import 'result_screen.dart';
 
 class TestScreen extends StatefulWidget {
@@ -74,7 +76,8 @@ class _TestScreenState extends State<TestScreen> {
       _q.chosen = i;
       _flipped = true;
     });
-    ProgressScope.read(context).record(widget.level, _q.kanji.char, _q.isCorrect);
+    ProgressScope.read(context)
+        .record(widget.level, _q.kanji.char, _q.isCorrect);
     if (AppScope.read(context).autoNext) {
       _autoTimer?.cancel();
       _autoTimer = Timer(const Duration(milliseconds: 1500), () {
@@ -92,7 +95,8 @@ class _TestScreenState extends State<TestScreen> {
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (_) => ResultScreen(level: widget.level, questions: _questions, mode: _mode),
+          builder: (_) => ResultScreen(
+              level: widget.level, questions: _questions, mode: _mode),
         ),
       );
       return;
@@ -150,82 +154,86 @@ class _TestScreenState extends State<TestScreen> {
         ],
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 4, 20, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: LinearProgressIndicator(
-                        value: (_index + (answered ? 1 : 0)) / total,
-                        minHeight: 8,
-                        backgroundColor: scheme.surfaceContainerHighest,
+        child: ContentWidth(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 4, 20, 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: LinearProgressIndicator(
+                          value: (_index + (answered ? 1 : 0)) / total,
+                          minHeight: 8,
+                          backgroundColor: scheme.surfaceContainerHighest,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  _ScoreChip(correct: _correctCount),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(_mode.icon, size: 16, color: scheme.onSurfaceVariant),
-                  const SizedBox(width: 6),
-                  Flexible(
-                    child: Text(
-                      _mode.instruction,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: scheme.onSurfaceVariant,
+                    const SizedBox(width: 12),
+                    _ScoreChip(correct: _correctCount),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(_mode.icon, size: 16, color: scheme.onSurfaceVariant),
+                    const SizedBox(width: 6),
+                    Flexible(
+                      child: Text(
+                        _mode.instruction,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: scheme.onSurfaceVariant,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Expanded(
-                child: GestureDetector(
-                  onTap: answered
-                      ? () => setState(() => _flipped = !_flipped)
-                      : null,
-                  child: FlipCard(
-                    key: ValueKey(_index),
-                    showBack: _flipped,
-                    front: _CardFront(
-                      kanji: _q.kanji,
-                      mode: _mode,
-                      showHanViet: settings.showHanViet,
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Expanded(
+                  child: GestureDetector(
+                    onTap: answered
+                        ? () => setState(() => _flipped = !_flipped)
+                        : null,
+                    child: FlipCard(
+                      key: ValueKey(_index),
+                      showBack: _flipped,
+                      front: _CardFront(
+                        kanji: _q.kanji,
+                        mode: _mode,
+                        showHanViet: settings.showHanViet,
+                      ),
+                      back: _CardBack(question: _q),
                     ),
-                    back: _CardBack(question: _q),
                   ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              _OptionsGrid(
-                question: _q,
-                bigText: _mode == QuizMode.meaningToKanji,
-                onSelect: _answer,
-              ),
-              const SizedBox(height: 14),
-              AnimatedOpacity(
-                opacity: answered ? 1 : 0,
-                duration: const Duration(milliseconds: 200),
-                child: FilledButton.icon(
-                  onPressed: answered ? _next : null,
-                  icon: Icon(
-                    _isLast ? Icons.flag_rounded : Icons.arrow_forward_rounded,
-                  ),
-                  label: Text(_isLast ? 'Xem kết quả' : 'Câu tiếp theo'),
+                const SizedBox(height: 16),
+                _OptionsGrid(
+                  question: _q,
+                  bigText: _mode == QuizMode.meaningToKanji,
+                  onSelect: _answer,
                 ),
-              ),
-            ],
+                const SizedBox(height: 14),
+                AnimatedOpacity(
+                  opacity: answered ? 1 : 0,
+                  duration: const Duration(milliseconds: 200),
+                  child: FilledButton.icon(
+                    onPressed: answered ? _next : null,
+                    icon: Icon(
+                      _isLast
+                          ? Icons.flag_rounded
+                          : Icons.arrow_forward_rounded,
+                    ),
+                    label: Text(_isLast ? 'Xem kết quả' : 'Câu tiếp theo'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

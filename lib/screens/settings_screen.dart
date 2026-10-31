@@ -8,6 +8,8 @@ import '../data/level_data.dart';
 import '../data/levels.dart';
 import '../models/app_settings.dart';
 import '../progress_scope.dart';
+import '../widgets/content_width.dart';
+
 import 'welcome_screen.dart';
 
 /// Màu cho hàng "Xóa lịch sử học" (đỏ son N1).
@@ -80,7 +82,7 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Cài đặt'), automaticallyImplyLeading: false),
       bottomNavigationBar: const BannerAdSlot(),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 8, 16, 32),
+        padding: contentPadding(context, side: 16, bottom: 32),
         children: [
           const _SectionTitle('Lộ trình & học tập'),
           _Group(

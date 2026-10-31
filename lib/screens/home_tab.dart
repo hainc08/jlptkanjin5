@@ -5,15 +5,19 @@ import '../data/levels.dart';
 import '../data/progress_store.dart';
 import '../progress_scope.dart';
 import '../theme.dart';
+import '../widgets/content_width.dart';
+
 import 'test_screen.dart';
 
 /// Trang chủ: tiến độ 5 cấp, tiếp tục học, chuỗi ngày, chữ cần ôn.
 class HomeTab extends StatelessWidget {
   const HomeTab({super.key});
 
-  void _openQuiz(BuildContext context, JlptLevel level, [List<Kanji>? targets]) {
+  void _openQuiz(BuildContext context, JlptLevel level,
+      [List<Kanji>? targets]) {
     Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => TestScreen(level: level, targets: targets)),
+      MaterialPageRoute(
+          builder: (_) => TestScreen(level: level, targets: targets)),
     );
   }
 
@@ -26,11 +30,12 @@ class HomeTab extends StatelessWidget {
     final pct = progress.percent(level, items);
     final next = level.next;
     final review = progress.needsReview(level, items);
+    final wide = MediaQuery.sizeOf(context).width >= 600;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Kanji JLPT')),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+        padding: contentPadding(context),
         children: [
           _LevelsStrip(progress: progress),
           const SizedBox(height: 16),
@@ -75,18 +80,22 @@ class HomeTab extends StatelessWidget {
           ),
           if (review.isNotEmpty) ...[
             const SizedBox(height: 24),
-            Text('Cần ôn lại', style: Theme.of(context).textTheme.headlineSmall),
+            Text('Cần ôn lại',
+                style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 12),
             GridView.count(
-              crossAxisCount: 2,
+              crossAxisCount: wide ? 4 : 2,
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               mainAxisSpacing: 12,
               crossAxisSpacing: 12,
-              childAspectRatio: 1.25,
+              childAspectRatio: wide ? 0.85 : 1.25,
               children: [
                 for (final k in review.take(4))
-                  _ReviewTile(key: const ValueKey('review-tile'), kanji: k, color: level.color),
+                  _ReviewTile(
+                      key: const ValueKey('review-tile'),
+                      kanji: k,
+                      color: level.color),
               ],
             ),
             const SizedBox(height: 12),
@@ -122,7 +131,10 @@ class _LevelsStrip extends StatelessWidget {
                   children: [
                     Text(
                       '${l.label} ${(progress.percent(l, kanjiOf(l)) * 100).round()}%',
-                      style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: l.color),
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: l.color),
                     ),
                     const SizedBox(height: 6),
                     ClipRRect(
@@ -166,7 +178,8 @@ class _ContinueCard extends StatelessWidget {
     const white = Colors.white;
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(color: level.color, borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(
+          color: level.color, borderRadius: BorderRadius.circular(10)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -178,13 +191,19 @@ class _ContinueCard extends StatelessWidget {
                   border: Border.all(color: white.withValues(alpha: 0.7)),
                   borderRadius: BorderRadius.circular(3),
                 ),
-                child: Text(level.label, style: const TextStyle(color: white, fontWeight: FontWeight.w600)),
+                child: Text(level.label,
+                    style: const TextStyle(
+                        color: white, fontWeight: FontWeight.w600)),
               ),
               const SizedBox(width: 10),
               const Expanded(
                 child: Text(
                   'Tiếp tục học',
-                  style: TextStyle(fontFamily: 'NotoSerif', fontSize: 22, fontWeight: FontWeight.w600, color: white),
+                  style: TextStyle(
+                      fontFamily: 'NotoSerif',
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
+                      color: white),
                 ),
               ),
             ],
@@ -195,10 +214,13 @@ class _ContinueCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   'Đã thuộc $mastered/$total chữ',
-                  style: const TextStyle(color: white, fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                      color: white, fontWeight: FontWeight.w600),
                 ),
               ),
-              Text('${(percent * 100).round()}%', style: const TextStyle(color: white, fontWeight: FontWeight.w600)),
+              Text('${(percent * 100).round()}%',
+                  style: const TextStyle(
+                      color: white, fontWeight: FontWeight.w600)),
             ],
           ),
           const SizedBox(height: 8),
@@ -213,7 +235,8 @@ class _ContinueCard extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           FilledButton.icon(
-            style: FilledButton.styleFrom(backgroundColor: white, foregroundColor: level.color),
+            style: FilledButton.styleFrom(
+                backgroundColor: white, foregroundColor: level.color),
             onPressed: onTap,
             icon: const Icon(Icons.arrow_forward_rounded),
             label: const Text('Học tiếp'),
@@ -225,7 +248,8 @@ class _ContinueCard extends StatelessWidget {
 }
 
 class _NextLevelHint extends StatelessWidget {
-  const _NextLevelHint({required this.from, required this.to, required this.onTap});
+  const _NextLevelHint(
+      {required this.from, required this.to, required this.onTap});
 
   final JlptLevel from;
   final JlptLevel to;
@@ -245,7 +269,9 @@ class _NextLevelHint extends StatelessWidget {
             children: [
               Icon(Icons.explore_outlined, color: to.color),
               const SizedBox(width: 10),
-              Expanded(child: Text('${from.label} gần xong, thử bắt đầu ${to.label} →')),
+              Expanded(
+                  child: Text(
+                      '${from.label} gần xong, thử bắt đầu ${to.label} →')),
             ],
           ),
         ),
@@ -283,14 +309,21 @@ class _StatCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(child: Text(label, style: TextStyle(color: color, fontWeight: FontWeight.w600))),
+              Expanded(
+                  child: Text(label,
+                      style: TextStyle(
+                          color: color, fontWeight: FontWeight.w600))),
               Icon(icon, color: color, size: 20),
             ],
           ),
           const SizedBox(height: 8),
           Text(
             value,
-            style: TextStyle(fontFamily: 'NotoSerif', fontSize: 22, fontWeight: FontWeight.w600, color: color),
+            style: TextStyle(
+                fontFamily: 'NotoSerif',
+                fontSize: 22,
+                fontWeight: FontWeight.w600,
+                color: color),
           ),
           Text(note, style: TextStyle(fontSize: 12, color: color)),
         ],
@@ -319,12 +352,19 @@ class _ReviewTile extends StatelessWidget {
         children: [
           Text(kanji.char, style: kanjiStyle(36, color: color)),
           const SizedBox(height: 4),
-          Text(kanji.hanViet, style: const TextStyle(fontWeight: FontWeight.w600, letterSpacing: 0.5)),
+          Text(kanji.hanViet,
+              style: const TextStyle(
+                  fontWeight: FontWeight.w600, letterSpacing: 0.5)),
           Text(
             kanji.meaning,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7)),
+            style: TextStyle(
+                fontSize: 12,
+                color: Theme.of(context)
+                    .colorScheme
+                    .onSurface
+                    .withValues(alpha: 0.7)),
           ),
         ],
       ),

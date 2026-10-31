@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import '../app_scope.dart';
 import '../data/levels.dart';
 import '../progress_scope.dart';
+import '../widgets/content_width.dart';
 import '../widgets/level_card.dart';
+
 import 'test_screen.dart';
 
 /// Tab Các cấp: tiến độ từng cấp, bấm để vào quiz của cấp đó (không đổi cấp đang học).
@@ -17,7 +19,7 @@ class LevelsTab extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('Các cấp')),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+        padding: contentPadding(context),
         children: [
           for (final l in JlptLevel.values) ...[
             LevelCard(

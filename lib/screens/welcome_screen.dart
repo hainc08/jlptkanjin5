@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../app_scope.dart';
 import '../data/levels.dart';
+import '../widgets/content_width.dart';
 import '../widgets/level_card.dart';
+
 import 'home_shell.dart';
 
 /// Màn chào hỏi lần đầu: người dùng tự chọn cấp bắt đầu.
@@ -22,7 +24,7 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(20, 32, 20, 24),
+          padding: contentPadding(context, top: 32),
           children: [
             Text('Chào bạn!', style: theme.textTheme.headlineLarge),
             const SizedBox(height: 8),

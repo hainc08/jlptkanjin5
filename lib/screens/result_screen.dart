@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 
 import '../ads/banner_ad_slot.dart';
+import '../data/levels.dart';
 import '../logic/quiz.dart';
 import '../models/app_settings.dart';
-import '../data/levels.dart';
 import '../theme.dart';
+import '../widgets/content_width.dart';
+
 import 'home_shell.dart';
 import 'test_screen.dart';
 
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({super.key, required this.level, required this.questions, required this.mode});
+  const ResultScreen(
+      {super.key,
+      required this.level,
+      required this.questions,
+      required this.mode});
 
   final JlptLevel level;
   final List<Question> questions;
@@ -27,7 +33,10 @@ class ResultScreen extends StatelessWidget {
 
   ({String title, String subtitle}) _message(double pct) {
     if (pct >= 0.9) {
-      return (title: 'Xuất sắc! 🎉', subtitle: 'Bạn nắm Kanji ${level.label} rất chắc.');
+      return (
+        title: 'Xuất sắc! 🎉',
+        subtitle: 'Bạn nắm Kanji ${level.label} rất chắc.'
+      );
     }
     if (pct >= 0.7) {
       return (title: 'Tốt lắm!', subtitle: 'Ôn thêm vài chữ nữa là hoàn hảo.');
@@ -35,7 +44,10 @@ class ResultScreen extends StatelessWidget {
     if (pct >= 0.5) {
       return (title: 'Khá ổn', subtitle: 'Hãy ôn lại các câu sai bên dưới.');
     }
-    return (title: 'Cố lên nhé!', subtitle: 'Luyện thêm mỗi ngày sẽ tiến bộ nhanh.');
+    return (
+      title: 'Cố lên nhé!',
+      subtitle: 'Luyện thêm mỗi ngày sẽ tiến bộ nhanh.'
+    );
   }
 
   @override
@@ -60,7 +72,7 @@ class ResultScreen extends StatelessWidget {
         ],
       ),
       body: ListView(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 24),
+        padding: contentPadding(context),
         children: [
           Center(child: _ScoreRing(pct: pct, correct: correct, total: total)),
           const SizedBox(height: 18),
@@ -115,39 +127,43 @@ class ResultScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Padding(
-          padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
-          child: Row(
-            children: [
-              if (wrong.isNotEmpty) ...[
-                Expanded(
-                  child: OutlinedButton.icon(
-                    icon: const Icon(Icons.replay_rounded),
-                    label: const Text('Ôn câu sai'),
-                    onPressed: () => Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (_) => TestScreen(
-                          level: level,
-                          targets: wrong.map((q) => q.kanji).toList(),
+            ContentWidth(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 8, 20, 12),
+                child: Row(
+                  children: [
+                    if (wrong.isNotEmpty) ...[
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          icon: const Icon(Icons.replay_rounded),
+                          label: const Text('Ôn câu sai'),
+                          onPressed: () =>
+                              Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (_) => TestScreen(
+                                level: level,
+                                targets: wrong.map((q) => q.kanji).toList(),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                    ],
+                    Expanded(
+                      child: FilledButton.icon(
+                        icon: const Icon(Icons.play_arrow_rounded),
+                        label: const Text('Làm bài mới'),
+                        onPressed: () => Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                              builder: (_) => TestScreen(level: level)),
                         ),
                       ),
                     ),
-                  ),
-                ),
-                const SizedBox(width: 12),
-              ],
-              Expanded(
-                child: FilledButton.icon(
-                  icon: const Icon(Icons.play_arrow_rounded),
-                  label: const Text('Làm bài mới'),
-                  onPressed: () => Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (_) => TestScreen(level: level)),
-                  ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
+            ),
             const BannerAdSlot(),
           ],
         ),
@@ -251,7 +267,8 @@ class _StatBox extends StatelessWidget {
             const SizedBox(height: 2),
             Text(
               label,
-              style: TextStyle(fontSize: 12, color: color.withValues(alpha: 0.8)),
+              style:
+                  TextStyle(fontSize: 12, color: color.withValues(alpha: 0.8)),
             ),
           ],
         ),
@@ -269,7 +286,8 @@ class _WrongTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final k = question.kanji;
-    final chosen = question.chosen == null ? '—' : question.options[question.chosen!];
+    final chosen =
+        question.chosen == null ? '—' : question.options[question.chosen!];
 
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
