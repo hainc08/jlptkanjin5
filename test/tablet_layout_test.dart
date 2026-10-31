@@ -17,19 +17,12 @@ const ipad = Size(1032, 1376);
 /// Bề rộng tối đa của cột nội dung trên màn rộng.
 const maxContent = 640.0;
 
-/// Giả lập màn iPad (cả kích thước vẽ lẫn MediaQuery).
-void useIpad(WidgetTester tester) {
-  tester.view.devicePixelRatio = 1;
-  tester.view.physicalSize = ipad;
-  addTearDown(tester.view.reset);
-}
-
 void main() {
   tearDown(resetPlatform);
 
   Future<TestApp> pump(WidgetTester tester, Widget screen, {Map<String, Object> prefs = const {'currentLevel': 'n4'}}) async {
     final app = await TestApp.create(prefs);
-    useIpad(tester);
+    useScreen(tester, ipad);
     await tester.pumpWidget(app.wrap(MaterialApp(home: screen)));
     await tester.pump();
     return app;
@@ -54,7 +47,7 @@ void main() {
     for (final k in kanjiOf(JlptLevel.n4).take(4)) {
       app.progress.record(JlptLevel.n4, k.char, false);
     }
-    useIpad(tester);
+    useScreen(tester, ipad);
     await tester.pumpWidget(app.wrap(const MaterialApp(home: Scaffold(body: HomeTab()))));
     await tester.pump();
     final tiles = find.byKey(const ValueKey('review-tile'));

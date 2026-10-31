@@ -12,7 +12,7 @@ void main() {
   Future<TestApp> pumpSettings(WidgetTester tester) async {
     final app = await TestApp.create({'currentLevel': 'n4'});
     app.progress.record(JlptLevel.n4, kanjiOf(JlptLevel.n4)[0].char, false);
-    await tester.binding.setSurfaceSize(const Size(420, 2600));
+    useScreen(tester, const Size(420, 2600));
     await tester.pumpWidget(app.wrap(const MaterialApp(home: SettingsScreen())));
     await tester.pump();
     return app;

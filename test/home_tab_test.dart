@@ -12,7 +12,7 @@ void main() {
   Future<TestApp> pumpHome(WidgetTester tester, String level, [void Function(TestApp)? seed]) async {
     final app = await TestApp.create({'currentLevel': level});
     seed?.call(app);
-    await tester.binding.setSurfaceSize(const Size(420, 2000));
+    useScreen(tester, const Size(420, 2000));
     await tester.pumpWidget(app.wrap(const MaterialApp(home: Scaffold(body: HomeTab()))));
     await tester.pump();
     return app;

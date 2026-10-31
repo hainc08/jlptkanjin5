@@ -12,7 +12,7 @@ void main() {
 
   testWidgets('đủ 5 cấp, cấp đang học có nhãn Đang học', (tester) async {
     final app = await TestApp.create({'currentLevel': 'n4'});
-    await tester.binding.setSurfaceSize(const Size(420, 1600));
+    useScreen(tester, const Size(420, 1600));
     await tester.pumpWidget(app.wrap(const MaterialApp(home: Scaffold(body: LevelsTab()))));
     await tester.pump();
     expect(find.byType(LevelCard), findsNWidgets(5));
@@ -24,7 +24,7 @@ void main() {
 
   testWidgets('bấm N2 khi đang học N4 → quiz N2, không đổi cấp đang học', (tester) async {
     final app = await TestApp.create({'currentLevel': 'n4'});
-    await tester.binding.setSurfaceSize(const Size(420, 1600));
+    useScreen(tester, const Size(420, 1600));
     await tester.pumpWidget(app.wrap(const MaterialApp(home: Scaffold(body: LevelsTab()))));
     await tester.pump();
     await tester.tap(find.byWidgetPredicate((w) => w is LevelCard && w.level == JlptLevel.n2));

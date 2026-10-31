@@ -30,7 +30,6 @@ class HomeTab extends StatelessWidget {
     final pct = progress.percent(level, items);
     final next = level.next;
     final review = progress.needsReview(level, items);
-    final wide = MediaQuery.sizeOf(context).width >= 600;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Kanji JLPT')),
@@ -83,20 +82,26 @@ class HomeTab extends StatelessWidget {
             Text('Cần ôn lại',
                 style: Theme.of(context).textTheme.headlineSmall),
             const SizedBox(height: 12),
-            GridView.count(
-              crossAxisCount: wide ? 4 : 2,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              mainAxisSpacing: 12,
-              crossAxisSpacing: 12,
-              childAspectRatio: wide ? 0.85 : 1.25,
-              children: [
-                for (final k in review.take(4))
-                  _ReviewTile(
-                      key: const ValueKey('review-tile'),
-                      kanji: k,
-                      color: level.color),
-              ],
+            // Đủ chỗ (iPad) thì 4 ô một hàng, điện thoại thì 2×2.
+            LayoutBuilder(
+              builder: (context, box) {
+                final wide = box.maxWidth >= 520;
+                return GridView.count(
+                  crossAxisCount: wide ? 4 : 2,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                  childAspectRatio: wide ? 0.85 : 1.25,
+                  children: [
+                    for (final k in review.take(4))
+                      _ReviewTile(
+                          key: const ValueKey('review-tile'),
+                          kanji: k,
+                          color: level.color),
+                  ],
+                );
+              },
             ),
             const SizedBox(height: 12),
             OutlinedButton.icon(

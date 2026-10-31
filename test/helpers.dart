@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:kanji_n5_flashcard/app_scope.dart';
 import 'package:kanji_n5_flashcard/data/progress_store.dart';
 import 'package:kanji_n5_flashcard/main.dart';
@@ -28,3 +29,10 @@ class TestApp {
 }
 
 void resetPlatform() => debugDefaultTargetPlatformOverride = null;
+
+/// Đặt kích thước màn hình (logic) cho cả vùng vẽ lẫn MediaQuery.
+void useScreen(WidgetTester tester, Size size) {
+  tester.view.devicePixelRatio = 1;
+  tester.view.physicalSize = size;
+  addTearDown(tester.view.reset);
+}
