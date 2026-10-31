@@ -14,7 +14,7 @@ on:
       app:
         description: 'App (tên thư mục trong apps/)'
         type: choice
-        options: [n5, n4, n3, n2, n1]
+        options: [n5]
         default: n5
       submit_review:
         description: 'Gửi review (iOS) và đẩy lên Production (Android)'
