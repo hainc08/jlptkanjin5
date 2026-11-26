@@ -4,8 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'ad_ids.dart';
+import 'tracking.dart';
 
-/// Quản lý xin phép (UMP consent), khởi tạo AdMob và quảng cáo toàn màn hình.
+/// Quản lý xin phép (UMP consent, ATT trên iOS), khởi tạo AdMob và quảng cáo toàn màn hình.
 class AdsService {
   AdsService._();
 
@@ -30,6 +31,7 @@ class AdsService {
     _initStarted = true;
 
     await _gatherConsent();
+    await askTracking(isIos: defaultTargetPlatform == TargetPlatform.iOS);
     if (!await ConsentInformation.instance.canRequestAds()) return;
 
     await MobileAds.instance.initialize();

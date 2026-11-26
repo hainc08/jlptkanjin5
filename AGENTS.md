@@ -18,7 +18,7 @@
 
 ## Trạng thái (26/11/2026) — Kanji
 - Bản 1.1.0 (27) bị từ chối 4.3/4.2.6 (tin ngày 11/11), Apple hỏi 9 câu và dặn không nộp lại nếu cho là app đã đạt. Thư trả lời: `docs/apple-43-reply-kanji.txt` (người dùng tự gửi).
-- Đã bỏ tải dữ liệu từ mạng, gộp 30 chữ mới (1.072 chữ). Build: iOS 29 trên TestFlight, Android 30 ở Internal testing (CI ghim Flutter 3.44.8 cho Android). Ghi chú review mới chưa đẩy lên App Store Connect.
+- Đã bỏ tải dữ liệu từ mạng, gộp 30 chữ mới (1.072 chữ). Build: iOS 29 trên TestFlight, Android 30 ở Internal testing (CI ghim Flutter 3.44.8 cho Android). Ghi chú review mới chưa đẩy lên App Store Connect. Đã thêm hỏi ATT (`lib/ads/tracking.dart`), có trong bản build sau 29.
 
 ## Trạng thái (31/10/2026) — app gộp
 - Apple từ chối N1–N5 theo Guideline 4.3 (Spam) / 4.2.6 vì 5 app chung một binary. Hướng xử lý: **gộp thành một app "Kanji JLPT - Flashcard N5–N1"** dùng lại bundle N5 (`com.manabihub.kanjin5`), bản 1.1.0.

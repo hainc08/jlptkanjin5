@@ -41,5 +41,5 @@ HOW TO REVIEW
 
 EXTERNAL SERVICES
 - All study data is bundled; learning works offline.
-- Google Mobile Ads (AdMob), consent via the Google UMP SDK.
+- Google Mobile Ads (AdMob), consent via the Google UMP SDK; on iOS the App Tracking Transparency prompt appears before ads start.
 - No login, payment, user-generated content or AI. Progress stays on the device. App features are the same in all regions.
