@@ -21,7 +21,7 @@ The problem: learners need to memorise hundreds of characters per level and keep
 
 9. No. This is our own product (ManabiHub); the concept, branding and content were prepared by us, not for a client.
 
-One more point: the build you reviewed (1.1.0, 27) could refresh its kanji lists from our public GitHub Pages site. We have removed that; in our newer build all content is inside the app. We can submit that build for review whenever you wish.
+One more point: the build you reviewed (1.1.0, 27) could refresh its kanji lists from our public GitHub Pages site. We have removed that; in the newer build 1.1.0 (29) all content is inside the app. We can submit that build for review whenever you wish.
 
 Thank you.
 ManabiHub
