@@ -29,7 +29,7 @@ void main() {
   testWidgets('người mới: 0%, không có Cần ôn lại, không gợi ý', (tester) async {
     await pumpHome(tester, 'n5');
     expect(find.text('Tiếp tục học'), findsOneWidget);
-    expect(find.textContaining('0/104'), findsOneWidget);
+    expect(find.textContaining('0/110'), findsOneWidget);
     expect(find.text('Cần ôn lại'), findsNothing);
     expect(find.textContaining('gần xong'), findsNothing);
     resetPlatform();
@@ -49,7 +49,7 @@ void main() {
 
   testWidgets('≥ 80% → gợi ý cấp kế, bấm thì đổi cấp', (tester) async {
     late TestApp app;
-    app = await pumpHome(tester, 'n5', (a) => master(a, JlptLevel.n5, 84));
+    app = await pumpHome(tester, 'n5', (a) => master(a, JlptLevel.n5, 88));
     expect(find.textContaining('gần xong'), findsOneWidget);
     await tester.tap(find.textContaining('gần xong'));
     await tester.pump();

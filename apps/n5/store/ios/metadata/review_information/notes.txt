@@ -1,8 +1,12 @@
+CHANGES IN THIS BUILD
+- The app no longer downloads any study data. Earlier builds could refresh the kanji lists from our public GitHub Pages site; that code and the refresh button are removed. All 1,072 kanji are inside the app binary, so content can only change through a new version submitted for review.
+- No hidden menus, and nothing detects App Review or unlocks features by date or location. Dates are used only for study history (streak, today's count, review order). Google's consent SDK shows its form and a privacy option in Settings only in regions that require it.
+
 CHANGES SINCE THE 4.3 / 4.2.6 REJECTION
 We previously submitted five apps (Kanji N5, N4, N3, N2, N1) that shared one codebase and differed only in their kanji list. We agree that was not appropriate. We merged all five levels into this single app, "Kanji JLPT - Flashcard N5–N1" (1.1.0), and will not resubmit N4, N3, N2 or N1.
 
 1. WHAT THE APP DOES
-Helps Vietnamese speakers learn the 1,000+ JLPT kanji (N5 to N1). Each kanji has its Sino-Vietnamese (Han-Viet) reading, a Vietnamese meaning and On/Kun readings. Learners practise with multiple-choice flashcards (kanji to meaning, kanji to reading, meaning to kanji). Progress is stored per kanji on the device: one correct answer = studied, 3 correct answers in a row = mastered. Home shows studied and mastered counts for each level, the daily streak, kanji studied today and a "needs review" list. Quizzes first revisit kanji in progress, then add new ones; at 80% mastered the app suggests the next level.
+Helps Vietnamese speakers learn 1,072 JLPT kanji (N5 to N1). Each kanji has its Sino-Vietnamese (Han-Viet) reading, a Vietnamese meaning and On/Kun readings. Learners practise with multiple-choice flashcards (kanji to meaning, kanji to reading, meaning to kanji). Progress is stored per kanji on the device: one correct answer = studied, 3 correct answers in a row = mastered. Home shows studied and mastered counts for each level, the daily streak, kanji studied today and a "needs review" list. Quizzes first revisit kanji in progress, then add new ones; at 80% mastered the app suggests the next level.
 
 2. INTENDED USERS
 Vietnamese learners of Japanese from beginner (N5) to advanced (N1): students, people going to work or study in Japan, and staff of Japanese companies. Each user picks a starting level on first launch.
@@ -11,16 +15,16 @@ Vietnamese learners of Japanese from beginner (N5) to advanced (N1): students, p
 Most kanji apps teach through English. Much Vietnamese vocabulary comes from Chinese characters, so the Han-Viet reading is often the fastest memory hook. Few apps combine Han-Viet readings, Vietnamese meanings, the full N5-N1 list and offline per-kanji progress without an account.
 
 4. BETA TESTING
-Testing so far has been limited and internal: earlier builds ran on our own devices via TestFlight and Google Play closed testing, and we are still recruiting external testers. Changes from that testing: remote kanji data corrections, a 50-question round option, one-tap review of wrong answers. The largest change came from your 4.3 review: merging the five apps and adding progress tracking.
+Testing before the 1.1.0 submission was internal, on our own devices through TestFlight and Google Play testing tracks. One change from it: progress did not visibly move after studying, so quizzes now revisit kanji in progress first and Home shows studied as well as mastered counts.
 
 5. STANDALONE OR SUITE
-Standalone. It replaces the five per-level apps. No other app on our account offers kanji study.
+Standalone. It replaces our earlier per-level apps (N4-N1 were rejected and will not be resubmitted). Our Japanese grammar app, Bunpo, is a separate product without kanji study.
 
 6. COULD IT BE AN IN-APP PURCHASE / EXPANSION?
 Yes, which is why the five levels are now merged into this app, all free.
 
 7. CODE SHARED WITH OTHER APPS ON OUR ACCOUNT
-No other published app uses this binary. Only standard frameworks are shared (Flutter, Google Mobile Ads SDK, shared_preferences, http).
+No other published app uses this binary. Only standard frameworks are shared (Flutter, Google Mobile Ads SDK, shared_preferences).
 
 8. CODE SHARED WITH THIRD-PARTY APPS
 No. Written by us, not from a commercial template or app generation service.
@@ -36,6 +40,6 @@ HOW TO REVIEW
 - "Cài đặt" (Settings): change level, question type, questions per round; "Xóa lịch sử học" resets progress.
 
 EXTERNAL SERVICES
-- Works offline with bundled data; kanji lists optionally update over HTTPS from our GitHub Pages repository.
-- Google Mobile Ads (AdMob), consent via Google UMP SDK with ATT.
-- No login, payment, user-generated content or AI. Progress stays on the device. Same behaviour in all regions.
+- All study data is bundled; learning works offline.
+- Google Mobile Ads (AdMob), consent via the Google UMP SDK.
+- No login, payment, user-generated content or AI. Progress stays on the device. App features are the same in all regions.

@@ -192,4 +192,12 @@ const List<Kanji> kanjiN4 = [
   Kanji('旅', 'LỮ', 'chuyến đi, du lịch', 'リョ', 'たび'),
   Kanji('方', 'PHƯƠNG', 'phương hướng, cách', 'ホウ', 'かた'),
   Kanji('銀', 'NGÂN', 'bạc (kim loại)', 'ギン', ''),
+
+  // Bổ sung
+  Kanji('登', 'ĐĂNG', 'leo núi, trèo lên cao', 'トウ、ト', 'のぼ(る)'),
+  Kanji('速', 'TỐC', 'nhanh chóng, tốc độ cao', 'ソク', 'はや(い)'),
+  Kanji('受', 'THỤ', 'nhận lấy, tiếp nhận, dự thi', 'ジュ', 'う(ける)'),
+  Kanji('緑', 'LỤC', 'màu xanh lá cây', 'リョク', 'みどり'),
+  Kanji('球', 'CẦU', 'quả bóng tròn, hình cầu tròn', 'キュウ', 'たま'),
+  Kanji('湯', 'THANG', 'nước nóng, nước sôi sục', 'トウ', 'ゆ'),
 ];

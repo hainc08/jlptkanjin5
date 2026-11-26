@@ -279,4 +279,12 @@ const List<Kanji> kanjiN3 = [
   Kanji('科', 'KHOA', 'khoa học, môn học', 'カ', ''),
   Kanji('史', 'SỬ', 'lịch sử, sử ký', 'シ', ''),
   Kanji('歴', 'LỊCH', 'lý lịch, trải qua', 'レキ', ''),
+
+  // Bổ sung
+  Kanji('観', 'QUAN', 'quan sát, thưởng ngoạn cảnh sắc', 'カン', 'み(る)'),
+  Kanji('賞', 'THƯỞNG', 'phần thưởng, giải thưởng cao quý', 'ショウ', ''),
+  Kanji('票', 'PHIẾU', 'lá phiếu, bỏ phiếu bầu cử', 'ヒョウ', ''),
+  Kanji('輪', 'LUÂN', 'bánh xe tròn, vòng tròn khép kín', 'リン', 'わ'),
+  Kanji('灯', 'ĐĂNG', 'ngọn đèn dầu, ánh đèn thắp', 'トウ', 'ひ'),
+  Kanji('隊', 'ĐỘI', 'đội ngũ, đoàn quân xếp ngũ', 'タイ', ''),
 ];

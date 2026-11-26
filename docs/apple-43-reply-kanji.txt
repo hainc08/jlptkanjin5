@@ -1,0 +1,27 @@
+Hello App Review team,
+
+We believe this app meets guidelines 4.3(a), 4.3(b) and 4.2.6, so we are answering your questions.
+
+1. The app helps Vietnamese speakers learn the kanji of all five JLPT levels. It contains 1,072 kanji, each with its Sino-Vietnamese (Han-Viet) reading, a Vietnamese meaning and On/Kun readings. Learners practise with multiple-choice flip cards in three modes (kanji to meaning, kanji to reading, meaning to kanji), 10, 20, 50 or all cards per round. Progress is stored per kanji on the device: one correct answer = studied, three in a row = mastered. Home shows studied and mastered counts per level, the daily streak, today's count and a needs-review list. Quizzes revisit kanji in progress first; at 80% mastered the app suggests the next level.
+The problem: learners need to memorise hundreds of characters per level and keep track of which ones they still get wrong.
+
+2. Vietnamese learners of Japanese from N5 to N1: students, people going to work or study in Japan, and staff of Japanese companies.
+
+3. Most kanji apps we know teach through English. Many Vietnamese words come from Chinese characters, so the Han-Viet reading is a fast memory hook for Vietnamese speakers. The app combines it with Vietnamese meanings, the full N5-N1 set and per-kanji progress, offline and without an account.
+
+4. Testing before submission was internal, on our own devices through TestFlight and Google Play testing tracks. One change from it: progress did not visibly move after studying, so quizzes now revisit kanji in progress first and Home shows studied as well as mastered counts. We had not collected formal feedback from external testers before submitting.
+
+5. Standalone. Earlier we submitted five apps (N5, N4, N3, N2, N1) that shared one codebase and differed only in the kanji list. We agree that was not appropriate: all levels are now in this one app and we will not resubmit N4-N1. Our account also has Bunpo, a Japanese grammar course (submitted, not published), which teaches sentence patterns and has no kanji study, and two drafts never submitted (a JLPT N5 mock test and a Chinese learning app).
+
+6. Yes for the earlier per-level apps, which is why we merged them into this app, with all levels free. Bunpo is not merged because it teaches a different subject with a different method (lessons, explanations and exam-style questions).
+
+7. Among the apps we have submitted, only our rejected N4-N1 apps share this codebase, and this app replaces them. Bunpo was written separately and shares no source files, design or icon with this app. Both use standard third-party frameworks (Flutter, Google Mobile Ads SDK, shared_preferences).
+
+8. No. Apart from standard packages we use no third-party app code, SDK or content library, and the app is not built from a commercial template or app generation service.
+
+9. No. This is our own product (ManabiHub); the concept, branding and content were prepared by us, not for a client.
+
+One more point: the build you reviewed (1.1.0, 27) could refresh its kanji lists from our public GitHub Pages site. We have removed that; in our newer build all content is inside the app. We can submit that build for review whenever you wish.
+
+Thank you.
+ManabiHub

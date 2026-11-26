@@ -125,4 +125,12 @@ const List<Kanji> kanjiN5 = [
   Kanji('買', 'MÃI', 'mua', 'バイ', 'か(う)'),
   Kanji('立', 'LẬP', 'đứng', 'リツ', 'た(つ)'),
   Kanji('会', 'HỘI', 'gặp gỡ, hội', 'カイ', 'あ(う)'),
+
+  // Bổ sung
+  Kanji('竹', 'TRÚC', 'cây tre, tre trúc', 'チク', 'たけ'),
+  Kanji('貝', 'BỐI', 'con sò, vỏ sò', 'バイ', 'かい'),
+  Kanji('玉', 'NGỌC', 'viên ngọc, hòn bi tròn', 'ギョク', 'たま'),
+  Kanji('毛', 'MAO', 'lông, sợi tóc', 'モウ', 'け'),
+  Kanji('矢', 'THỈ', 'mũi tên bắn', 'シ', 'や'),
+  Kanji('刀', 'ĐAO', 'con dao, thanh kiếm Nhật', 'トウ', 'かたな'),
 ];

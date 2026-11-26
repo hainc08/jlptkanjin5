@@ -261,4 +261,12 @@ const List<Kanji> kanjiN1 = [
   Kanji('封', 'PHONG', 'niêm phong, phong tỏa', 'フウ、ホウ', ''),
   Kanji('鎖', 'TỎA', 'dây xích, khóa chặt', 'サ', 'くさり'),
   Kanji('縛', 'PHƯỢC', 'trói buộc, ràng buộc', 'バク', 'しば(る)'),
+
+  // Bổ sung
+  Kanji('跡', 'TÍCH', 'dấu vết tích xưa còn lưu lại', 'セキ', 'あと'),
+  Kanji('偏', 'THIÊN', 'thiên lệch, thành kiến nghiêng một bên', 'ヘン', 'かたよ(る)'),
+  Kanji('傲', 'NGẠO', 'kiêu ngạo hống hách khinh người', 'ゴウ', ''),
+  Kanji('蔑', 'MIỆT', 'khinh miệt coi thường rẻ rúng miệt thị', 'ベツ', 'さげす(む)'),
+  Kanji('濫', 'LẠM', 'lạm dụng quyền lực, tràn lan bờ cõi', 'ラン', 'みだ(りに)'),
+  Kanji('痕', 'NGÂN', 'vết sẹo, vết tích còn hằn lại', 'コン', 'あと'),
 ];

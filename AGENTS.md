@@ -9,13 +9,16 @@
 
 ## Cấu trúc
 - Một app gộp 5 cấp, build bằng `apps/n5/config.json` (APP, APP_NAME, STORE_NAME, BUNDLE_ID, VERSION, IOS_PROFILE, mã AdMob) qua `--dart-define-from-file`; `lib/app_config.dart` đọc. Màu nhấn đi theo cấp đang học (`JlptLevel.color`).
-- `lib/data/jlpt_level.dart`: enum `JlptLevel` (n5..n1) với dữ liệu đóng sẵn: `kanji_n5.dart` 104 chữ, `kanji_n4.dart` 176 chữ, `kanji_n3.dart` 276 chữ, `kanji_n2.dart` 228 chữ, `kanji_n1.dart` 258 chữ — tổng 1.042 chữ không trùng. `kanjiOf(level)` trong `levels.dart` trả bộ đang dùng; `LevelData` giữ 5 `KanjiStore`.
+- `lib/data/jlpt_level.dart`: enum `JlptLevel` (n5..n1) với dữ liệu đóng sẵn: `kanji_n5.dart` 110 chữ, `kanji_n4.dart` 182, `kanji_n3.dart` 282, `kanji_n2.dart` 234, `kanji_n1.dart` 264 — tổng 1.072 chữ không trùng. `kanjiOf(level)` trong `levels.dart` trả bộ đóng sẵn.
 - `lib/data/progress_store.dart`: tiến độ từng chữ (đúng 3 lần liên tiếp = đã thuộc), chuỗi ngày, số chữ hôm nay — chỉ lưu SharedPreferences.
-- `lib/data/kanji_store.dart`: tải `https://hainc08.github.io/jlpt-content/kanji/<app>.json` (repo `D:\100.JLPT\content`), ETag, cache SharedPreferences, kiểm tra hợp lệ (≥20 chữ, không trùng chữ/nghĩa); tự đồng bộ ≤6 giờ/lần, nút ⟳ ở Cài đặt → Bộ dữ liệu. Sửa chữ trên GitHub là app cập nhật, không cần build lại.
-- `tools/export_kanji_json.py ../../content/kanji` xuất .dart → JSON.
+- **Không tải dữ liệu từ mạng** (bỏ ngày 26/11/2026 sau khi Apple từ chối app Bunpo theo 5.6): sửa chữ phải phát hành bản mới.
 - `tools/configure_native.py <app>` đặt tên/bundle/icon native; `tools/check_metadata.py`, `app_info.py`, `write_export_options.py`.
 - `apps/<app>/store/...`, `apps/<app>/icons/...`; trang chính sách: `docs/<app>/privacy-policy.html` (GitHub Pages).
 - CI: `.github/workflows/ci.yml` (matrix n5). Release: `release.yml` — tag `n5-v1.1.0` (tag `v*` cũ = n5) hoặc chạy tay với input `app` (chỉ n5), `platform`. Fastlane đọc `ENV["APP"]`.
+
+## Trạng thái (26/11/2026) — Kanji
+- Bản 1.1.0 (27) bị từ chối 4.3/4.2.6 (tin ngày 11/11), Apple hỏi 9 câu và dặn không nộp lại nếu cho là app đã đạt. Thư trả lời: `docs/apple-43-reply-kanji.txt` (người dùng tự gửi).
+- Đã bỏ tải dữ liệu từ mạng, gộp 30 chữ mới (1.072 chữ).
 
 ## Trạng thái (31/10/2026) — app gộp
 - Apple từ chối N1–N5 theo Guideline 4.3 (Spam) / 4.2.6 vì 5 app chung một binary. Hướng xử lý: **gộp thành một app "Kanji JLPT - Flashcard N5–N1"** dùng lại bundle N5 (`com.manabihub.kanjin5`), bản 1.1.0.

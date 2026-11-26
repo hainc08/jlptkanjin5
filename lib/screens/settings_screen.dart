@@ -4,7 +4,6 @@ import '../ads/ads_service.dart';
 import '../ads/banner_ad_slot.dart';
 import '../app_config.dart';
 import '../app_scope.dart';
-import '../data/level_data.dart';
 import '../data/levels.dart';
 import '../models/app_settings.dart';
 import '../progress_scope.dart';
@@ -241,60 +240,17 @@ class _Group extends StatelessWidget {
   }
 }
 
-/// Bộ dữ liệu Kanji của 5 cấp: tổng số chữ, lần kiểm tra gần nhất, nút kiểm tra dữ liệu mới.
-class _DataTile extends StatefulWidget {
+/// Bộ dữ liệu Kanji đóng sẵn: tổng số chữ của 5 cấp.
+class _DataTile extends StatelessWidget {
   const _DataTile();
 
   @override
-  State<_DataTile> createState() => _DataTileState();
-}
-
-class _DataTileState extends State<_DataTile> {
-  bool _syncing = false;
-
-  int get _total => JlptLevel.values.fold(0, (sum, l) => sum + kanjiOf(l).length);
-
-  DateTime? get _lastSync {
-    final data = LevelData.current;
-    if (data == null) return null;
-    DateTime? last;
-    for (final l in JlptLevel.values) {
-      final t = data.storeOf(l).lastSync;
-      if (t != null && (last == null || t.isAfter(last))) last = t;
-    }
-    return last;
-  }
-
-  Future<void> _sync() async {
-    final data = LevelData.current;
-    if (data == null) return;
-    final messenger = ScaffoldMessenger.of(context);
-    setState(() => _syncing = true);
-    final r = await data.syncAll();
-    if (!mounted) return;
-    setState(() => _syncing = false);
-    messenger.showSnackBar(SnackBar(
-      content: Text(r < 0
-          ? 'Không tải được dữ liệu mới. Đang dùng bộ hiện có.'
-          : (r == 0 ? 'Dữ liệu đã là mới nhất.' : 'Đã cập nhật bộ Kanji ($_total chữ).')),
-    ));
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final last = _lastSync;
-    final when = last == null
-        ? ''
-        : ' · kiểm tra ${last.hour.toString().padLeft(2, '0')}:${last.minute.toString().padLeft(2, '0')} ${last.day}/${last.month}';
+    final total = JlptLevel.values.fold(0, (sum, l) => sum + kanjiOf(l).length);
     return ListTile(
       leading: const Icon(Icons.menu_book_outlined),
       title: const Text('Bộ dữ liệu'),
-      subtitle: Text('5 cấp · $_total chữ Kanji$when'),
-      trailing: LevelData.current == null
-          ? null
-          : _syncing
-              ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2))
-              : IconButton(tooltip: 'Cập nhật', icon: const Icon(Icons.refresh), onPressed: _sync),
+      subtitle: Text('5 cấp · $total chữ Kanji'),
     );
   }
 }

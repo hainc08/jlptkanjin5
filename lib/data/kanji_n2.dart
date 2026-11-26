@@ -231,4 +231,12 @@ const List<Kanji> kanjiN2 = [
   Kanji('騒', 'TAO', 'ồn ào, náo động', 'ソウ', 'さわ(ぐ)'),
   Kanji('忙', 'MANG', 'bận rộn', 'ボウ', 'いそが(しい)'),
   Kanji('暇', 'HẠ', 'rảnh rỗi, thời gian rảnh', 'カ', 'ひま'),
+
+  // Bổ sung
+  Kanji('率', 'SUẤT', 'tỷ lệ phần trăm, năng suất làm việc', 'ソツ、リツ', 'ひき(いる)'),
+  Kanji('保', 'BẢO', 'bảo tồn, giữ gìn trạng thái ban đầu', 'ホ', 'たも(つ)'),
+  Kanji('基', 'CƠ', 'cơ bản, nền tảng móng công trình', 'キ', 'もと'),
+  Kanji('逆', 'NGHỊCH', 'ngược lại, đảo ngược chiều hướng', 'ギャク', 'さか(らう)'),
+  Kanji('燃', 'NHIÊN', 'cháy, đốt cháy bốc lửa rực rỡ', 'ネン', 'も(える)'),
+  Kanji('準', 'CHUẨN', 'tiêu chuẩn, chuẩn bị sẵn sàng', 'ジュン', ''),
 ];

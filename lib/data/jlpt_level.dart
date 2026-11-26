@@ -20,7 +20,7 @@ enum JlptLevel {
   final String description;
   final Color color;
 
-  /// Mã dùng cho khoá lưu trữ và tên file dữ liệu trên GitHub (`kanji/<id>.json`).
+  /// Mã dùng cho khoá lưu trữ.
   String get id => name;
 
   /// Bộ Kanji đóng sẵn trong app.
